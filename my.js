@@ -355,3 +355,14 @@ window.addEventListener('DOMContentLoaded', () => {
         fadeObserver.observe(el);
     });
 });
+
+// Developer Console Easter Egg
+console.log(
+    "%c◇ MK.dev %c| System Initialized",
+    "color: #00D9FF; font-size: 24px; font-weight: bold; text-shadow: 0 0 10px #00D9FF;",
+    "color: #00FF88; font-size: 16px; font-style: italic;"
+);
+console.log(
+    "%c> Welcome to Madan Kumar S's Portfolio\n> Specialization: Cybersecurity & Embedded Systems\n> Status: Secure connection established.\n> Explore the source, but respect the cyber-defenses. 🛡️",
+    "color: #a0a0a0; font-family: monospace; font-size: 14px; line-height: 1.5;"
+);
