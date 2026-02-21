@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MK.dev - Madan Kumar S Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span>◇</span>
+                <span>MK.dev</span>
+            </div>
+            <ul class="menu">
+                <li><a href="#home" class="link"><span class="link-title">Home</span></a></li>
+                <li><a href="#about" class="link"><span class="link-title">About</span></a></li>
+                <li><a href="#skills" class="link"><span class="link-title">Skills</span></a></li>
+                <li><a href="#projects" class="link"><span class="link-title">IC Lobby</span></a></li>
+                <li><a href="#contact" class="link"><span class="link-title">Contact</span></a></li>
+            </ul>
+            <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <button class="theme-toggle-btn" id="themeToggle"
+                    style="background: none; border: none; font-size: 1.5rem; cursor: pointer; margin-right: 1rem;"
+                    title="Toggle Dark/Light Mode">☀️</button>
+                <button class="login-btn">⬆ Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="container">
+        <div class="left-section">
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                <span>Available for opportunities</span>
+            </div>
+
+            <div class="greeting">
+                <div class="greeting-prefix">> HELLO, I'AM</div>
+                <h1 class="name">Madan Kumar S<span class="cursor">.</span></h1>
+            </div>
+
+            <div class="title">
+                <span class="title-prefix">$</span>
+                <span class="title-text">Cybersecurity Analyst & ECE Engineer</span>
+            </div>
+
+            <p class="description">
+                Passionate about bridging the gap between hardware security and software defense. Specializing in
+                embedded systems, VLSI design, and cybersecurity — I build secure digital solutions from chip to cloud.
+            </p>
+
+            <div class="education">
+                <div class="edu-item">
+                    <div class="edu-icon">🎓</div>
+                    <div>
+                        <div class="edu-title">VTU - Visvesvaraya Technological University</div>
+                        <div class="edu-subtitle">Electronics & Communication Engineering</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="#contact" class="btn btn-primary" style="text-decoration: none; display: inline-block;">Get in
+                    Touch →</a>
+                <a href="#" download="Madan_Kumar_Resume.pdf" class="btn btn-secondary"
+                    style="text-decoration: none; display: inline-block;">↓ Resume</a>
+            </div>
+
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#contact" class="social-icon" title="Send me an Email"><i class="fas fa-envelope"></i></a>
+                <a href="#contact" class="social-icon" title="Message me on WhatsApp"><i
+                        class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+
+        <div class="right-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><i class="fas fa-shield-alt" style="margin-right: 8px;"></i> CyberSec</div>
+                    <div class="card-corner">⌐</div>
+                </div>
+                <div class="card-content">
+                    <div class="profile-img-container">
+                        <img src="profile.jpeg" alt="Madan Kumar" class="profile-img">
+                    </div>
+                    <div class="card-subtitle">madan_kumar.jpeg</div>
+                    <div class="card-description">CyberSecurity & Embedded Systems</div>
+                </div>
+            </div>
+
+            <div class="floating-dot dot-1"></div>
+            <div class="floating-dot dot-2"></div>
+            <div class="floating-dot dot-3"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="about-container">
+            <div class="about-header">
+                <span class="section-prefix">// ABOUT_ME</span>
+                <h2 class="section-title">Who Am I?</h2>
+            </div>
+
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm <strong>Madan Kumar</strong>, an Electronics & Communication Engineering student at
+                        <strong>VTU (Visvesvaraya Technological University)</strong>. My passion lies at the
+                        intersection of hardware and security.
+                    </p>
+                    <p style="margin-top: 1rem;">From designing VLSI circuits to analyzing network vulnerabilities, I
+                        bring a unique perspective that combines the precision of electronics engineering with the
+                        strategic thinking of cybersecurity. I also develop web applications, making me a versatile
+                        engineer who can work across the full technology stack.</p>
+                </div>
+
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <div class="stat-value">19+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">6+</div>
+                        <div class="stat-label">Languages</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">3+</div>
+                        <div class="stat-label">Certifications</div>
+                    </div>
+                </div>
+
+                <div class="expertise-grid">
+                    <div class="expertise-item">
+                        <div class="expertise-icon"><i class="fas fa-user-shield"></i></div>
+                        <div class="expertise-title">Cybersecurity</div>
+                        <div class="expertise-desc">Network security, penetration testing, cryptography, and
+                            vulnerability assessment.</div>
+                    </div>
+                    <div class="expertise-item">
+                        <div class="expertise-icon"><i class="fas fa-microchip"></i></div>
+                        <div class="expertise-title">Electronics & Communication</div>
+                        <div class="expertise-desc">Embedded systems, VLSI design, microcontroller programming, and PCB
+                            design.</div>
+                    </div>
+                    <div class="expertise-item">
+                        <div class="expertise-icon"><i class="fas fa-laptop-code"></i></div>
+                        <div class="expertise-title">Web Development</div>
+                        <div class="expertise-desc">Full-stack development with modern frameworks, creating responsive
+                            and secure applications.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="certifications">
+                <div class="cert-header"><i class="fas fa-certificate" style="margin-right: 8px;"></i> Certifications
+                </div>
+                <ul class="cert-list">
+                    <li>CompTIA Security+ (In Progress)</li>
+                    <li>Cisco CCNA Routing & Switching</li>
+                    <li>Embedded Systems Specialization - Coursera</li>
+                    <li>VLSI Design Workshop - VTU</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section">
+        <div class="skills-container">
+            <div class="skills-header">
+                <span class="section-prefix">// TECHNICAL_ARSENAL</span>
+                <h2 class="section-title">Technical Skills;</h2>
+            </div>
+
+            <div class="skills-tabs">
+                <button class="tab-btn active" data-tab="cybersecurity"><i class="fas fa-shield-alt"></i>
+                    Cybersecurity</button>
+                <button class="tab-btn" data-tab="electronics"><i class="fas fa-microchip"></i> Electronics</button>
+                <button class="tab-btn" data-tab="programming"><i class="fas fa-code"></i> Programming</button>
+            </div>
+
+            <div class="skills-content">
+                <div class="tab-content active" id="cybersecurity">
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-shield-alt" style="margin-right: 8px;"></i>
+                                Network Security</span>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 85%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-shield-alt" style="margin-right: 8px;"></i> Threat
+                                Analysis</span>
+                            <span class="skill-percent">82%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 82%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-shield-alt" style="margin-right: 8px;"></i>
+                                Vulnerability Assessment</span>
+                            <span class="skill-percent">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 80%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-shield-alt" style="margin-right: 8px;"></i>
+                                Penetration Testing</span>
+                            <span class="skill-percent">78%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 78%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-shield-alt" style="margin-right: 8px;"></i>
+                                Cryptography</span>
+                            <span class="skill-percent">75%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 75%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-shield-alt" style="margin-right: 8px;"></i>
+                                Forensics</span>
+                            <span class="skill-percent">70%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 70%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="electronics">
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-microchip" style="margin-right: 8px;"></i> VLSI
+                                Design</span>
+                            <span class="skill-percent">88%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 88%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-microchip" style="margin-right: 8px;"></i>
+                                Embedded Systems</span>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 85%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-microchip" style="margin-right: 8px;"></i>
+                                Microcontrollers</span>
+                            <span class="skill-percent">82%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 82%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-microchip" style="margin-right: 8px;"></i> PCB
+                                Design</span>
+                            <span class="skill-percent">78%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 78%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-microchip" style="margin-right: 8px;"></i> Signal
+                                Processing</span>
+                            <span class="skill-percent">75%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 75%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-microchip" style="margin-right: 8px;"></i> Circuit
+                                Analysis</span>
+                            <span class="skill-percent">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="programming">
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fab fa-python" style="margin-right: 8px;"></i>
+                                Python</span>
+                            <span class="skill-percent">90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 90%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fab fa-js" style="margin-right: 8px;"></i>
+                                JavaScript</span>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 85%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-code" style="margin-right: 8px;"></i> C/C++</span>
+                            <span class="skill-percent">88%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 88%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-code" style="margin-right: 8px;"></i>
+                                Verilog/VHDL</span>
+                            <span class="skill-percent">82%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 82%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fab fa-html5" style="margin-right: 8px;"></i> Web
+                                Technologies</span>
+                            <span class="skill-percent">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 80%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-database" style="margin-right: 8px;"></i>
+                                SQL/Databases</span>
+                            <span class="skill-percent">78%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 78%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="projects-container">
+            <div class="projects-header">
+                <span class="section-prefix">// IC_LOBBY</span>
+                <h2 class="section-title">My Work( )</h2>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-plug"></i></div>
+                    <div class="project-title">Arduino Uno R3</div>
+                    <div class="project-category">Development Kit</div>
+                    <p class="project-desc">Microcontroller board based on ATmega328P. Perfect for prototyping IoT and
+                        embedded projects.</p>
+                    <div class="project-meta">
+                        <span>Microcontroller</span>
+                        <span>16 MHz</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-satellite-dish"></i></div>
+                    <div class="project-title">ESP32-WROOM</div>
+                    <div class="project-category">WiFi Module</div>
+                    <p class="project-desc">Dual-core MCU with WiFi & Bluetooth. Ideal for IoT applications and smart
+                        device development.</p>
+                    <div class="project-meta">
+                        <span>WiFi 802.11</span>
+                        <span>240 MHz</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-cogs"></i></div>
+                    <div class="project-title">STM32F4 Discovery</div>
+                    <div class="project-category">Development Kit</div>
+                    <p class="project-desc">ARM Cortex-M4 based board. Advanced features for real-time applications and
+                        signal processing.</p>
+                    <div class="project-meta">
+                        <span>ARM Cortex-M4</span>
+                        <span>168 MHz</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-server"></i></div>
+                    <div class="project-title">Xilinx Spartan-7</div>
+                    <div class="project-category">FPGA Board</div>
+                    <p class="project-desc">Cost-optimized FPGA family for digital design. Excellent for VLSI and
+                        hardware acceleration projects.</p>
+                    <div class="project-meta">
+                        <span>FPGA</span>
+                        <span>100K LUTs</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-desktop"></i></div>
+                    <div class="project-title">Raspberry Pi 4</div>
+                    <div class="project-category">Single Board Computer</div>
+                    <p class="project-desc">Quad-core ARM processor with 4GB RAM. Perfect for edge computing and IoT
+                        gateway applications.</p>
+                    <div class="project-meta">
+                        <span>ARM Cortex-A72</span>
+                        <span>1.5 GHz</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-search-location"></i></div>
+                    <div class="project-title">Logic Analyzer</div>
+                    <div class="project-category">Debug Tool</div>
+                    <p class="project-desc">24-channel logic analyzer for debugging digital circuits and communication
+                        protocols.</p>
+                    <div class="project-meta">
+                        <span>24 Channels</span>
+                        <span>100 MHz</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="contact-container">
+            <div class="contact-header">
+                <span class="section-prefix">// GET_IN_TOUCH</span>
+                <h2 class="section-title">Contact Me;</h2>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="info-block">
+                        <div class="info-label">Email & WhatsApp</div>
+                        <div class="info-value">Protected for privacy. Please use the form via the secure relay.</div>
+                    </div>
+
+                    <div class="info-block">
+                        <div class="info-label">Location</div>
+                        <div class="info-value">Karnataka, India</div>
+                    </div>
+
+                    <div class="info-block">
+                        <div class="info-label">Available on request</div>
+                    </div>
+
+                    <div class="code-block">
+                        <pre><code>// Contact Information
+const contact = {
+  communication: "Via Secure Relay",
+  location: "Karnataka, India",
+  availability: "Open to opportunities"
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- To activate this form, replace 'YOUR_FORMSPREE_ID' with your real endpoint from formspree.io -->
+                <form class="contact-form" id="secureContactForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID"
+                    method="POST">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" name="name" placeholder="Your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" name="subject" placeholder="Project inquiry, collaboration, etc." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea name="message" placeholder="Tell me about your project or idea..." rows="5"
+                            required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="formSubmitBtn">
+                        <span class="btn-text">Send Message &nbsp;<i class="fas fa-paper-plane"></i></span>
+                    </button>
+                    <p id="formStatusMessage" style="margin-top: 15px; font-size: 0.9rem; display: none;"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p><i class="fas fa-code"></i> Designed & Built by Madan Kumar &copy; 2026</p>
+    </footer>
+
+    <script src="my.js"></script>
+</body>
+
+</html>
