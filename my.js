@@ -297,8 +297,22 @@ window.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('formSubmitBtn');
 
     if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
+        window.sendToWhatsApp = async (e) => {
             e.preventDefault();
+
+            // Extract the user inputted form values explicitly 
+            const nameInput = contactForm.querySelector('[name="name"]').value;
+            const emailInput = contactForm.querySelector('[name="email"]').value;
+            const subInput = contactForm.querySelector('[name="subject"]').value;
+            const txtInput = contactForm.querySelector('[name="message"]').value;
+
+            // Simple validation check before running fetch
+            if (!nameInput || !emailInput || !subInput || !txtInput) {
+                formStatus.textContent = "Please fill out all the fields before sending!";
+                formStatus.style.color = "#FF3366";
+                formStatus.style.display = 'block';
+                return;
+            }
 
             const btnText = submitBtn.querySelector('.btn-text');
             const originalText = btnText.innerHTML;
@@ -307,6 +321,7 @@ window.addEventListener('DOMContentLoaded', () => {
             formStatus.style.display = 'none';
 
             try {
+                // Background email processing using FormSubmit Protocol
                 const response = await fetch(contactForm.action, {
                     method: 'POST',
                     body: new FormData(contactForm),
@@ -314,24 +329,31 @@ window.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (response.ok) {
+                    // Instantly open the physical WhatsApp native app forwarding the pre-generated text over to the phone
+                    const cleanMessage = `Hello Madan!\n\n*Name:* ${nameInput}\n*Email:* ${emailInput}\n*Subject:* ${subInput}\n\n*Message:* ${txtInput}`;
+                    window.open(`https://wa.me/919449887678?text=${encodeURIComponent(cleanMessage)}`, '_blank');
+
                     contactForm.reset();
-                    formStatus.textContent = "Message securely sent! I will receive it on my email and WhatsApp.";
+                    formStatus.innerHTML = `Success! Sent to both your 📧 Email & <i class='fab fa-whatsapp'></i> WhatsApp.`;
                     formStatus.style.color = "#00FF88";
                     formStatus.style.display = 'block';
                 } else {
-                    formStatus.textContent = "Oops! There was a problem submitting your form.";
+                    formStatus.textContent = "Oops! Temporary Email server connection drop. Try again.";
                     formStatus.style.color = "#FF3366";
                     formStatus.style.display = 'block';
                 }
             } catch (error) {
-                formStatus.textContent = "Error sending message. Please try again later.";
+                formStatus.textContent = "Network Error. Please check your signal and retry.";
                 formStatus.style.color = "#FF3366";
                 formStatus.style.display = 'block';
             }
 
             btnText.innerHTML = originalText;
             submitBtn.disabled = false;
-        });
+        };
+
+        // Ensure browser "enter" keys map directly to the function
+        contactForm.addEventListener('submit', window.sendToWhatsApp);
     }
 
     // Add global scroll animations for a premium feel
