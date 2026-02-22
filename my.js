@@ -508,3 +508,36 @@ window.addEventListener('click', function (e) {
         closeWhatsAppModal();
     }
 });
+
+// Premium Mouse Spotlight & Glow Engine
+document.addEventListener('DOMContentLoaded', () => {
+    const mouseGlow = document.getElementById('mouseGlow');
+
+    // Navbar Scroll Effect
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        // Render Global Spotlight Aura
+        if (mouseGlow) {
+            mouseGlow.style.left = `${e.clientX}px`;
+            mouseGlow.style.top = `${e.clientY}px`;
+        }
+
+        // Render localized Hover Border/Glow on Cards
+        const glowCards = document.querySelectorAll('.project-card, .expertise-item, .card');
+        glowCards.forEach(card => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--x', `${x}px`);
+            card.style.setProperty('--y', `${y}px`);
+        });
+    });
+});

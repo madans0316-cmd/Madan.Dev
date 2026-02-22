@@ -1343,3 +1343,79 @@ h6,
 .close-wa-modal:hover {
     color: var(--primary-color);
 }
+
+/* -------------------------------------
+   Premium UI/UX Enhancements
+   ------------------------------------- */
+
+/* Global Mouse Spotlight Aura */
+.mouse-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle at center, rgba(var(--primary-rgb), 0.08) 0%, transparent 60%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: screen;
+    transition: opacity 0.5s ease;
+}
+
+[data-theme="light"] .mouse-glow {
+    background: radial-gradient(circle at center, rgba(var(--primary-rgb), 0.15) 0%, transparent 60%);
+    mix-blend-mode: multiply;
+}
+
+/* Ambient glow follow effect for cards */
+.project-card,
+.expertise-item,
+.card {
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(16px);
+}
+
+.project-card::before,
+.expertise-item::before,
+.card::before {
+    content: '';
+    position: absolute;
+    top: var(--y, -250px);
+    left: var(--x, -250px);
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(var(--primary-rgb), 0.25) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.project-card:hover::before,
+.expertise-item:hover::before,
+.card:hover::before {
+    opacity: 1;
+}
+
+/* Keep card interior above the glowing hover layer */
+.project-card>*,
+.expertise-item>*,
+.card>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* Elevated Glassmorphism Navbar scrolling effect class */
+.navbar.scrolled {
+    background: rgba(var(--nav-rgb), 0.65);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    padding: 0.5rem 2rem;
+    /* Shrinks the navbar gracefully */
+    border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);
+}
