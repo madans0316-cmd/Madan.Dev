@@ -382,19 +382,27 @@ window.addEventListener('DOMContentLoaded', () => {
     if (matrixCanvas) {
         const mCtx = matrixCanvas.getContext('2d');
 
-        let mWidth = matrixCanvas.width = matrixCanvas.offsetWidth;
-        let mHeight = matrixCanvas.height = matrixCanvas.offsetHeight;
-
+        let mWidth, mHeight, mColumns;
+        let mDrops = [];
         const binChars = '01';
         const mFontSize = 14;
-        let mColumns = mWidth / mFontSize;
-        let mDrops = [];
 
-        for (let x = 0; x < mColumns; x++) {
-            mDrops[x] = 1;
+        function initMatrix() {
+            mWidth = matrixCanvas.width = matrixCanvas.offsetWidth;
+            mHeight = matrixCanvas.height = matrixCanvas.offsetHeight;
+            mColumns = mWidth / mFontSize;
+            mDrops = [];
+            for (let x = 0; x < mColumns; x++) {
+                mDrops[x] = 1;
+            }
         }
 
+        // Initialize once sizes are mathematically computed by browser layout engine
+        setTimeout(initMatrix, 100);
+
         function drawMatrix() {
+            if (!mWidth || !mHeight) return; // Wait until init
+
             // Semi-transparent dark blue to create the fading trail effect
             mCtx.fillStyle = 'rgba(10, 14, 39, 0.1)';
             mCtx.fillRect(0, 0, mWidth, mHeight);
@@ -417,15 +425,7 @@ window.addEventListener('DOMContentLoaded', () => {
         setInterval(drawMatrix, 50);
 
         // Adjust canvas on window resize
-        window.addEventListener('resize', () => {
-            mWidth = matrixCanvas.width = matrixCanvas.offsetWidth;
-            mHeight = matrixCanvas.height = matrixCanvas.offsetHeight;
-            mColumns = mWidth / mFontSize;
-            mDrops = [];
-            for (let x = 0; x < mColumns; x++) {
-                mDrops[x] = 1;
-            }
-        });
+        window.addEventListener('resize', initMatrix);
     }
 });
 
