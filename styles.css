@@ -454,7 +454,8 @@ h6,
     -webkit-text-fill-color: transparent;
 }
 
-.cursor {
+.cursor,
+.blinking-cursor {
     color: var(--primary-color);
     animation: blink 1s infinite;
 }
