@@ -396,17 +396,24 @@ window.addEventListener('DOMContentLoaded', () => {
         const particlesCount = 900;
         const posArray = new Float32Array(particlesCount * 3);
 
-        for (let i = 0; i < particlesCount * 3; i++) {
-            // Spread particles across a glowing sphere shape
-            posArray[i] = (Math.random() - 0.5) * 4;
+        for (let i = 0; i < particlesCount; i++) {
+            // Spread particles dynamically inside a sphere shape to look like a networked globe
+            const r = 2.2 * Math.cbrt(Math.random());
+            const theta = Math.random() * 2 * Math.PI;
+            const phi = Math.acos((Math.random() * 2) - 1);
+
+            posArray[i * 3] = r * Math.sin(phi) * Math.cos(theta);     // x
+            posArray[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta); // y
+            posArray[i * 3 + 2] = r * Math.cos(phi);                   // z
         }
 
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
         const material = new THREE.PointsMaterial({
-            size: 0.025,
+            size: 0.035,
             color: 0x3279F9, // Deep blue palette-blue-600 to contrast against white board
             transparent: true,
-            opacity: 0.85
+            opacity: 0.9,
+            sizeAttenuation: true
         });
 
         const particlesMesh = new THREE.Points(particlesGeometry, material);
@@ -437,9 +444,10 @@ window.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(animate);
             const elapsedTime = clock.getElapsedTime();
 
-            // Auto rotation + gentle mouse interaction
+            // Auto rotation + gentle mouse interaction + breathing effect
             particlesMesh.rotation.y = elapsedTime * 0.15 + (mouseX * 1.5);
             particlesMesh.rotation.x = elapsedTime * 0.05 + (mouseY * 1.5);
+            particlesMesh.position.y = Math.sin(elapsedTime * 0.5) * 0.15; // Smooth breathing
 
             renderer.render(scene, camera);
         };
