@@ -532,9 +532,15 @@ const contact = {
                     </div>
                 </div>
 
-                <!-- To activate this form, replace 'YOUR_FORMSPREE_ID' with your real endpoint from formspree.io -->
-                <form class="contact-form" id="secureContactForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID"
+                <!-- Contact Form via FormSubmit.co (Zero-setup) -->
+                <form class="contact-form" id="secureContactForm" action="https://formsubmit.co/madans0316@gmail.com"
                     method="POST">
+
+                    <!-- FormSubmit Configuration Settings -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_subject" value="New Portfolio Message!">
+                    <input type="hidden" name="_template" value="box">
+
                     <div class="form-group">
                         <label>Name</label>
                         <input type="text" name="name" placeholder="Your name" required>
