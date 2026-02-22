@@ -357,24 +357,65 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     // Add global scroll animations for a premium feel
-    const fadeElements = document.querySelectorAll('.card, .stat-card, .expertise-item, .info-block, .project-card, .left-section > *, .certifications, .code-block');
+    const fadeElements = document.querySelectorAll('.card, .stat-card, .expertise-item, .info-block, .project-card, .left-section > *, .certifications, .code-block, .skill-fill');
     const fadeObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
                 setTimeout(() => {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
-                }, (index % 5) * 100); // Stagger animations nicely grouped together
+
+                    // If it's a skill bar, expand its width!
+                    if (entry.target.classList.contains('skill-fill')) {
+                        entry.target.style.width = entry.target.dataset.width;
+                    }
+                }, (index % 5) * 80); // Stagger animations nicely grouped together
                 fadeObserver.unobserve(entry.target);
             }
         });
     }, { threshold: 0.1 });
 
     fadeElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
-        fadeObserver.observe(el);
+        // Check if it's a skill bar specifically
+        if (el.classList.contains('skill-fill')) {
+            el.dataset.width = el.style.width; // Backup the target width (e.g., 85%)
+            el.style.width = '0%'; // Reset to 0 for the animation
+            el.style.opacity = '1';
+            el.style.transition = 'width 1.5s cubic-bezier(0.25, 1, 0.5, 1)';
+            fadeObserver.observe(el);
+        } else {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+            fadeObserver.observe(el);
+        }
+    });
+
+    // Interactive Premium Hover Tilt for Content Cards
+    document.querySelectorAll('.project-card, .expertise-item, .stat-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -6; // Up/down tilt
+            const rotateY = ((x - centerX) / centerX) * 6;  // Left/right tilt
+
+            // Apply 3D rotate with a slight pop-out scale
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            card.style.zIndex = '10';
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transition = 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            card.style.zIndex = '1';
+        });
+
+        card.addEventListener('mouseenter', () => {
+            card.style.transition = 'none'; // Instant tracking while mouse is moving inside
+        });
     });
 
     // Three.js 3D Particles Effect for CyberSec Card
