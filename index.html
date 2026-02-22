@@ -589,11 +589,13 @@ const contact = {
 
     <!-- WhatsApp QR Modal -->
     <div id="waModal" class="wa-modal">
-        <div class="wa-modal-content">
-            <span class="close-wa-modal" onclick="closeWhatsAppModal()">&times;</span>
+        <div class="wa-modal-content"
+            style="background: white !important; border: none; max-width: 320px; padding: 2rem;">
+            <span class="close-wa-modal" onclick="closeWhatsAppModal()"
+                style="color: #333; top: 10px; right: 15px;">&times;</span>
             <div style="text-align: center;">
                 <img src="whatsapp-qr.jpeg" alt="WhatsApp QR Code"
-                    style="max-width: 200px; border-radius: 8px; margin-bottom: 1.5rem; border: 2px solid var(--border-color);">
+                    style="width: 100%; max-width: 250px; margin-bottom: 1.5rem; display: block; margin-left: auto; margin-right: auto;">
                 <a href="https://wa.me/919449887678" target="_blank" class="btn btn-primary"
                     style="display: block; text-decoration: none; width: 100%;"><i class="fab fa-whatsapp"></i> Chat on
                     WhatsApp</a>
