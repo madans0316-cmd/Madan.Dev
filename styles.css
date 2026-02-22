@@ -454,10 +454,14 @@ h6,
     -webkit-text-fill-color: transparent;
 }
 
-.cursor,
-.blinking-cursor {
+.cursor {
     color: var(--primary-color);
     animation: blink 1s infinite;
+}
+
+.blinking-cursor {
+    animation: blink .5s infinite;
+    opacity: 0.838284;
 }
 
 @keyframes blink {
