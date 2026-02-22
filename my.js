@@ -376,6 +376,57 @@ window.addEventListener('DOMContentLoaded', () => {
         el.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
         fadeObserver.observe(el);
     });
+
+    // Matrix Binary Rain Effect for CyberSec Card
+    const matrixCanvas = document.getElementById('matrixCanvas');
+    if (matrixCanvas) {
+        const mCtx = matrixCanvas.getContext('2d');
+
+        let mWidth = matrixCanvas.width = matrixCanvas.offsetWidth;
+        let mHeight = matrixCanvas.height = matrixCanvas.offsetHeight;
+
+        const binChars = '01';
+        const mFontSize = 14;
+        let mColumns = mWidth / mFontSize;
+        let mDrops = [];
+
+        for (let x = 0; x < mColumns; x++) {
+            mDrops[x] = 1;
+        }
+
+        function drawMatrix() {
+            // Semi-transparent dark blue to create the fading trail effect
+            mCtx.fillStyle = 'rgba(10, 14, 39, 0.1)';
+            mCtx.fillRect(0, 0, mWidth, mHeight);
+
+            // Bluish-white color for the 1s and 0s
+            mCtx.fillStyle = '#00D9FF';
+            mCtx.font = mFontSize + 'px monospace';
+
+            for (let i = 0; i < mDrops.length; i++) {
+                const text = binChars.charAt(Math.floor(Math.random() * binChars.length));
+                mCtx.fillText(text, i * mFontSize, mDrops[i] * mFontSize);
+
+                if (mDrops[i] * mFontSize > mHeight && Math.random() > 0.95) {
+                    mDrops[i] = 0;
+                }
+                mDrops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 50);
+
+        // Adjust canvas on window resize
+        window.addEventListener('resize', () => {
+            mWidth = matrixCanvas.width = matrixCanvas.offsetWidth;
+            mHeight = matrixCanvas.height = matrixCanvas.offsetHeight;
+            mColumns = mWidth / mFontSize;
+            mDrops = [];
+            for (let x = 0; x < mColumns; x++) {
+                mDrops[x] = 1;
+            }
+        });
+    }
 });
 
 // Developer Console Easter Egg
