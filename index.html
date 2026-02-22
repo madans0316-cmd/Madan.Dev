@@ -96,7 +96,7 @@
                 <a href="https://www.instagram.com/madan_shaiva.s?igsh=MTA0eWtyOXJubGtpOA==" target="_blank"
                     class="social-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
                 <!-- 2. WhatsApp -->
-                <a href="whatsapp.html" target="_blank" class="social-icon" title="WhatsApp QR"><i
+                <a href="#" onclick="openWhatsAppModal(event)" class="social-icon" title="WhatsApp"><i
                         class="fab fa-whatsapp"></i></a>
                 <!-- 3. GitHub -->
                 <a href="https://github.com/madans0316-cmd" target="_blank" class="social-icon" title="GitHub"><i
@@ -586,6 +586,24 @@ const contact = {
     <footer class="footer">
         <p><i class="fas fa-code"></i> Designed & Built by Madan Kumar &copy; 2026</p>
     </footer>
+
+    <!-- WhatsApp QR Modal -->
+    <div id="waModal" class="wa-modal">
+        <div class="wa-modal-content">
+            <span class="close-wa-modal" onclick="closeWhatsAppModal()">&times;</span>
+            <div style="text-align: center;">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem; font-family: 'Space Grotesk', sans-serif;">
+                    Connect on WhatsApp</h3>
+                <img src="whatsapp-qr.jpeg" alt="WhatsApp QR Code"
+                    style="max-width: 200px; border-radius: 8px; margin-bottom: 1rem; border: 2px solid var(--border-color);">
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">Scan the QR code or
+                    click the button below to text me directly.</p>
+                <a href="https://wa.me/919449887678" target="_blank" class="btn btn-primary"
+                    style="display: inline-block; text-decoration: none; width: 100%;"><i class="fab fa-whatsapp"></i>
+                    Open WhatsApp Web/App</a>
+            </div>
+        </div>
+    </div>
 
     <script src="my.js"></script>
 </body>

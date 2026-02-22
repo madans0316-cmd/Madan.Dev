@@ -388,3 +388,27 @@ console.log(
     "%c> Welcome to Madan Kumar S's Portfolio\n> Specialization: Cybersecurity & Embedded Systems\n> Status: Secure connection established.\n> Explore the source, but respect the cyber-defenses. 🛡️",
     "color: #a0a0a0; font-family: monospace; font-size: 14px; line-height: 1.5;"
 );
+
+// WhatsApp Modal Controls
+window.openWhatsAppModal = function (e) {
+    if (e) e.preventDefault();
+    const modal = document.getElementById('waModal');
+    if (modal) {
+        modal.classList.add('active');
+    }
+};
+
+window.closeWhatsAppModal = function () {
+    const modal = document.getElementById('waModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+};
+
+// Close modal when clicking outside of it
+window.addEventListener('click', function (e) {
+    const modal = document.getElementById('waModal');
+    if (e.target === modal) {
+        closeWhatsAppModal();
+    }
+});
