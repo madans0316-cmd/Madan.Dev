@@ -376,28 +376,6 @@ window.addEventListener('DOMContentLoaded', () => {
         el.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
         fadeObserver.observe(el);
     });
-
-    // WhatsApp QR Modal Logic
-    const waModal = document.getElementById("waModal");
-    const waBtn = document.getElementById("whatsappBtn");
-    const closeBtn = document.querySelector(".close-modal");
-
-    if (waBtn && waModal && closeBtn) {
-        waBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            waModal.style.display = "block";
-        });
-
-        closeBtn.addEventListener('click', function () {
-            waModal.style.display = "none";
-        });
-
-        window.addEventListener('click', function (event) {
-            if (event.target == waModal) {
-                waModal.style.display = "none";
-            }
-        });
-    }
 });
 
 // Developer Console Easter Egg
