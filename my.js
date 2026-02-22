@@ -422,7 +422,7 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        setInterval(drawMatrix, 50);
+        setInterval(drawMatrix, 35);
 
         // Adjust canvas on window resize
         window.addEventListener('resize', initMatrix);
