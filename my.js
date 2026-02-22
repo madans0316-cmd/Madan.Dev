@@ -377,55 +377,93 @@ window.addEventListener('DOMContentLoaded', () => {
         fadeObserver.observe(el);
     });
 
-    // Matrix Binary Rain Effect for CyberSec Card
-    const matrixCanvas = document.getElementById('matrixCanvas');
-    if (matrixCanvas) {
-        const mCtx = matrixCanvas.getContext('2d');
+    // Three.js 3D Particles Effect for CyberSec Card
+    const threeCanvas = document.getElementById('threeCanvas');
+    if (threeCanvas && typeof THREE !== 'undefined') {
+        const container = threeCanvas.parentElement;
+        let tWidth = container.offsetWidth;
+        let tHeight = container.offsetHeight;
 
-        let mWidth, mHeight, mColumns;
-        let mDrops = [];
-        const binChars = '01';
-        const mFontSize = 14;
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, tWidth / tHeight, 0.1, 1000);
 
-        function initMatrix() {
-            mWidth = matrixCanvas.width = matrixCanvas.offsetWidth;
-            mHeight = matrixCanvas.height = matrixCanvas.offsetHeight;
-            mColumns = mWidth / mFontSize;
-            mDrops = [];
-            for (let x = 0; x < mColumns; x++) {
-                mDrops[x] = 1;
-            }
+        const renderer = new THREE.WebGLRenderer({ canvas: threeCanvas, alpha: true, antialias: true });
+        renderer.setSize(tWidth, tHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+
+        // Create Particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 900;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for (let i = 0; i < particlesCount * 3; i++) {
+            // Spread particles across a glowing sphere shape
+            posArray[i] = (Math.random() - 0.5) * 4;
         }
 
-        // Initialize once sizes are mathematically computed by browser layout engine
-        setTimeout(initMatrix, 100);
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const material = new THREE.PointsMaterial({
+            size: 0.025,
+            color: 0x00D9FF, // Using the site's exact bluish-cyan theme
+            transparent: true,
+            opacity: 0.85,
+            blending: THREE.AdditiveBlending
+        });
 
-        function drawMatrix() {
-            if (!mWidth || !mHeight) return; // Wait until init
+        const particlesMesh = new THREE.Points(particlesGeometry, material);
+        scene.add(particlesMesh);
+        camera.position.z = 2.5;
 
-            // Semi-transparent dark blue to create the fading trail effect
-            mCtx.fillStyle = 'rgba(10, 14, 39, 0.1)';
-            mCtx.fillRect(0, 0, mWidth, mHeight);
+        // Interactive Mouse Movement Logging
+        let mouseX = 0;
+        let mouseY = 0;
+        const cyberSecCard = document.querySelector('.right-section .card');
 
-            // Bluish-white color for the 1s and 0s
-            mCtx.fillStyle = '#00D9FF';
-            mCtx.font = mFontSize + 'px monospace';
-
-            for (let i = 0; i < mDrops.length; i++) {
-                const text = binChars.charAt(Math.floor(Math.random() * binChars.length));
-                mCtx.fillText(text, i * mFontSize, mDrops[i] * mFontSize);
-
-                if (mDrops[i] * mFontSize > mHeight && Math.random() > 0.95) {
-                    mDrops[i] = 0;
-                }
-                mDrops[i]++;
-            }
+        if (cyberSecCard) {
+            cyberSecCard.addEventListener('mousemove', (event) => {
+                const rect = cyberSecCard.getBoundingClientRect();
+                mouseX = ((event.clientX - rect.left) / rect.width - 0.5);
+                mouseY = ((event.clientY - rect.top) / rect.height - 0.5);
+            });
+            cyberSecCard.addEventListener('mouseleave', () => {
+                mouseX = 0;
+                mouseY = 0;
+            });
         }
 
-        setInterval(drawMatrix, 35);
+        const clock = new THREE.Clock();
 
-        // Adjust canvas on window resize
-        window.addEventListener('resize', initMatrix);
+        // Render Loop
+        const animate = () => {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+
+            // Auto rotation + gentle mouse interaction
+            particlesMesh.rotation.y = elapsedTime * 0.15 + (mouseX * 1.5);
+            particlesMesh.rotation.x = elapsedTime * 0.05 + (mouseY * 1.5);
+
+            renderer.render(scene, camera);
+        };
+
+        // Wait momentarily to ensure DOM has painted dimensions accurately
+        setTimeout(() => {
+            tWidth = container.offsetWidth;
+            tHeight = container.offsetHeight;
+            camera.aspect = tWidth / tHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(tWidth, tHeight);
+            animate();
+        }, 100);
+
+        // Adjust 3D canvas accurately on window resize
+        window.addEventListener('resize', () => {
+            if (!container) return;
+            tWidth = container.offsetWidth;
+            tHeight = container.offsetHeight;
+            camera.aspect = tWidth / tHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(tWidth, tHeight);
+        });
     }
 });
 
