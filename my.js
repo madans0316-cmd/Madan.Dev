@@ -404,10 +404,9 @@ window.addEventListener('DOMContentLoaded', () => {
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
         const material = new THREE.PointsMaterial({
             size: 0.025,
-            color: 0x00D9FF, // Using the site's exact bluish-cyan theme
+            color: 0x3279F9, // Deep blue palette-blue-600 to contrast against white board
             transparent: true,
-            opacity: 0.85,
-            blending: THREE.AdditiveBlending
+            opacity: 0.85
         });
 
         const particlesMesh = new THREE.Points(particlesGeometry, material);
