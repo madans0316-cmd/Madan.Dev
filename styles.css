@@ -121,8 +121,41 @@ body {
 
 .close-modal:hover,
 .close-modal:focus {
-    color: var(--primary-color);
+    color: #fff;
+    text-shadow: 0 0 15px #fff;
     text-decoration: none;
+}
+
+/* Paytm Style Scanner Animation */
+.scanner-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #fff;
+    box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.9);
+    animation: scanAnimation 2.5s infinite linear;
+}
+
+@keyframes scanAnimation {
+    0% {
+        top: 0;
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    95% {
+        opacity: 1;
+    }
+
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
 }
 
 body {
