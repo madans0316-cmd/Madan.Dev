@@ -2,11 +2,11 @@
 class ParticleSystem {
     constructor(canvas) {
         this.canvas = canvas;
-        this.ctx = canvas.getContext('2d', { alpha: false });
+        this.ctx = canvas.getContext('2d');
         this.particles = [];
-        this.particleCount = window.innerWidth < 768 ? 60 : 150;
-        this.mouse = { x: -1000, y: -1000 };
-        this.connectionDistance = 180;
+        this.particleCount = 120;
+        this.mouse = { x: 0, y: 0 };
+        this.connectionDistance = 150;
         this.themeColors = { bgRgb: '5, 8, 18' };
         this.cursorDots = [];
 
@@ -150,15 +150,7 @@ class ParticleSystem {
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
                 if (distance < this.connectionDistance) {
-                    const opacity = 1 - (distance / this.connectionDistance);
-                    // Draw a gradient line between connected nodes for a premium network look
-                    const gradient = this.ctx.createLinearGradient(this.particles[i].x, this.particles[i].y, this.particles[j].x, this.particles[j].y);
-                    gradient.addColorStop(0, `${this.particles[i].color}${Math.floor(opacity * 255).toString(16).padStart(2, '0')}`);
-                    gradient.addColorStop(1, `${this.particles[j].color}${Math.floor(opacity * 255).toString(16).padStart(2, '0')}`);
-
                     this.ctx.beginPath();
-                    this.ctx.strokeStyle = gradient;
-                    this.ctx.lineWidth = opacity * 1.5;
                     this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
                     this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
                     this.ctx.stroke();
@@ -166,20 +158,19 @@ class ParticleSystem {
             }
         }
 
-        // Draw particles with glowing core
+        // Draw particles
         this.particles.forEach(particle => {
-            this.ctx.beginPath();
-            this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
             this.ctx.fillStyle = particle.color;
             this.ctx.globalAlpha = particle.opacity;
+            this.ctx.beginPath();
+            this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
             this.ctx.fill();
 
-            // Neon ambient glow around each node
-            this.ctx.beginPath();
-            this.ctx.arc(particle.x, particle.y, particle.radius * 3.5, 0, Math.PI * 2);
-            this.ctx.fillStyle = particle.color;
-            this.ctx.globalAlpha = particle.opacity * 0.15;
-            this.ctx.fill();
+            // Glow effect
+            this.ctx.strokeStyle = particle.color;
+            this.ctx.lineWidth = 0.5;
+            this.ctx.globalAlpha = particle.opacity * 0.3;
+            this.ctx.stroke();
         });
 
         // Draw cursor dots
