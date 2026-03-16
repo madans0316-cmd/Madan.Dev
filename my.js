@@ -23,7 +23,7 @@ class ParticleSystem {
         const computed = getComputedStyle(target);
         this.themeColors.bgRgb = computed.getPropertyValue('--bg-rgb').trim() || '5, 8, 18';
         
-        const isLight = document.body && document.body.getAttribute('data-theme') === 'light';
+        const isLight = document.body?.dataset.theme === 'light';
         this.connectionColor = isLight ? 'rgba(0, 0, 0, 0.4)' : 'rgba(255, 255, 255, 0.4)';
         
         if (this.particles) {
@@ -40,7 +40,7 @@ class ParticleSystem {
 
     initParticles() {
         this.particles = [];
-        const isLight = document.body && document.body.getAttribute('data-theme') === 'light';
+        const isLight = document.body?.dataset.theme === 'light';
         for (let i = 0; i < this.particleCount; i++) {
             const angle = Math.random() * Math.PI * 2;
             const radius = Math.random() * (Math.max(window.innerWidth, window.innerHeight) / 1.5) + 50;
@@ -78,7 +78,7 @@ class ParticleSystem {
                         vy: (Math.random() - 0.5) * 1.5,
                         size: Math.random() * 2 + 1.5,
                         life: 1,
-                        color: document.body && document.body.getAttribute('data-theme') === 'light' ? '#000000' : '#ffffff'
+                        color: document.body?.dataset.theme === 'light' ? '#000000' : '#ffffff'
                     });
                 }
             }
@@ -102,7 +102,7 @@ class ParticleSystem {
             // Mouse interaction - repel particles
             const dx = this.mouse.x - particle.x;
             const dy = this.mouse.y - particle.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
+            const distance = Math.hypot(dx, dy);
             const minDistance = 150;
 
             if (distance < minDistance) {
@@ -149,7 +149,7 @@ class ParticleSystem {
             for (let j = i + 1; j < this.particles.length; j++) {
                 const dx = this.particles[i].x - this.particles[j].x;
                 const dy = this.particles[i].y - this.particles[j].y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+                const distance = Math.hypot(dx, dy);
 
                 if (distance < this.connectionDistance) {
                     this.ctx.beginPath();
@@ -200,7 +200,7 @@ class ParticleSystem {
 }
 
 // Initialize on page load
-window.addEventListener('DOMContentLoaded', () => {
+globalThis.addEventListener('DOMContentLoaded', () => {
     // Initialize ParticleSystem first so we can refer to it
     const canvas = document.getElementById('particleCanvas');
     const particleSys = new ParticleSystem(canvas);
@@ -210,23 +210,23 @@ window.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme') || 'light';
 
     if (savedTheme === 'light') {
-        document.body.setAttribute('data-theme', 'light');
+        document.body.dataset.theme = 'light';
         if (themeToggleBtn) themeToggleBtn.innerText = '🌙';
         particleSys.updateThemeColors();
     } else {
-        document.body.removeAttribute('data-theme');
+        delete document.body.dataset.theme;
         if (themeToggleBtn) themeToggleBtn.innerText = '☀️';
     }
 
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = document.body.getAttribute('data-theme');
+            const currentTheme = document.body.dataset.theme;
             if (currentTheme === 'light') {
-                document.body.removeAttribute('data-theme');
+                delete document.body.dataset.theme;
                 localStorage.setItem('theme', 'dark');
                 themeToggleBtn.innerText = '☀️';
             } else {
-                document.body.setAttribute('data-theme', 'light');
+                document.body.dataset.theme = 'light';
                 localStorage.setItem('theme', 'light');
                 themeToggleBtn.innerText = '🌙';
             }
@@ -260,7 +260,7 @@ window.addEventListener('DOMContentLoaded', () => {
             });
 
             // Show selected tab content
-            const tabId = button.getAttribute('data-tab');
+            const tabId = button.dataset.tab;
             const tabContent = document.getElementById(tabId);
             if (tabContent) {
                 tabContent.classList.add('active');
@@ -274,18 +274,20 @@ window.addEventListener('DOMContentLoaded', () => {
         rootMargin: '0px'
     };
 
+    const animateSkillFills = (entry) => {
+        const skillFills = entry.target.querySelectorAll('.skill-fill');
+        skillFills.forEach(fill => {
+            const width = fill.dataset.width ? fill.dataset.width + '%' : fill.style.width;
+            fill.style.width = '0';
+            setTimeout(() => { fill.style.width = width; }, 100);
+        });
+        observer.unobserve(entry.target);
+    };
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const skillFills = entry.target.querySelectorAll('.skill-fill');
-                skillFills.forEach(fill => {
-                    const width = fill.dataset.width ? fill.dataset.width + '%' : fill.style.width;
-                    fill.style.width = '0';
-                    setTimeout(() => {
-                        fill.style.width = width;
-                    }, 100);
-                });
-                observer.unobserve(entry.target);
+                animateSkillFills(entry);
             }
         });
     }, observerOptions);
@@ -300,7 +302,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('formSubmitBtn');
 
     if (contactForm) {
-        window.sendToWhatsApp = async (e) => {
+        globalThis.sendToWhatsApp = async (e) => {
             e.preventDefault();
 
             // Extract the user inputted form values explicitly 
@@ -334,7 +336,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 if (response.ok) {
                     // Instantly open the physical WhatsApp native app forwarding the pre-generated text over to the phone
                     const cleanMessage = `Hello Madan!\n\n*Name:* ${nameInput}\n*Email:* ${emailInput}\n*Subject:* ${subInput}\n\n*Message:* ${txtInput}`;
-                    window.open(`https://wa.me/919449887678?text=${encodeURIComponent(cleanMessage)}`, '_blank');
+                    globalThis.open(`https://wa.me/919449887678?text=${encodeURIComponent(cleanMessage)}`, '_blank');
 
                     contactForm.reset();
                     formStatus.innerHTML = `Success! Sent to both your 📧 Email & <i class='fab fa-whatsapp'></i> WhatsApp.`;
@@ -346,6 +348,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     formStatus.style.display = 'block';
                 }
             } catch (error) {
+                console.error('Form submission failed:', error);
                 formStatus.textContent = "Network Error. Please check your signal and retry.";
                 formStatus.style.color = "#FF3366";
                 formStatus.style.display = 'block';
@@ -356,7 +359,7 @@ window.addEventListener('DOMContentLoaded', () => {
         };
 
         // Ensure browser "enter" keys map directly to the function
-        contactForm.addEventListener('submit', window.sendToWhatsApp);
+        contactForm.addEventListener('submit', globalThis.sendToWhatsApp);
     }
 
     // Add global scroll animations for a premium feel
@@ -456,7 +459,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const isLight = document.body && document.body.getAttribute('data-theme') === 'light';
+        const isLight = document.body?.dataset.theme === 'light';
         const material = new THREE.PointsMaterial({
             size: 0.035,
             color: isLight ? 0x000000 : 0xffffff,
@@ -464,7 +467,7 @@ window.addEventListener('DOMContentLoaded', () => {
             opacity: 0.9,
             sizeAttenuation: true
         });
-        window.threeMaterial = material;
+        globalThis.threeMaterial = material;
 
         const particlesMesh = new THREE.Points(particlesGeometry, material);
         scene.add(particlesMesh);
@@ -536,7 +539,7 @@ console.log(
 );
 
 // WhatsApp Modal Controls
-window.openWhatsAppModal = function (e) {
+globalThis.openWhatsAppModal = function (e) {
     if (e) e.preventDefault();
     const modal = document.getElementById('waModal');
     if (modal) {
@@ -544,7 +547,7 @@ window.openWhatsAppModal = function (e) {
     }
 };
 
-window.closeWhatsAppModal = function () {
+globalThis.closeWhatsAppModal = function () {
     const modal = document.getElementById('waModal');
     if (modal) {
         modal.classList.remove('active');
@@ -552,7 +555,7 @@ window.closeWhatsAppModal = function () {
 };
 
 // Close modal when clicking outside of it
-window.addEventListener('click', function (e) {
+globalThis.addEventListener('click', function (e) {
     const modal = document.getElementById('waModal');
     if (e.target === modal) {
         closeWhatsAppModal();

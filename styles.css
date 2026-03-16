@@ -2122,6 +2122,12 @@ h6,
     width: 100%;
 }
 
+.project-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
 /* Responsive overrides */
 @media (max-width: 768px) {
     .contact-container-grid {
