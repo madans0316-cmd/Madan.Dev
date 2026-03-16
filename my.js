@@ -199,13 +199,8 @@ class ParticleSystem {
     }
 }
 
-// Initialize on page load
-globalThis.addEventListener('DOMContentLoaded', () => {
-    // Initialize ParticleSystem first so we can refer to it
-    const canvas = document.getElementById('particleCanvas');
-    const particleSys = new ParticleSystem(canvas);
-
-    // Theme setup
+// Theme initialization
+function initTheme(particleSys) {
     const themeToggleBtn = document.getElementById('themeToggle');
     const savedTheme = localStorage.getItem('theme') || 'light';
 
@@ -233,6 +228,78 @@ globalThis.addEventListener('DOMContentLoaded', () => {
             particleSys.updateThemeColors();
         });
     }
+}
+
+// Form submission handler
+function initFormSubmission() {
+    const contactForm = document.getElementById('secureContactForm');
+    const formStatus = document.getElementById('formStatusMessage');
+    const submitBtn = document.getElementById('formSubmitBtn');
+
+    if (!contactForm) return;
+
+    globalThis.sendToWhatsApp = async (e) => {
+        e.preventDefault();
+
+        const nameInput = contactForm.querySelector('[name="name"]').value;
+        const emailInput = contactForm.querySelector('[name="email"]').value;
+        const subInput = contactForm.querySelector('[name="subject"]').value;
+        const txtInput = contactForm.querySelector('[name="message"]').value;
+
+        if (!nameInput || !emailInput || !subInput || !txtInput) {
+            formStatus.textContent = "Please fill out all the fields before sending!";
+            formStatus.style.color = "#FF3366";
+            formStatus.style.display = 'block';
+            return;
+        }
+
+        const btnText = submitBtn.querySelector('.btn-text');
+        const originalText = btnText.innerHTML;
+        btnText.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+        submitBtn.disabled = true;
+        formStatus.style.display = 'none';
+
+        try {
+            const response = await fetch(contactForm.action, {
+                method: 'POST',
+                body: new FormData(contactForm),
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                const cleanMessage = `Hello Madan!\n\n*Name:* ${nameInput}\n*Email:* ${emailInput}\n*Subject:* ${subInput}\n\n*Message:* ${txtInput}`;
+                globalThis.open(`https://wa.me/919449887678?text=${encodeURIComponent(cleanMessage)}`, '_blank');
+
+                contactForm.reset();
+                formStatus.innerHTML = `Success! Sent to both your 📧 Email & <i class='fab fa-whatsapp'></i> WhatsApp.`;
+                formStatus.style.color = "#00FF88";
+                formStatus.style.display = 'block';
+            } else {
+                formStatus.textContent = "Oops! Temporary Email server connection drop. Try again.";
+                formStatus.style.color = "#FF3366";
+                formStatus.style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Form submission failed:', error);
+            formStatus.textContent = "Network Error. Please check your signal and retry.";
+            formStatus.style.color = "#FF3366";
+            formStatus.style.display = 'block';
+        }
+
+        btnText.innerHTML = originalText;
+        submitBtn.disabled = false;
+    };
+
+    contactForm.addEventListener('submit', globalThis.sendToWhatsApp);
+}
+
+// Initialize on page load
+globalThis.addEventListener('DOMContentLoaded', () => {
+    // Initialize ParticleSystem first so we can refer to it
+    const canvas = document.getElementById('particleCanvas');
+    const particleSys = new ParticleSystem(canvas);
+
+    initTheme(particleSys);
 
     // Smooth scroll for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -249,17 +316,13 @@ globalThis.addEventListener('DOMContentLoaded', () => {
     const tabButtons = document.querySelectorAll('.tab-btn');
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // Remove active class from all buttons
             tabButtons.forEach(btn => btn.classList.remove('active'));
-            // Add active class to clicked button
             button.classList.add('active');
 
-            // Hide all tab contents
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
 
-            // Show selected tab content
             const tabId = button.dataset.tab;
             const tabContent = document.getElementById(tabId);
             if (tabContent) {
@@ -296,71 +359,7 @@ globalThis.addEventListener('DOMContentLoaded', () => {
         observer.observe(section);
     });
 
-    // Form submission
-    const contactForm = document.getElementById('secureContactForm');
-    const formStatus = document.getElementById('formStatusMessage');
-    const submitBtn = document.getElementById('formSubmitBtn');
-
-    if (contactForm) {
-        globalThis.sendToWhatsApp = async (e) => {
-            e.preventDefault();
-
-            // Extract the user inputted form values explicitly 
-            const nameInput = contactForm.querySelector('[name="name"]').value;
-            const emailInput = contactForm.querySelector('[name="email"]').value;
-            const subInput = contactForm.querySelector('[name="subject"]').value;
-            const txtInput = contactForm.querySelector('[name="message"]').value;
-
-            // Simple validation check before running fetch
-            if (!nameInput || !emailInput || !subInput || !txtInput) {
-                formStatus.textContent = "Please fill out all the fields before sending!";
-                formStatus.style.color = "#FF3366";
-                formStatus.style.display = 'block';
-                return;
-            }
-
-            const btnText = submitBtn.querySelector('.btn-text');
-            const originalText = btnText.innerHTML;
-            btnText.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
-            submitBtn.disabled = true;
-            formStatus.style.display = 'none';
-
-            try {
-                // Background email processing using FormSubmit Protocol
-                const response = await fetch(contactForm.action, {
-                    method: 'POST',
-                    body: new FormData(contactForm),
-                    headers: { 'Accept': 'application/json' }
-                });
-
-                if (response.ok) {
-                    // Instantly open the physical WhatsApp native app forwarding the pre-generated text over to the phone
-                    const cleanMessage = `Hello Madan!\n\n*Name:* ${nameInput}\n*Email:* ${emailInput}\n*Subject:* ${subInput}\n\n*Message:* ${txtInput}`;
-                    globalThis.open(`https://wa.me/919449887678?text=${encodeURIComponent(cleanMessage)}`, '_blank');
-
-                    contactForm.reset();
-                    formStatus.innerHTML = `Success! Sent to both your 📧 Email & <i class='fab fa-whatsapp'></i> WhatsApp.`;
-                    formStatus.style.color = "#00FF88";
-                    formStatus.style.display = 'block';
-                } else {
-                    formStatus.textContent = "Oops! Temporary Email server connection drop. Try again.";
-                    formStatus.style.color = "#FF3366";
-                    formStatus.style.display = 'block';
-                }
-            } catch (error) {
-                console.error('Form submission failed:', error);
-                formStatus.textContent = "Network Error. Please check your signal and retry.";
-                formStatus.style.color = "#FF3366";
-                formStatus.style.display = 'block';
-            }
-
-            btnText.innerHTML = originalText;
-            submitBtn.disabled = false;
-        };
-
-        // Ensure browser "enter" keys map directly to the function
-        contactForm.addEventListener('submit', globalThis.sendToWhatsApp);
-    }
+    initFormSubmission();
 
     // Add global scroll animations for a premium feel
     const fadeElements = document.querySelectorAll('.card, .stat-card, .expertise-item, .info-block, .project-card, .left-section > *, .certifications, .code-block, .skill-fill');
