@@ -22,6 +22,15 @@ class ParticleSystem {
         const target = document.body || document.documentElement;
         const computed = getComputedStyle(target);
         this.themeColors.bgRgb = computed.getPropertyValue('--bg-rgb').trim() || '5, 8, 18';
+        
+        const isLight = document.body?.dataset.theme === 'light';
+        this.connectionColor = isLight ? 'rgba(0, 0, 0, 0.4)' : 'rgba(255, 255, 255, 0.4)';
+        
+        if (this.particles) {
+            this.particles.forEach(p => {
+                p.color = isLight ? '#000000' : '#ffffff';
+            });
+        }
     }
 
     resizeCanvas() {
@@ -31,15 +40,21 @@ class ParticleSystem {
 
     initParticles() {
         this.particles = [];
+        const isLight = document.body?.dataset.theme === 'light';
         for (let i = 0; i < this.particleCount; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const radius = Math.random() * (Math.max(window.innerWidth, window.innerHeight) / 1.5) + 50;
             this.particles.push({
-                x: Math.random() * this.canvas.width,
-                y: Math.random() * this.canvas.height,
-                vx: (Math.random() - 0.5) * 0.3,
-                vy: (Math.random() - 0.5) * 0.3,
-                radius: Math.random() * 1.2 + 0.5,
+                angle: angle,
+                orbitRadius: radius,
+                orbitSpeed: (Math.random() * 0.0015) + 0.0005,
+                x: (window.innerWidth / 2) + Math.cos(angle) * radius,
+                y: (window.innerHeight / 2) + Math.sin(angle) * radius,
+                vx: 0,
+                vy: 0,
+                radius: Math.random() * 1.5 + 0.5,
                 opacity: Math.random() * 0.6 + 0.2,
-                color: Math.random() > 0.5 ? '#00D9FF' : '#00FF88',
+                color: isLight ? '#000000' : '#ffffff',
                 originalOpacity: Math.random() * 0.6 + 0.2
             });
         }
@@ -63,7 +78,7 @@ class ParticleSystem {
                         vy: (Math.random() - 0.5) * 1.5,
                         size: Math.random() * 2 + 1.5,
                         life: 1,
-                        color: Math.random() > 0.5 ? '#00D9FF' : '#00FF88'
+                        color: document.body?.dataset.theme === 'light' ? '#000000' : '#ffffff'
                     });
                 }
             }
@@ -71,50 +86,37 @@ class ParticleSystem {
     }
 
     update() {
+        const centerX = this.canvas.width / 2;
+        const centerY = this.canvas.height / 2;
+
         this.particles.forEach(particle => {
-            // Movement with slight randomness
-            particle.x += particle.vx;
-            particle.y += particle.vy;
+            // Orbiting math
+            particle.angle += particle.orbitSpeed;
+            
+            // Add a little wobble for the swimming effect
+            const wobble = Math.sin(particle.angle * 6) * 5;
 
-            // Add slight drift
-            particle.vx += (Math.random() - 0.5) * 0.02;
-            particle.vy += (Math.random() - 0.5) * 0.02;
-
-            // Bounce off walls
-            if (particle.x < 0 || particle.x > this.canvas.width) {
-                particle.vx *= -1;
-                particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
-            }
-            if (particle.y < 0 || particle.y > this.canvas.height) {
-                particle.vy *= -1;
-                particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
-            }
+            particle.x = centerX + Math.cos(particle.angle) * (particle.orbitRadius + wobble) + particle.vx;
+            particle.y = centerY + Math.sin(particle.angle) * (particle.orbitRadius + wobble) + particle.vy;
 
             // Mouse interaction - repel particles
             const dx = this.mouse.x - particle.x;
             const dy = this.mouse.y - particle.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            const minDistance = 120;
+            const distance = Math.hypot(dx, dy);
+            const minDistance = 150;
 
             if (distance < minDistance) {
                 const angle = Math.atan2(dy, dx);
-                particle.vx -= Math.cos(angle) * 0.3;
-                particle.vy -= Math.sin(angle) * 0.3;
-                particle.opacity = Math.min(1, particle.opacity + 0.1);
+                particle.vx -= Math.cos(angle) * 1.5;
+                particle.vy -= Math.sin(angle) * 1.5;
+                particle.opacity = Math.min(1, particle.opacity + 0.3);
             } else {
-                particle.opacity = Math.max(particle.originalOpacity, particle.opacity - 0.02);
+                particle.opacity = Math.max(particle.originalOpacity, particle.opacity - 0.015);
             }
 
-            // Damping
-            particle.vx *= 0.98;
-            particle.vy *= 0.98;
-
-            // Speed limit
-            const speed = Math.sqrt(particle.vx * particle.vx + particle.vy * particle.vy);
-            if (speed > 2) {
-                particle.vx = (particle.vx / speed) * 2;
-                particle.vy = (particle.vy / speed) * 2;
-            }
+            // Damping for mouse repulsion
+            particle.vx *= 0.92;
+            particle.vy *= 0.92;
         });
 
         // Update cursor dots
@@ -140,14 +142,14 @@ class ParticleSystem {
 
         // Draw connections between nearby particles
         this.ctx.globalAlpha = 0.08;
-        this.ctx.strokeStyle = '#00D9FF';
+        this.ctx.strokeStyle = this.connectionColor || '#00D9FF';
         this.ctx.lineWidth = 0.8;
 
         for (let i = 0; i < this.particles.length; i++) {
             for (let j = i + 1; j < this.particles.length; j++) {
                 const dx = this.particles[i].x - this.particles[j].x;
                 const dy = this.particles[i].y - this.particles[j].y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+                const distance = Math.hypot(dx, dy);
 
                 if (distance < this.connectionDistance) {
                     this.ctx.beginPath();
@@ -197,39 +199,107 @@ class ParticleSystem {
     }
 }
 
-// Initialize on page load
-window.addEventListener('DOMContentLoaded', () => {
-    // Initialize ParticleSystem first so we can refer to it
-    const canvas = document.getElementById('particleCanvas');
-    const particleSys = new ParticleSystem(canvas);
-
-    // Theme setup
+// Theme initialization
+function initTheme(particleSys) {
     const themeToggleBtn = document.getElementById('themeToggle');
-    const savedTheme = localStorage.getItem('theme');
+    const savedTheme = localStorage.getItem('theme') || 'light';
 
     if (savedTheme === 'light') {
-        document.body.setAttribute('data-theme', 'light');
+        document.body.dataset.theme = 'light';
         if (themeToggleBtn) themeToggleBtn.innerText = '🌙';
         particleSys.updateThemeColors();
     } else {
+        delete document.body.dataset.theme;
         if (themeToggleBtn) themeToggleBtn.innerText = '☀️';
     }
 
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = document.body.getAttribute('data-theme');
+            const currentTheme = document.body.dataset.theme;
             if (currentTheme === 'light') {
-                document.body.removeAttribute('data-theme');
+                delete document.body.dataset.theme;
                 localStorage.setItem('theme', 'dark');
                 themeToggleBtn.innerText = '☀️';
             } else {
-                document.body.setAttribute('data-theme', 'light');
+                document.body.dataset.theme = 'light';
                 localStorage.setItem('theme', 'light');
                 themeToggleBtn.innerText = '🌙';
             }
             particleSys.updateThemeColors();
         });
     }
+}
+
+// Form submission handler
+function initFormSubmission() {
+    const contactForm = document.getElementById('secureContactForm');
+    const formStatus = document.getElementById('formStatusMessage');
+    const submitBtn = document.getElementById('formSubmitBtn');
+
+    if (!contactForm) return;
+
+    globalThis.sendToWhatsApp = async (e) => {
+        e.preventDefault();
+
+        const nameInput = contactForm.querySelector('[name="name"]').value;
+        const emailInput = contactForm.querySelector('[name="email"]').value;
+        const subInput = contactForm.querySelector('[name="subject"]').value;
+        const txtInput = contactForm.querySelector('[name="message"]').value;
+
+        if (!nameInput || !emailInput || !subInput || !txtInput) {
+            formStatus.textContent = "Please fill out all the fields before sending!";
+            formStatus.style.color = "#FF3366";
+            formStatus.style.display = 'block';
+            return;
+        }
+
+        const btnText = submitBtn.querySelector('.btn-text');
+        const originalText = btnText.innerHTML;
+        btnText.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+        submitBtn.disabled = true;
+        formStatus.style.display = 'none';
+
+        try {
+            const response = await fetch(contactForm.action, {
+                method: 'POST',
+                body: new FormData(contactForm),
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                const cleanMessage = `Hello Madan!\n\n*Name:* ${nameInput}\n*Email:* ${emailInput}\n*Subject:* ${subInput}\n\n*Message:* ${txtInput}`;
+                globalThis.open(`https://wa.me/919449887678?text=${encodeURIComponent(cleanMessage)}`, '_blank');
+
+                contactForm.reset();
+                formStatus.innerHTML = `Success! Sent to both your 📧 Email & <i class='fab fa-whatsapp'></i> WhatsApp.`;
+                formStatus.style.color = "#00FF88";
+                formStatus.style.display = 'block';
+            } else {
+                formStatus.textContent = "Oops! Temporary Email server connection drop. Try again.";
+                formStatus.style.color = "#FF3366";
+                formStatus.style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Form submission failed:', error);
+            formStatus.textContent = "Network Error. Please check your signal and retry.";
+            formStatus.style.color = "#FF3366";
+            formStatus.style.display = 'block';
+        }
+
+        btnText.innerHTML = originalText;
+        submitBtn.disabled = false;
+    };
+
+    contactForm.addEventListener('submit', globalThis.sendToWhatsApp);
+}
+
+// Initialize on page load
+globalThis.addEventListener('DOMContentLoaded', () => {
+    // Initialize ParticleSystem first so we can refer to it
+    const canvas = document.getElementById('particleCanvas');
+    const particleSys = new ParticleSystem(canvas);
+
+    initTheme(particleSys);
 
     // Smooth scroll for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -246,18 +316,14 @@ window.addEventListener('DOMContentLoaded', () => {
     const tabButtons = document.querySelectorAll('.tab-btn');
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // Remove active class from all buttons
             tabButtons.forEach(btn => btn.classList.remove('active'));
-            // Add active class to clicked button
             button.classList.add('active');
 
-            // Hide all tab contents
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
 
-            // Show selected tab content
-            const tabId = button.getAttribute('data-tab');
+            const tabId = button.dataset.tab;
             const tabContent = document.getElementById(tabId);
             if (tabContent) {
                 tabContent.classList.add('active');
@@ -271,18 +337,20 @@ window.addEventListener('DOMContentLoaded', () => {
         rootMargin: '0px'
     };
 
+    const animateSkillFills = (entry) => {
+        const skillFills = entry.target.querySelectorAll('.skill-fill');
+        skillFills.forEach(fill => {
+            const width = fill.dataset.width ? fill.dataset.width + '%' : fill.style.width;
+            fill.style.width = '0';
+            setTimeout(() => { fill.style.width = width; }, 100);
+        });
+        observer.unobserve(entry.target);
+    };
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const skillFills = entry.target.querySelectorAll('.skill-fill');
-                skillFills.forEach(fill => {
-                    const width = fill.style.width;
-                    fill.style.width = '0';
-                    setTimeout(() => {
-                        fill.style.width = width;
-                    }, 100);
-                });
-                observer.unobserve(entry.target);
+                animateSkillFills(entry);
             }
         });
     }, observerOptions);
@@ -291,70 +359,7 @@ window.addEventListener('DOMContentLoaded', () => {
         observer.observe(section);
     });
 
-    // Form submission
-    const contactForm = document.getElementById('secureContactForm');
-    const formStatus = document.getElementById('formStatusMessage');
-    const submitBtn = document.getElementById('formSubmitBtn');
-
-    if (contactForm) {
-        window.sendToWhatsApp = async (e) => {
-            e.preventDefault();
-
-            // Extract the user inputted form values explicitly 
-            const nameInput = contactForm.querySelector('[name="name"]').value;
-            const emailInput = contactForm.querySelector('[name="email"]').value;
-            const subInput = contactForm.querySelector('[name="subject"]').value;
-            const txtInput = contactForm.querySelector('[name="message"]').value;
-
-            // Simple validation check before running fetch
-            if (!nameInput || !emailInput || !subInput || !txtInput) {
-                formStatus.textContent = "Please fill out all the fields before sending!";
-                formStatus.style.color = "#FF3366";
-                formStatus.style.display = 'block';
-                return;
-            }
-
-            const btnText = submitBtn.querySelector('.btn-text');
-            const originalText = btnText.innerHTML;
-            btnText.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
-            submitBtn.disabled = true;
-            formStatus.style.display = 'none';
-
-            try {
-                // Background email processing using FormSubmit Protocol
-                const response = await fetch(contactForm.action, {
-                    method: 'POST',
-                    body: new FormData(contactForm),
-                    headers: { 'Accept': 'application/json' }
-                });
-
-                if (response.ok) {
-                    // Instantly open the physical WhatsApp native app forwarding the pre-generated text over to the phone
-                    const cleanMessage = `Hello Madan!\n\n*Name:* ${nameInput}\n*Email:* ${emailInput}\n*Subject:* ${subInput}\n\n*Message:* ${txtInput}`;
-                    window.open(`https://wa.me/919449887678?text=${encodeURIComponent(cleanMessage)}`, '_blank');
-
-                    contactForm.reset();
-                    formStatus.innerHTML = `Success! Sent to both your 📧 Email & <i class='fab fa-whatsapp'></i> WhatsApp.`;
-                    formStatus.style.color = "#00FF88";
-                    formStatus.style.display = 'block';
-                } else {
-                    formStatus.textContent = "Oops! Temporary Email server connection drop. Try again.";
-                    formStatus.style.color = "#FF3366";
-                    formStatus.style.display = 'block';
-                }
-            } catch (error) {
-                formStatus.textContent = "Network Error. Please check your signal and retry.";
-                formStatus.style.color = "#FF3366";
-                formStatus.style.display = 'block';
-            }
-
-            btnText.innerHTML = originalText;
-            submitBtn.disabled = false;
-        };
-
-        // Ensure browser "enter" keys map directly to the function
-        contactForm.addEventListener('submit', window.sendToWhatsApp);
-    }
+    initFormSubmission();
 
     // Add global scroll animations for a premium feel
     const fadeElements = document.querySelectorAll('.card, .stat-card, .expertise-item, .info-block, .project-card, .left-section > *, .certifications, .code-block, .skill-fill');
@@ -378,7 +383,9 @@ window.addEventListener('DOMContentLoaded', () => {
     fadeElements.forEach(el => {
         // Check if it's a skill bar specifically
         if (el.classList.contains('skill-fill')) {
-            el.dataset.width = el.style.width; // Backup the target width (e.g., 85%)
+            // Read width from data-width attribute (e.g., "85" -> "85%")
+            const targetWidth = el.dataset.width ? el.dataset.width + '%' : el.style.width;
+            el.dataset.width = targetWidth; // Store with % for the animation callback
             el.style.width = '0%'; // Reset to 0 for the animation
             el.style.opacity = '1';
             el.style.transition = 'width 1.5s cubic-bezier(0.25, 1, 0.5, 1)';
@@ -438,24 +445,28 @@ window.addEventListener('DOMContentLoaded', () => {
         const posArray = new Float32Array(particlesCount * 3);
 
         for (let i = 0; i < particlesCount; i++) {
-            // Spread particles dynamically inside a sphere shape to look like a networked globe
-            const r = 2.2 * Math.cbrt(Math.random());
-            const theta = Math.random() * 2 * Math.PI;
-            const phi = Math.acos((Math.random() * 2) - 1);
+            // Create a space galaxy spinning disc
+            const r = (Math.random() * 2.5) + (Math.random() * 2.5); // Density towards center
+            const theta = r * 3 + (Math.random() * Math.PI * 2);
+            
+            // Add a bit of vertical spread (thicker at center, thinner at edges)
+            const ySpread = (1 - (Math.min(r, 2.5) / 2.5)) * (Math.random() - 0.5) * 1.2;
 
-            posArray[i * 3] = r * Math.sin(phi) * Math.cos(theta);     // x
-            posArray[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta); // y
-            posArray[i * 3 + 2] = r * Math.cos(phi);                   // z
+            posArray[i * 3] = (r / 2) * Math.cos(theta);         // x
+            posArray[i * 3 + 1] = ySpread;                       // y
+            posArray[i * 3 + 2] = (r / 2) * Math.sin(theta);     // z
         }
 
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const isLight = document.body?.dataset.theme === 'light';
         const material = new THREE.PointsMaterial({
             size: 0.035,
-            color: 0x3279F9, // Deep blue palette-blue-600 to contrast against white board
+            color: isLight ? 0x000000 : 0xffffff,
             transparent: true,
             opacity: 0.9,
             sizeAttenuation: true
         });
+        globalThis.threeMaterial = material;
 
         const particlesMesh = new THREE.Points(particlesGeometry, material);
         scene.add(particlesMesh);
@@ -527,7 +538,7 @@ console.log(
 );
 
 // WhatsApp Modal Controls
-window.openWhatsAppModal = function (e) {
+globalThis.openWhatsAppModal = function (e) {
     if (e) e.preventDefault();
     const modal = document.getElementById('waModal');
     if (modal) {
@@ -535,7 +546,7 @@ window.openWhatsAppModal = function (e) {
     }
 };
 
-window.closeWhatsAppModal = function () {
+globalThis.closeWhatsAppModal = function () {
     const modal = document.getElementById('waModal');
     if (modal) {
         modal.classList.remove('active');
@@ -543,7 +554,7 @@ window.closeWhatsAppModal = function () {
 };
 
 // Close modal when clicking outside of it
-window.addEventListener('click', function (e) {
+globalThis.addEventListener('click', function (e) {
     const modal = document.getElementById('waModal');
     if (e.target === modal) {
         closeWhatsAppModal();
