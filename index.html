@@ -13,8 +13,7 @@
     <title>Madan Kumar S | Cybersecurity Analyst & ECE Engineer</title>
 
     <!-- Browser Profile Icon (Favicon) -->
-    <link rel="icon" type="image/png" href="mk_dev_logo.png">
-    <link rel="apple-touch-icon" href="mk_dev_logo.png">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='90' font-weight='bold' fill='%233279F9'>◇</text></svg>">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -644,7 +643,10 @@
             <button class="close-wa-modal wa-close-dark" onclick="closeWhatsAppModal()"
                 onkeydown="if(event.key==='Enter') closeWhatsAppModal()" aria-label="Close modal">&times;</button>
             <div class="wa-qr-center">
-                <img src="whatsapp-qr.jpeg" alt="WhatsApp QR Code" class="wa-qr-img">
+                <div class="wa-qr-placeholder">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <p style="margin: 1rem 0; font-size: 0.95rem; color: var(--text-secondary);">Click the button below to chat with Madan on WhatsApp</p>
                 <a href="https://wa.me/919449887678" target="_blank" rel="noopener"
                     class="btn btn-primary wa-chat-link"><i class="fab fa-whatsapp"></i> Chat on
                     WhatsApp</a>

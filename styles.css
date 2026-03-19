@@ -2188,6 +2188,21 @@ h6,
     width: 100%;
 }
 
+.wa-qr-placeholder {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 1.5rem;
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.1), rgba(var(--primary-rgb), 0.05));
+    border: 2px dashed rgba(var(--primary-rgb), 0.3);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: rgba(var(--primary-rgb), 0.4);
+    animation: pulse 3s ease-in-out infinite;
+}
+
 .project-card-link {
     text-decoration: none;
     color: inherit;
