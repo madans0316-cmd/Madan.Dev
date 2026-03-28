@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
         content="Madan Kumar S Portfolio - Cybersecurity Analyst & ECE Engineer specializing in embedded systems, VLSI design, and cybersecurity.">
     <meta name="keywords"
@@ -589,8 +589,10 @@
                 <form class="contact-form" id="secureContactForm" action="https://formsubmit.co/madans0316@gmail.com"
                     method="POST">
                     <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_subject" value="New Portfolio Message!">
+                    <input type="hidden" name="_subject" value="🔔 New Portfolio Contact: Someone reached out!">
                     <input type="hidden" name="_template" value="box">
+                    <input type="hidden" name="_replyto" id="_replyto_field" value="">
+                    <input type="hidden" name="_autoresponse" value="Hi! Thanks for reaching out to Madan Kumar S. I've received your message and will respond within 24 hours. — MK.dev">
 
                     <div class="form-row-2col">
                         <div>
@@ -624,10 +626,10 @@
                             class="form-textarea"></textarea>
                     </div>
 
-                    <button type="submit" class="btn form-submit-btn">
-                        Send Message
+                    <button type="submit" class="btn form-submit-btn" id="formSubmitBtn">
+                        <span class="btn-text"><i class="fas fa-paper-plane"></i> Send Message</span>
                     </button>
-                    <p id="formStatusMessage"></p>
+                    <p id="formStatusMessage" class="form-status-msg"></p>
                 </form>
             </div>
         </div>

@@ -230,7 +230,7 @@ function initTheme(particleSys) {
     }
 }
 
-// Form submission handler
+// Form submission handler — sends email notification via FormSubmit.co (no WhatsApp)
 function initFormSubmission() {
     const contactForm = document.getElementById('secureContactForm');
     const formStatus = document.getElementById('formStatusMessage');
@@ -238,59 +238,68 @@ function initFormSubmission() {
 
     if (!contactForm) return;
 
-    globalThis.sendToWhatsApp = async (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
 
-        const nameInput = contactForm.querySelector('[name="name"]').value;
-        const emailInput = contactForm.querySelector('[name="email"]').value;
-        const subInput = contactForm.querySelector('[name="subject"]').value;
-        const txtInput = contactForm.querySelector('[name="message"]').value;
+        const nameInput  = contactForm.querySelector('[name="name"]').value.trim();
+        const emailInput = contactForm.querySelector('[name="email"]').value.trim();
+        const subInput   = contactForm.querySelector('[name="subject"]').value.trim();
+        const txtInput   = contactForm.querySelector('[name="message"]').value.trim();
 
+        // Basic validation
         if (!nameInput || !emailInput || !subInput || !txtInput) {
-            formStatus.textContent = "Please fill out all the fields before sending!";
-            formStatus.style.color = "#FF3366";
-            formStatus.style.display = 'block';
+            showStatus('⚠️ Please fill out all required fields before sending!', '#FF3366');
             return;
         }
 
+        // Dynamically set _replyto so FormSubmit can auto-reply to the sender
+        const replyToField = document.getElementById('_replyto_field');
+        if (replyToField) replyToField.value = emailInput;
+
+        // Loading state
         const btnText = submitBtn.querySelector('.btn-text');
-        const originalText = btnText.innerHTML;
-        btnText.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+        const originalHTML = btnText.innerHTML;
+        btnText.innerHTML = 'Sending… <i class="fas fa-spinner fa-spin"></i>';
         submitBtn.disabled = true;
         formStatus.style.display = 'none';
 
         try {
+            const formData = new FormData(contactForm);
             const response = await fetch(contactForm.action, {
                 method: 'POST',
-                body: new FormData(contactForm),
+                body: formData,
                 headers: { 'Accept': 'application/json' }
             });
 
             if (response.ok) {
-                const cleanMessage = `Hello Madan!\n\n*Name:* ${nameInput}\n*Email:* ${emailInput}\n*Subject:* ${subInput}\n\n*Message:* ${txtInput}`;
-                globalThis.open(`https://wa.me/919449887678?text=${encodeURIComponent(cleanMessage)}`, '_blank');
-
                 contactForm.reset();
-                formStatus.innerHTML = `Success! Sent to both your 📧 Email & <i class='fab fa-whatsapp'></i> WhatsApp.`;
-                formStatus.style.color = "#00FF88";
-                formStatus.style.display = 'block';
+                showStatus(
+                    '✅ Message sent! I\'ll reply to <strong>' + emailInput + '</strong> within 24 hours.',
+                    '#00CC6A'
+                );
             } else {
-                formStatus.textContent = "Oops! Temporary Email server connection drop. Try again.";
-                formStatus.style.color = "#FF3366";
-                formStatus.style.display = 'block';
+                const data = await response.json().catch(() => ({}));
+                const msg = data?.errors?.[0]?.message || 'Server error — please try again shortly.';
+                showStatus('❌ ' + msg, '#FF3366');
             }
-        } catch (error) {
-            console.error('Form submission failed:', error);
-            formStatus.textContent = "Network Error. Please check your signal and retry.";
-            formStatus.style.color = "#FF3366";
-            formStatus.style.display = 'block';
+        } catch (err) {
+            console.error('Contact form error:', err);
+            showStatus('❌ Network error. Check your connection and retry.', '#FF3366');
         }
 
-        btnText.innerHTML = originalText;
+        btnText.innerHTML = originalHTML;
         submitBtn.disabled = false;
     };
 
-    contactForm.addEventListener('submit', globalThis.sendToWhatsApp);
+    function showStatus(html, color) {
+        formStatus.innerHTML = html;
+        formStatus.style.color = color;
+        formStatus.style.display = 'block';
+        // Smooth scroll so user sees the confirmation
+        formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    contactForm.addEventListener('submit', handleFormSubmit);
 }
 
 // Initialize on page load
