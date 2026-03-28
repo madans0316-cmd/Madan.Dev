@@ -230,13 +230,16 @@ function initTheme(particleSys) {
     }
 }
 
-// Form submission handler — sends email notification via FormSubmit.co (no WhatsApp)
+// Form submission handler — sends email via FormSubmit.co + WhatsApp notification
 function initFormSubmission() {
     const contactForm = document.getElementById('secureContactForm');
     const formStatus = document.getElementById('formStatusMessage');
     const submitBtn = document.getElementById('formSubmitBtn');
 
     if (!contactForm) return;
+
+    // Private contact — not rendered in UI
+    const _p = ['91', '9449', '887678'].join('');
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -246,9 +249,8 @@ function initFormSubmission() {
         const subInput   = contactForm.querySelector('[name="subject"]').value.trim();
         const txtInput   = contactForm.querySelector('[name="message"]').value.trim();
 
-        // Basic validation
         if (!nameInput || !emailInput || !subInput || !txtInput) {
-            showStatus('⚠️ Please fill out all required fields before sending!', '#FF3366');
+            showStatus('⚠️ Please fill out all required fields before sending!', '#c0392b');
             return;
         }
 
@@ -273,18 +275,25 @@ function initFormSubmission() {
 
             if (response.ok) {
                 contactForm.reset();
+
+                // Send WhatsApp notification to private contact
+                const waMsg = `📬 New Portfolio Message\n\n👤 Name: ${nameInput}\n📧 Email: ${emailInput}\n📌 Subject: ${subInput}\n\n💬 Message:\n${txtInput}`;
+                const waUrl = `https://wa.me/${_p}?text=${encodeURIComponent(waMsg)}`;
+                const waWin = window.open(waUrl, '_blank', 'noopener,noreferrer');
+                if (waWin) setTimeout(() => waWin.close(), 3000);
+
                 showStatus(
-                    '✅ Message sent! I\'ll reply to <strong>' + emailInput + '</strong> within 24 hours.',
-                    '#00CC6A'
+                    '✅ Message delivered! I\'ll respond to <strong>' + emailInput + '</strong> within 24 hours.',
+                    '#1a7a4a'
                 );
             } else {
                 const data = await response.json().catch(() => ({}));
                 const msg = data?.errors?.[0]?.message || 'Server error — please try again shortly.';
-                showStatus('❌ ' + msg, '#FF3366');
+                showStatus('❌ ' + msg, '#c0392b');
             }
         } catch (err) {
             console.error('Contact form error:', err);
-            showStatus('❌ Network error. Check your connection and retry.', '#FF3366');
+            showStatus('❌ Network error. Check your connection and retry.', '#c0392b');
         }
 
         btnText.innerHTML = originalHTML;
@@ -295,7 +304,6 @@ function initFormSubmission() {
         formStatus.innerHTML = html;
         formStatus.style.color = color;
         formStatus.style.display = 'block';
-        // Smooth scroll so user sees the confirmation
         formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
