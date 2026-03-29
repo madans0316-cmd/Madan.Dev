@@ -352,6 +352,33 @@ globalThis.addEventListener('DOMContentLoaded', () => {
 
     initFormSubmission();
 
+    // Skills Sections Expansion Toggle (Mobile Only)
+    const viewMoreBtn = document.getElementById('viewMoreSkillsBtn');
+    const skillsContent = document.querySelector('.skills-content');
+    if (viewMoreBtn && skillsContent) {
+        viewMoreBtn.addEventListener('click', () => {
+            const isExpanded = skillsContent.classList.toggle('expanded');
+            viewMoreBtn.classList.toggle('active');
+            
+            if (isExpanded) {
+                viewMoreBtn.innerHTML = `View Less <i class="fas fa-chevron-up"></i>`;
+            } else {
+                viewMoreBtn.innerHTML = `View More Skills <i class="fas fa-chevron-down"></i>`;
+            }
+        });
+    }
+
+    // Interactive Hero Tags (Mobile Only)
+    document.querySelectorAll('.hero-tag').forEach(tag => {
+        tag.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                // Toggle active state for "expand" effect
+                this.classList.toggle('active');
+                if (navigator.vibrate) navigator.vibrate(20);
+            }
+        });
+    });
+
     // Add global scroll animations for a premium feel
     const fadeElements = document.querySelectorAll('.card, .stat-card, .expertise-item, .info-block, .project-card, .left-section > *, .certifications, .code-block, .skill-tab-item');
     const fadeObserver = new IntersectionObserver((entries) => {

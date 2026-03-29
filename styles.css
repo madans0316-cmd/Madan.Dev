@@ -2138,8 +2138,8 @@ h6,
 @media (max-width: 768px) {
     /* Header/Logo positioning */
     .navbar {
-        padding: 0.5rem 0;
-        height: 60px;
+        padding: 1.5rem 0 0.5rem 0; /* Position MK Dev ~0.5in from top */
+        height: auto;
         display: flex;
         align-items: center;
     }
@@ -2289,6 +2289,66 @@ h6,
         flex: 1;
         padding: 0.6rem;
         font-size: 0.8rem;
+    }
+
+    .skills-content {
+        max-height: 250px;
+        overflow: hidden;
+        position: relative;
+        transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    }
+
+    .skills-content.expanded {
+        max-height: 2000px;
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+
+    .hero-tag {
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .hero-tag.active {
+        background: var(--primary-color);
+        color: var(--dark-bg);
+        transform: scale(1.05);
+    }
+
+    .view-more-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 1.5rem;
+    }
+
+    .view-more-btn {
+        background: transparent;
+        border: 1px solid var(--primary-color);
+        color: var(--primary-color);
+        padding: 0.6rem 1.5rem;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .view-more-btn:active {
+        background: rgba(var(--primary-rgb), 0.1);
+        transform: scale(0.95);
+    }
+
+    .view-more-btn i {
+        transition: transform 0.3s ease;
+    }
+
+    .view-more-btn.active i {
+        transform: rotate(180deg);
     }
 }
 
