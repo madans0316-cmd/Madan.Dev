@@ -2134,12 +2134,223 @@ h6,
     text-decoration: none;
     color: inherit;
     display: block;
-}
-
-/* Responsive overrides */
+}/* --- Mobile Specific Overrides --- */
 @media (max-width: 768px) {
-    .contact-container-grid {
+    /* Header/Logo positioning */
+    .navbar {
+        padding: 0.5rem 0;
+        height: 60px;
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-container {
+        padding: 0 1rem;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .logo {
+        margin-top: 0.2rem;
+        font-size: 1.1rem;
+    }
+
+    /* Bottom Navigation Menu */
+    .navbar .menu {
+        position: fixed;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        z-index: 1000;
+        background: rgba(var(--nav-rgb), 0.95);
+        -webkit-backdrop-filter: blur(15px);
+        backdrop-filter: blur(15px);
+        border: 1px solid var(--border-color);
+        border-radius: 999px;
+        justify-content: space-around;
+        padding: 0.75rem 1rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .navbar .menu li {
+        margin: 0;
+    }
+
+    .navbar .menu .link {
+        font-size: 0.8rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+    }
+
+    .navbar .menu .link-title {
+        opacity: 1;
+        transform: none;
+        font-size: 0.7rem;
+        font-weight: 500;
+    }
+
+    /* Hero Section (Left Section On Mobile) */
+    .container {
+        padding-top: 5rem;
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .left-section {
+        align-items: center;
+    }
+
+    .hero-name {
+        font-size: 2.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-description {
+        font-size: 0.9rem;
+        max-width: 100%;
+    }
+
+    /* Mobile Profile Image Styling */
+    .mobile-profile-container {
+        display: block;
+        width: 160px;
+        height: 160px;
+        margin: 1.5rem auto;
+        border-radius: 50%;
+        padding: 3px;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .mobile-profile-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid var(--dark-bg);
+    }
+
+    /* Hide Desktop Profile Section on Mobile */
+    .right-section {
+        display: none;
+    }
+
+    /* Hero Tags Scrollable List for Mobile */
+    .hero-tags {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 10px 0;
+        gap: 8px;
+        width: 100%;
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+    .hero-tags::-webkit-scrollbar { display: none; }
+
+    .hero-tag {
+        flex: 0 0 auto;
+        padding: 6px 14px;
+        background: rgba(var(--primary-rgb), 0.1);
+        border: 1px solid var(--border-color);
+        font-size: 0.8rem;
+    }
+
+    /* Stats Grid */
+    .hero-stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+
+    .hero-stat-value {
+        font-size: 1rem;
+    }
+
+    .hero-stat-label {
+        font-size: 0.7rem;
+    }
+
+    /* Skills Tabs Adjustments */
+    .skills-tabs {
+        display: flex;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .tab-btn {
+        flex: 1;
+        padding: 0.6rem;
+        font-size: 0.8rem;
     }
 }
+
+/* Base Styles for new elements */
+.mobile-profile-container {
+    display: none;
+}
+
+.contact-info-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Footer White Background & Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+.footer {
+    background: #ffffff !important;
+    padding: 3rem 1rem;
+    border-top: 1px solid #e2e8f0;
+    text-align: center;
+}
+
+.footer-copy {
+    color: #475569 !important;
+    font-size: 0.9rem;
+}
+
+.footer-copy strong {
+    color: #1e293b !important;
+}
+
+/* Skills Content Tab POP UP Animation Effect */
+.tab-content.active {
+    animation: slideUpFade 0.5s ease-out;
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Project Actions UI Updates */
+.project-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; gap: 1rem; }
+.btn-action-icon { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px; background: rgba(5, 8, 18, 0.6); border: 1px solid var(--border-color); color: var(--text-primary); font-size: 1.2rem; transition: all 0.3s; }
+.btn-action-icon:hover { background: rgba(0, 217, 255, 0.1); border-color: var(--primary-color); color: var(--primary-color); transform: translateY(-3px); }
+.btn-action-live { display: flex; align-items: center; gap: 0.5rem; background: var(--primary-color); color: #050812; padding: 0.6rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s; flex: 1; justify-content: center; }
+.btn-action-live:hover { background: #00bfff; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0, 217, 255, 0.3); }
+
+/* Skills Tabs UI Updates */
+.skill-tab-container { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: flex-start; padding: 1rem 0; }
+.skill-tab-item { background: rgba(0, 217, 255, 0.05); border: 1px solid rgba(0, 217, 255, 0.2); padding: 0.8rem 1.2rem; border-radius: 12px; font-weight: 500; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); cursor: default; }
+.skill-tab-item:hover { background: rgba(0, 217, 255, 0.15); border-color: var(--primary-color); color: var(--text-primary); transform: translateY(-3px) scale(1.02); box-shadow: 0 4px 15px rgba(0, 217, 255, 0.15); }
+.skill-tab-item i { color: var(--primary-color); font-size: 1.1rem; }

@@ -348,49 +348,23 @@ globalThis.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Animate skill bars on scroll
-    const observerOptions = {
-        threshold: 0.5,
-        rootMargin: '0px'
-    };
-
-    const animateSkillFills = (entry) => {
-        const skillFills = entry.target.querySelectorAll('.skill-fill');
-        skillFills.forEach(fill => {
-            const width = fill.dataset.width ? fill.dataset.width + '%' : fill.style.width;
-            fill.style.width = '0';
-            setTimeout(() => { fill.style.width = width; }, 100);
-        });
-        observer.unobserve(entry.target);
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateSkillFills(entry);
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.skills-section').forEach(section => {
-        observer.observe(section);
-    });
+    // Animate skill bars on scroll handled by global fade elements below
 
     initFormSubmission();
 
     // Add global scroll animations for a premium feel
-    const fadeElements = document.querySelectorAll('.card, .stat-card, .expertise-item, .info-block, .project-card, .left-section > *, .certifications, .code-block, .skill-fill');
+    const fadeElements = document.querySelectorAll('.card, .stat-card, .expertise-item, .info-block, .project-card, .left-section > *, .certifications, .code-block, .skill-tab-item');
     const fadeObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
                 setTimeout(() => {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
-
-                    // If it's a skill bar, expand its width!
-                    if (entry.target.classList.contains('skill-fill')) {
-                        entry.target.style.width = entry.target.dataset.width;
-                    }
+                    
+                    // After the transition ends, remove the inline transform so CSS hovers work
+                    setTimeout(() => {
+                        entry.target.style.transform = '';
+                    }, 650);
                 }, (index % 5) * 80); // Stagger animations nicely grouped together
                 fadeObserver.unobserve(entry.target);
             }
@@ -398,21 +372,10 @@ globalThis.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.1 });
 
     fadeElements.forEach(el => {
-        // Check if it's a skill bar specifically
-        if (el.classList.contains('skill-fill')) {
-            // Read width from data-width attribute (e.g., "85" -> "85%")
-            const targetWidth = el.dataset.width ? el.dataset.width + '%' : el.style.width;
-            el.dataset.width = targetWidth; // Store with % for the animation callback
-            el.style.width = '0%'; // Reset to 0 for the animation
-            el.style.opacity = '1';
-            el.style.transition = 'width 1.5s cubic-bezier(0.25, 1, 0.5, 1)';
-            fadeObserver.observe(el);
-        } else {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
-            fadeObserver.observe(el);
-        }
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+        fadeObserver.observe(el);
     });
 
     // Interactive Premium Hover Tilt for Content Cards
@@ -426,15 +389,26 @@ globalThis.addEventListener('DOMContentLoaded', () => {
             const rotateX = ((y - centerY) / centerY) * -6; // Up/down tilt
             const rotateY = ((x - centerX) / centerX) * 6;  // Left/right tilt
 
-            // Apply 3D rotate with a slight pop-out scale
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            // Determine correct slide distance from CSS rules
+            const slideDistance = card.classList.contains('project-card') ? -8 : -5;
+            
+            // Apply 3D rotate with a slight pop-out scale AND the CSS slide-up effect
+            card.style.transform = `perspective(1000px) translateY(${slideDistance}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
             card.style.zIndex = '10';
         });
 
         card.addEventListener('mouseleave', () => {
             card.style.transition = 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
-            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            card.style.transform = `perspective(1000px) translateY(0px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
             card.style.zIndex = '1';
+            
+            // Clean up inline transform after animation finishes so normal CSS hovers work if needed
+            setTimeout(() => {
+                if (!card.matches(':hover')) {
+                    card.style.transform = '';
+                    card.style.zIndex = '';
+                }
+            }, 500);
         });
 
         card.addEventListener('mouseenter', () => {
