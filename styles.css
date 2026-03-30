@@ -1067,6 +1067,51 @@ h6,
     font-size: 0.95rem;
 }
 
+.skill-tab {
+    display: inline-block;
+    background: linear-gradient(135deg, #87CEEB 0%, #ADD8E6 100%);
+    color: #001a4d;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(135, 206, 235, 0.3);
+    animation: slideInTab 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(135, 206, 235, 0.5);
+}
+
+.skill-tab:hover {
+    background: linear-gradient(135deg, #4DA6FF 0%, #87CEEB 100%);
+    box-shadow: 0 6px 16px rgba(77, 166, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+.skill-tab i {
+    margin-right: 6px;
+    animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes slideInTab {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes iconBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
 .skill-percent {
     color: var(--secondary-color);
     font-size: 0.9rem;
@@ -2436,6 +2481,22 @@ h6,
         gap: 1rem;
     }
 
+    /* Mobile skill tabs responsive */
+    .skill-tab {
+        padding: 5px 12px;
+        font-size: 0.85rem;
+        display: inline-block;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .skill-header {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
     /* Projects section */
     .projects-section {
         padding: 3rem 1rem;
@@ -2558,6 +2619,13 @@ h6,
 
     .skills-section {
         padding: 2rem 0.75rem;
+    }
+
+    /* Extra small skill tabs */
+    .skill-tab {
+        padding: 4px 10px;
+        font-size: 0.75rem;
+        border-radius: 16px;
     }
 
     .projects-section {
