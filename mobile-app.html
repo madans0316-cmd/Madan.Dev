@@ -408,6 +408,14 @@
             font-weight: 600;
             color: white;
             font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-name i {
+            font-size: 14px;
+            color: var(--primary-light);
         }
 
         .skill-percentage {
@@ -789,9 +797,10 @@
                 </div>
 
                 <div id="skill-items">
+                    <!-- CYBERSECURITY SKILLS -->
                     <div class="skill-item" data-category="cyber">
                         <div class="skill-header">
-                            <span class="skill-name">Network Security</span>
+                            <span class="skill-name"><i class="fas fa-shield-alt"></i> Network Security</span>
                             <span class="skill-percentage">85%</span>
                         </div>
                         <div class="skill-bar">
@@ -801,27 +810,7 @@
 
                     <div class="skill-item" data-category="cyber">
                         <div class="skill-header">
-                            <span class="skill-name">Penetration Testing</span>
-                            <span class="skill-percentage">78%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-fill" style="--skill-width: 78%"></div>
-                        </div>
-                    </div>
-
-                    <div class="skill-item" data-category="electronics">
-                        <div class="skill-header">
-                            <span class="skill-name">Embedded Systems</span>
-                            <span class="skill-percentage">85%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-fill" style="--skill-width: 85%"></div>
-                        </div>
-                    </div>
-
-                    <div class="skill-item" data-category="electronics">
-                        <div class="skill-header">
-                            <span class="skill-name">VLSI Design</span>
+                            <span class="skill-name"><i class="fas fa-exclamation-triangle"></i> Threat Analysis</span>
                             <span class="skill-percentage">82%</span>
                         </div>
                         <div class="skill-bar">
@@ -829,9 +818,81 @@
                         </div>
                     </div>
 
+                    <div class="skill-item" data-category="cyber">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-search"></i> Vulnerability Assessment</span>
+                            <span class="skill-percentage">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="--skill-width: 80%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" data-category="cyber">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-lock"></i> Penetration Testing</span>
+                            <span class="skill-percentage">78%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="--skill-width: 78%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" data-category="cyber">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-key"></i> Cryptography</span>
+                            <span class="skill-percentage">75%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="--skill-width: 75%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" data-category="cyber">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-fingerprint"></i> Forensics</span>
+                            <span class="skill-percentage">70%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="--skill-width: 70%"></div>
+                        </div>
+                    </div>
+
+                    <!-- ELECTRONICS SKILLS -->
+                    <div class="skill-item" data-category="electronics">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-microchip"></i> Embedded Systems</span>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="--skill-width: 85%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" data-category="electronics">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-cpu"></i> Microcontrollers</span>
+                            <span class="skill-percentage">82%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="--skill-width: 82%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" data-category="electronics">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-sitemap"></i> PCB Design</span>
+                            <span class="skill-percentage">78%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="--skill-width: 78%"></div>
+                        </div>
+                    </div>
+
+                    <!-- PROGRAMMING SKILLS -->
                     <div class="skill-item" data-category="programming">
                         <div class="skill-header">
-                            <span class="skill-name">Python</span>
+                            <span class="skill-name"><i class="fab fa-python"></i> Python</span>
                             <span class="skill-percentage">90%</span>
                         </div>
                         <div class="skill-bar">
@@ -841,11 +902,51 @@
 
                     <div class="skill-item" data-category="programming">
                         <div class="skill-header">
-                            <span class="skill-name">C/C++</span>
+                            <span class="skill-name"><i class="fas fa-code"></i> C/C++</span>
                             <span class="skill-percentage">88%</span>
                         </div>
                         <div class="skill-bar">
                             <div class="skill-fill" style="--skill-width: 88%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" data-category="programming">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-square"></i> Verilog/VHDL</span>
+                            <span class="skill-percentage">82%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="--skill-width: 82%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" data-category="programming">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fab fa-html5"></i> Web Technologies</span>
+                            <span class="skill-percentage">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="--skill-width: 80%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" data-category="electronics">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-cube"></i> FPGA</span>
+                            <span class="skill-percentage">78%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="--skill-width: 78%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" data-category="electronics">
+                        <div class="skill-header">
+                            <span class="skill-name"><i class="fas fa-wave-square"></i> Signal Processing</span>
+                            <span class="skill-percentage">76%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="--skill-width: 76%"></div>
                         </div>
                     </div>
                 </div>
