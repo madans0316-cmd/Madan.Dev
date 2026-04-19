@@ -1,3 +1,0 @@
-# Madan.Dev
-
-Personal portfolio website for Madan Kumar S — Cybersecurity & Embedded Systems specialist.

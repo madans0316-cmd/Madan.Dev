@@ -1,614 +1,726 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description"
-        content="Madan Kumar S Portfolio - Cybersecurity Analyst & ECE Engineer specializing in embedded systems, VLSI design, and cybersecurity.">
-    <meta name="keywords"
-        content="Madan Kumar S, Madan Kumar S, Cybersecurity Analyst, ECE Engineer, Portfolio, Embedded Systems, VLSI Design, Karnataka, India">
-    <meta name="author" content="Madan Kumar S">
-    <meta name="robots" content="index, follow">
-    <title>Madan Kumar S | Cybersecurity Analyst & ECE Engineer</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Madan Kumar S — ECE Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#0a1628;--navy-mid:#132140;--navy-light:#1e3560;
+  --accent:#2563eb;--accent-light:#3b82f6;--gold:#c8a84b;
+  --white:#f8faff;--muted:#94a3b8;--green:#00ff41;
+  --text-primary:#0a1628;--text-secondary:#475569;
+  --bg-main:#f8faff;--bg-section:#f1f5fd;--bg-card:#ffffff;
+  --border:#e2e8f0;
+  --nav-bg:rgba(10,22,40,0.97);
+  --hero-bg:#0a1628;--career-bg:#0a1628;--contact-bg:#0a1628;--footer-bg:#06101f;
+}
+[data-theme="light"]{
+  --text-primary:#0a0a0a;--text-secondary:#1a1a2e;
+  --bg-main:#ffffff;--bg-section:#efefef;--bg-card:#e4e4e4;
+  --border:#cccccc;--muted:#444444;
+  --nav-bg:rgba(255,255,255,0.97);
+}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg-main);color:var(--text-primary);overflow-x:hidden;transition:background 0.3s,color 0.3s;}
 
-    <!-- Browser Profile Icon (Favicon) -->
-    <link rel="icon" type="image/png" href="mk_dev_logo.png">
-    <link rel="apple-touch-icon" href="mk_dev_logo.png">
+/* LOADER */
+#intro-loader{position:fixed;inset:0;background:#0a1628;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;}
+.loader-name{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,4vw,2.3rem);color:#fff;letter-spacing:0.08em;text-align:center;animation:fadeUp 0.8s ease both;}
+.loader-name span{color:#c8a84b;}
+.loader-sub{color:#94a3b8;font-size:0.85rem;letter-spacing:0.18em;text-transform:uppercase;animation:fadeUp 0.8s 0.3s ease both;}
+.loader-bar-wrap{width:220px;height:3px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;animation:fadeUp 0.8s 0.5s ease both;}
+.loader-bar{height:100%;width:0%;background:linear-gradient(90deg,#2563eb,#c8a84b);border-radius:2px;}
+.loader-pct{color:#3b82f6;font-family:'Share Tech Mono',monospace;font-size:0.82rem;animation:fadeUp 0.8s 0.6s ease both;}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;600&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+/* CURSOR */
+.cursor-glow{position:fixed;width:18px;height:18px;border-radius:50%;background:rgba(37,99,235,0.35);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);mix-blend-mode:screen;}
+.cursor-trail{position:fixed;width:5px;height:5px;border-radius:50%;background:#c8a84b;pointer-events:none;z-index:9997;transform:translate(-50%,-50%);transition:all 0.08s;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:64px;border-bottom:1px solid rgba(255,255,255,0.07);transition:background 0.3s;}
+[data-theme="light"] nav{border-bottom:1px solid rgba(0,0,0,0.1);}
+.nav-logo{font-family:'Playfair Display',serif;color:#fff;font-size:1.2rem;font-weight:700;letter-spacing:0.03em;}
+[data-theme="light"] .nav-logo{color:#0a1628;}
+.nav-logo span{color:#c8a84b;}
+.nav-links{display:flex;gap:0;list-style:none;align-items:center;}
+.nav-links a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.8rem;font-weight:400;letter-spacing:0.07em;text-transform:uppercase;padding:0.5rem 0.9rem;display:block;transition:color 0.2s;border-radius:6px;}
+[data-theme="light"] .nav-links a{color:rgba(0,0,0,0.6);}
+.nav-links a:hover{color:#c8a84b;}
+.nav-right{display:flex;align-items:center;gap:0.75rem;}
+.nav-cta{background:#2563eb;color:#fff;border:none;padding:0.42rem 1rem;border-radius:6px;font-size:0.8rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:background 0.2s;text-decoration:none;display:inline-block;}
+.nav-cta:hover{background:#3b82f6;}
+.theme-btn{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#ffffff;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:0.95rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;}
+[data-theme="light"] .theme-btn{background:rgba(0,0,0,0.1);border-color:rgba(0,0,0,0.25);color:#000000;}
+.theme-btn:hover{border-color:#c8a84b;}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;background:none;border:none;padding:4px;}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all 0.3s;}
+[data-theme="light"] .hamburger span{background:#333;}
+
+/* MOBILE MENU */
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(10,22,40,0.98);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);z-index:99;padding:1.5rem;border-bottom:1px solid rgba(255,255,255,0.08);}
+[data-theme="light"] .mobile-menu{background:rgba(255,255,255,0.98);}
+.mobile-menu.open{display:block;}
+.mobile-menu ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem;}
+.mobile-menu a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.88rem;letter-spacing:0.06em;text-transform:uppercase;padding:0.6rem 0;display:block;border-bottom:1px solid rgba(255,255,255,0.06);}
+[data-theme="light"] .mobile-menu a{color:rgba(0,0,0,0.7);border-bottom-color:rgba(0,0,0,0.08);}
+.mobile-menu a:hover{color:#c8a84b;}
+
+/* FLOATING DOTS */
+.nav-float{position:fixed;right:1.25rem;top:50%;transform:translateY(-50%);z-index:99;display:flex;flex-direction:column;gap:0.65rem;}
+.nav-dot{width:9px;height:9px;border-radius:50%;border:2px solid rgba(255,255,255,0.3);background:transparent;cursor:pointer;transition:all 0.25s;position:relative;}
+.nav-dot.active,.nav-dot:hover{background:#c8a84b;border-color:#c8a84b;}
+.nav-dot::after{content:attr(data-label);position:absolute;right:17px;top:50%;transform:translateY(-50%);background:rgba(10,22,40,0.9);color:#fff;font-size:0.68rem;padding:0.18rem 0.55rem;border-radius:4px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;letter-spacing:0.05em;}
+.nav-dot:hover::after{opacity:1;}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--hero-bg);display:flex;align-items:center;padding:7rem 2.5rem 4rem;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-100px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(37,99,235,0.12) 0%,transparent 70%);border-radius:50%;pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:-60px;left:10%;width:300px;height:300px;background:radial-gradient(circle,rgba(200,168,75,0.07) 0%,transparent 70%);border-radius:50%;pointer-events:none;}
+.hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 290px;gap:4rem;align-items:center;position:relative;z-index:2;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,0.15);border:1px solid rgba(37,99,235,0.3);color:#93bbfc;font-size:0.73rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:0.33rem 1rem;border-radius:100px;margin-bottom:1.5rem;}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:#3b82f6;display:inline-block;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
+h1.hero-name{font-family:'Playfair Display',serif;font-size:clamp(2.3rem,5vw,3.7rem);font-weight:700;color:#fff;line-height:1.1;margin-bottom:0.5rem;}
+h1.hero-name span{color:#c8a84b;}
+.hero-title{font-size:0.97rem;color:#94a3b8;font-weight:300;letter-spacing:0.04em;margin-bottom:1.5rem;}
+.hero-desc{font-size:0.95rem;color:rgba(255,255,255,0.65);line-height:1.75;max-width:480px;margin-bottom:2.5rem;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-primary{background:#2563eb;color:#fff;border:none;padding:0.78rem 1.7rem;border-radius:8px;font-size:0.88rem;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
+.btn-primary:hover{background:#3b82f6;transform:translateY(-1px);}
+.btn-outline{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.3);padding:0.78rem 1.7rem;border-radius:8px;font-size:0.88rem;font-family:'DM Sans',sans-serif;font-weight:400;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
+.btn-outline:hover{border-color:#c8a84b;color:#c8a84b;}
+.hero-stats{display:flex;gap:1.75rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;color:#fff;display:block;}
+.stat-label{font-size:0.68rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;}
+
+/* PHOTO */
+.photo-card{position:relative;display:flex;align-items:center;justify-content:center;}
+.photo-frame{width:250px;height:310px;border-radius:16px;background:linear-gradient(145deg,#1e3560,#132140);border:1px solid rgba(255,255,255,0.1);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.photo-frame::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#2563eb,#c8a84b);}
+.avatar-area{width:108px;height:108px;border-radius:50%;overflow:hidden;margin-bottom:1rem;border:3px solid rgba(255,255,255,0.18);background:linear-gradient(135deg,#2563eb,#1e3560);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fff;}
+.avatar-area img{width:100%;height:100%;object-fit:cover;}
+.photo-name{font-family:'Playfair Display',serif;color:#fff;font-size:0.97rem;font-weight:700;margin-bottom:0.3rem;text-align:center;}
+.photo-role{color:#94a3b8;font-size:0.72rem;text-align:center;padding:0 1rem;}
+.photo-badge{position:absolute;bottom:-10px;right:-10px;background:#c8a84b;color:#0a1628;font-size:0.66rem;font-weight:700;padding:0.33rem 0.8rem;border-radius:100px;letter-spacing:0.06em;text-transform:uppercase;}
+.circuit-dots{position:absolute;top:1rem;right:1rem;display:grid;grid-template-columns:repeat(4,7px);gap:5px;}
+.circuit-dots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.07);display:block;}
+.circuit-dots span:nth-child(3n){background:rgba(37,99,235,0.4);}
+
+/* SECTIONS */
+section{padding:5rem 2.5rem;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-tag{display:inline-block;font-size:0.71rem;font-weight:500;text-transform:uppercase;letter-spacing:0.15em;color:#2563eb;margin-bottom:0.75rem;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.65rem,3vw,2.3rem);font-weight:700;color:var(--text-primary);line-height:1.2;margin-bottom:1rem;}
+.section-line{width:48px;height:3px;background:linear-gradient(90deg,#2563eb,#c8a84b);border-radius:2px;margin-bottom:3rem;}
+.section-subtitle{color:var(--text-secondary);font-size:0.95rem;line-height:1.7;max-width:560px;margin-bottom:3rem;}
+
+/* ABOUT */
+.about-section{background:var(--bg-section);}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.about-text p{color:var(--text-secondary);line-height:1.8;font-size:0.93rem;margin-bottom:1rem;}
+.about-highlights{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-top:1.5rem;}
+.highlight-chip{display:flex;align-items:center;gap:0.55rem;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;font-size:0.82rem;font-weight:500;color:var(--text-primary);}
+.chip-icon{width:26px;height:26px;border-radius:6px;background:rgba(37,99,235,0.15);color:#1d4ed8;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;}
+.value-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:0.9rem;border-left:3px solid #2563eb;transition:box-shadow 0.2s;}
+.value-card:hover{box-shadow:0 4px 20px rgba(37,99,235,0.08);}
+.value-card h4{font-size:0.88rem;font-weight:500;color:var(--text-primary);margin-bottom:0.35rem;}
+.value-card p{font-size:0.82rem;color:var(--text-secondary);line-height:1.6;}
+
+/* SKILLS */
+.skills-section{background:var(--bg-main);}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+.skill-category{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.4rem;transition:all 0.2s;}
+.skill-category:hover{border-color:#2563eb;transform:translateY(-2px);box-shadow:0 8px 30px rgba(37,99,235,0.08);}
+.skill-icon{width:40px;height:40px;border-radius:9px;background:linear-gradient(135deg,rgba(37,99,235,0.12),rgba(37,99,235,0.04));display:flex;align-items:center;justify-content:center;font-size:1.15rem;margin-bottom:0.85rem;border:1px solid rgba(37,99,235,0.12);}
+.skill-category h3{font-size:0.88rem;font-weight:500;color:var(--text-primary);margin-bottom:0.7rem;}
+.skill-tag{display:inline-block;background:var(--bg-section);color:var(--text-secondary);font-size:0.72rem;padding:0.22rem 0.65rem;border-radius:100px;margin:0.18rem 0.18rem 0.18rem 0;border:1px solid var(--border);}
+
+/* BINARY STRIP */
+.binary-section{background:#0a1628;padding:1.5rem 0;overflow:hidden;}
+.bin-title{text-align:center;font-size:0.67rem;color:rgba(0,255,65,0.45);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:0.4rem;font-family:'Share Tech Mono',monospace;}
+.binary-runner{font-family:'Share Tech Mono',monospace;font-size:0.82rem;color:#00ff41;white-space:nowrap;animation:runLeft 20s linear infinite;letter-spacing:0.12em;opacity:0.65;}
+@keyframes runLeft{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
+
+/* CAREER */
+.career-section{background:var(--career-bg);}
+.career-section .section-tag{color:#c8a84b;}
+.career-section .section-title{color:#fff;}
+.career-section .section-subtitle{color:rgba(255,255,255,0.6);}
+.career-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;}
+.career-timeline{position:relative;padding-left:2rem;}
+.career-timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:1px;background:rgba(255,255,255,0.12);}
+.timeline-item{position:relative;margin-bottom:2rem;}
+.timeline-dot{position:absolute;left:-2rem;top:4px;width:13px;height:13px;border-radius:50%;background:#2563eb;border:2px solid #0a1628;z-index:1;}
+.timeline-dot.gold{background:#c8a84b;}
+.timeline-dot.dim{background:rgba(255,255,255,0.18);}
+.timeline-year{font-size:0.7rem;color:#c8a84b;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.25rem;}
+.timeline-title{font-size:0.93rem;font-weight:500;color:#fff;margin-bottom:0.25rem;}
+.timeline-desc{font-size:0.81rem;color:rgba(255,255,255,0.52);line-height:1.6;}
+.goal-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.2rem;margin-bottom:0.9rem;}
+.goal-card h4{font-size:0.86rem;font-weight:500;color:#fff;margin-bottom:0.35rem;}
+.goal-card p{font-size:0.8rem;color:rgba(255,255,255,0.5);line-height:1.6;}
+
+/* EDUCATION */
+.education-section{background:var(--bg-section);}
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
+.edu-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.4rem;position:relative;overflow:hidden;transition:all 0.2s;}
+.edu-card:hover{box-shadow:0 8px 30px rgba(37,99,235,0.08);transform:translateY(-2px);}
+.edu-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#2563eb,#c8a84b);}
+.edu-badge{display:inline-block;font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;background:rgba(37,99,235,0.15);color:#1d4ed8;padding:0.22rem 0.65rem;border-radius:100px;margin-bottom:0.7rem;}
+.edu-card h3{font-size:0.92rem;font-weight:500;color:var(--text-primary);margin-bottom:0.3rem;}
+.edu-card .school{font-size:0.82rem;color:#2563eb;margin-bottom:0.25rem;}
+.edu-card .years{font-size:0.76rem;color:#94a3b8;margin-bottom:0.7rem;}
+.edu-card .desc{font-size:0.8rem;color:var(--text-secondary);line-height:1.6;}
+.course-chips{display:flex;flex-wrap:wrap;gap:0.28rem;margin-top:0.7rem;}
+.course-chip{font-size:0.68rem;color:var(--text-primary);background:var(--bg-section);border:1px solid var(--border);border-radius:100px;padding:0.16rem 0.55rem;}
+
+/* LEARNING */
+.learning-section{background:var(--bg-main);}
+.learning-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+.learning-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.2rem;text-align:center;transition:all 0.2s;}
+.learning-card:hover{border-color:#2563eb;box-shadow:0 4px 20px rgba(37,99,235,0.07);transform:translateY(-2px);}
+.learn-icon{font-size:1.75rem;margin-bottom:0.55rem;display:block;}
+.learning-card h4{font-size:0.83rem;font-weight:500;color:var(--text-primary);margin-bottom:0.35rem;}
+.learning-card p{font-size:0.73rem;color:#94a3b8;line-height:1.5;}
+.learn-progress{display:flex;align-items:center;justify-content:center;gap:0.4rem;margin-top:0.55rem;}
+.progress-dot{width:5px;height:5px;border-radius:50%;background:var(--border);}
+.progress-dot.active{background:#2563eb;}
+
+/* PROJECTS */
+.projects-section{background:var(--bg-section);}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}
+.project-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all 0.25s;cursor:pointer;}
+.project-card:hover{box-shadow:0 12px 40px rgba(37,99,235,0.1);transform:translateY(-3px);border-color:rgba(37,99,235,0.2);}
+.project-header{height:155px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:#0a1628;}
+.project-header img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s;}
+.project-card:hover .project-header img{transform:scale(1.05);}
+.ph-placeholder{font-size:2.4rem;}
+.ph-blue{background:linear-gradient(135deg,#e6f1fb,#c5d8f5);}
+.ph-navy{background:linear-gradient(135deg,#1e3560,#132140);}
+.ph-gold{background:linear-gradient(135deg,#faf0d7,#f0d99a);}
+.ph-green{background:linear-gradient(135deg,#0a1628,#0d2f1e);}
+.project-overlay{position:absolute;inset:0;background:rgba(10,22,40,0.85);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;}
+.project-card:hover .project-overlay{opacity:1;}
+.overlay-btn{background:#2563eb;color:#fff;border:none;padding:0.55rem 1.3rem;border-radius:6px;font-size:0.8rem;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:background 0.2s;}
+.overlay-btn:hover{background:#3b82f6;}
+.project-body{padding:1.1rem;}
+.project-tag{font-size:0.66rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#1d4ed8;background:rgba(37,99,235,0.12);padding:0.16rem 0.5rem;border-radius:100px;display:inline-block;margin-bottom:0.5rem;}
+.project-body h3{font-size:0.9rem;font-weight:500;color:var(--text-primary);margin-bottom:0.32rem;}
+.project-body p{font-size:0.78rem;color:var(--text-secondary);line-height:1.6;margin-bottom:0.7rem;}
+.tech-pills{display:flex;flex-wrap:wrap;gap:0.28rem;margin-bottom:0.65rem;}
+.tech-pill{font-size:0.65rem;background:var(--bg-section);color:var(--text-secondary);border:1px solid var(--border);border-radius:4px;padding:0.1rem 0.42rem;}
+.proj-link{font-size:0.76rem;color:#2563eb;text-decoration:none;font-weight:500;transition:color 0.2s;}
+.proj-link:hover{color:#0a1628;}
+
+/* CONTACT */
+.contact-section{background:var(--contact-bg);text-align:center;display:flex;flex-direction:column;align-items:center;}
+.contact-section .section-tag{color:#c8a84b;display:block;}
+.contact-section .section-title{color:#fff;}
+.contact-section .section-line{margin:0 auto 1.5rem;}
+.contact-tagline{color:rgba(255,255,255,0.6);font-size:0.95rem;max-width:460px;line-height:1.7;margin-bottom:2.5rem;}
+.contact-cards{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-bottom:2.5rem;}
+.contact-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:1.2rem 1.6rem;min-width:136px;text-align:center;transition:all 0.2s;cursor:pointer;}
+.contact-card:hover{background:rgba(37,99,235,0.12);border-color:rgba(37,99,235,0.4);transform:translateY(-2px);}
+.contact-card .c-icon{font-size:1.3rem;margin-bottom:0.35rem;display:block;}
+.contact-card h4{font-size:0.8rem;font-weight:500;color:#fff;margin-bottom:0.18rem;}
+.contact-card p{font-size:0.72rem;color:rgba(255,255,255,0.5);}
+.contact-form{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:2rem;max-width:490px;width:100%;text-align:left;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;margin-bottom:0.7rem;}
+.form-group{margin-bottom:0.7rem;}
+.form-group label{display:block;font-size:0.76rem;color:rgba(255,255,255,0.6);margin-bottom:0.32rem;}
+.form-group input,.form-group textarea{width:100%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:0.65rem 0.85rem;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.86rem;outline:none;transition:border 0.2s;}
+.form-group input:focus,.form-group textarea:focus{border-color:#2563eb;}
+.form-group textarea{resize:none;height:88px;}
+.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,0.28);}
+.btn-submit{width:100%;background:#2563eb;color:#fff;border:none;padding:0.82rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;transition:all 0.2s;}
+.btn-submit:hover{background:#3b82f6;transform:translateY(-1px);}
+
+/* FOOTER */
+footer{background:var(--footer-bg);padding:1.6rem 2.5rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;gap:1rem;}
+footer p{color:rgba(255,255,255,0.3);font-size:0.78rem;}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-links a{color:rgba(255,255,255,0.3);font-size:0.78rem;text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:#c8a84b;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-content>*{animation:fadeUp 0.7s both;}
+.hero-content .hero-eyebrow{animation-delay:0.1s;}.hero-content h1.hero-name{animation-delay:0.2s;}.hero-content .hero-title{animation-delay:0.3s;}.hero-content .hero-desc{animation-delay:0.4s;}.hero-content .hero-btns{animation-delay:0.5s;}.hero-content .hero-stats{animation-delay:0.6s;}
+.contact-section .section-inner{width:100%;display:flex;flex-direction:column;align-items:center;}
+
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;text-align:center;}
+  .photo-card{display:none;}
+  .about-grid{grid-template-columns:1fr;}
+  .skills-grid{grid-template-columns:1fr 1fr;}
+  .career-grid{grid-template-columns:1fr;}
+  .edu-grid{grid-template-columns:1fr;}
+  .learning-grid{grid-template-columns:1fr 1fr;}
+  .projects-grid{grid-template-columns:1fr 1fr;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .nav-float{display:none;}
+  .hero-desc{max-width:100%;}
+  .hero-eyebrow{justify-content:center;}
+  .about-highlights{grid-template-columns:1fr 1fr;}
+  .form-row{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  section{padding:3.5rem 1.25rem;}
+  nav{padding:0 1.25rem;}
+  .skills-grid{grid-template-columns:1fr;}
+  .learning-grid{grid-template-columns:1fr 1fr;}
+  .projects-grid{grid-template-columns:1fr;}
+  .contact-cards{flex-direction:column;align-items:center;}
+  footer{justify-content:center;}
+  .footer-links{display:none;}
+  .hero{padding:6rem 1.25rem 3rem;}
+  .contact-form{padding:1.4rem;}
+}
+</style>
 </head>
-
-<body data-theme="light">
-    <!-- Ambient Global Interactive Spotlight Glow -->
-    <div class="mouse-glow" id="mouseGlow"></div>
-    <canvas id="particleCanvas"></canvas>
-
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <span>◇</span>
-                <span>MK.dev</span>
-            </div>
-            <ul class="menu">
-                <li><a href="#home" class="link"><span class="link-title">Home</span></a></li>
-                <li><a href="#about" class="link"><span class="link-title">About</span></a></li>
-                <li><a href="#skills" class="link"><span class="link-title">Skills</span></a></li>
-                <li><a href="#projects" class="link"><span class="link-title">IC Lobby</span></a></li>
-                <li><a href="#contact" class="link"><span class="link-title">Contact</span></a></li>
-            </ul>
-            <div class="nav-actions">
-                <button class="theme-toggle-btn" id="themeToggle"
-                    title="Toggle Dark/Light Mode">☀️</button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Home Section -->
-    <section id="home" class="container">
-        <div class="left-section">
-
-
-            <!-- Availability Badge -->
-            <div class="availability-badge">
-                <span class="availability-dot"></span>
-                <span class="availability-text">Available for Internship
-                    & Opportunities</span>
-            </div>
-
-            <h1 class="name hero-name">
-                <br>Madan kumar S
-            </h1>
-
-            <!-- Mobile Profile Image (Visible only on Mobile) -->
-            <div class="mobile-profile-container">
-                <img src="madan AI.jpeg" alt="Madan kumar S Profile" class="mobile-profile-img">
-            </div>
-
-            <p class="hero-description">
-                Second year B.E. student in Electronics & Communication Engineering at Visvesvaraya Technological
-                University, Belagavi. Specialising in VLSI design, embedded systems, and intelligent hardware
-                solutions.
-            </p>
-
-            <div class="hero-tags">
-                <!-- Tags -->
-                <span class="hero-tag">VLSI Design</span>
-                <span class="hero-tag">Embedded Systems</span>
-                <span class="hero-tag">VTU Belagavi</span>
-                <span class="hero-tag">PCB Design</span>
-                <span class="hero-tag">IoT</span>
-                <span class="hero-tag">Signal Processing</span>
-
-            </div>
-
-            <div class="action-buttons hero-action-buttons">
-                <a href="#contact" class="btn btn-primary btn-link">
-                    <i class="fas fa-phone-alt"></i> Get in Touch
-                </a>
-                <a href="#" download="Madan_Kumar_Resume.pdf" class="btn btn-secondary btn-outline">
-                    <i class="fas fa-file-alt"></i> Download Resume
-                </a>
-                <a href="#about" class="btn btn-secondary btn-outline">
-                    <i class="fas fa-eye"></i> View Full CV
-                </a>
-            </div>
-
-            <div class="hero-stats-grid">
-                <div class="hero-stat-item">
-                    <div class="hero-stat-value">Second Year Engineering Student</div>
-                    <div class="hero-stat-label">Status</div>
-                </div>
-                <div class="hero-stat-item">
-                    <div class="hero-stat-value">6+</div>
-                    <div class="hero-stat-label">Projects Built</div>
-                </div>
-                <div class="hero-stat-item">
-                    <div class="hero-stat-value">4</div>
-                    <div class="hero-stat-label">Years at VTU</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="right-section">
-            <div class="card hero-card">
-                <!-- Hero Video Wrapper for 3D Particles -->
-                <div class="hero-video-wrapper">
-                    <div class="hero-video-inner">
-                        <landing-main-particles-component theme="light" class="particles-component-full">
-                            <div class="main-particles-component-section particles-section-full">
-                                <div class="main-particles-container particles-container-full">
-                                    <canvas id="threeCanvas" class="three-canvas"
-                                        data-engine="three.js r180"></canvas>
-                                </div>
-                            </div>
-                        </landing-main-particles-component>
-                    </div>
-                </div>
-
-                <div class="card-header card-header-z1">
-                    <div class="card-title card-title-text"><i class="fas fa-shield-alt icon-mr-8"></i> CyberSec</div>
-                    <div class="card-corner card-corner-text">⌐</div>
-                </div>
-                <div class="card-content card-content-centered">
-                    <!-- Satellite Communication Network Orbit Wrapper -->
-                    <div class="satellite-network-wrapper">
-
-                        <!-- Orbit Rings -->
-                        <div class="orbit-ring-inner"></div>
-                        <div class="orbit-ring-outer"></div>
-
-                        <!-- Orbiting Satellite -->
-                        <div class="satellite-orbit">
-                            <i class="fas fa-satellite satellite-icon"></i>
-                        </div>
-
-                        <!-- Signal Waves (Communication Network) -->
-                        <div class="signal-wave"></div>
-
-                        <div class="profile-img-container hero-profile-container">
-                            <img src="madan AI.jpeg" alt="Madan kumar S Profile" class="profile-img hero-profile-img">
-                        </div>
-                    </div>
-
-                    <div class="card-description card-description-centered">
-                        CyberSecurity & Embedded Systems
-                    </div>
-                </div>
-            </div>
-
-            <div class="floating-dot dot-1"></div>
-            <div class="floating-dot dot-2"></div>
-            <div class="floating-dot dot-3"></div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about-section">
-        <div class="about-container">
-            <div class="about-header">
-                <span class="section-prefix">// ABOUT_ME</span>
-                <h2 class="section-title">Who Am I?</h2>
-            </div>
-
-            <div class="about-content">
-                <div class="about-text">
-                    <p>I'm <strong>Madan Kumar S</strong>, an Electronics & Communication Engineering student at
-                        <strong>VTU (Visvesvaraya Technological University)</strong>. My passion lies at the
-                        intersection of hardware and security.
-                    </p>
-                    <p class="about-text-mt">From designing VLSI circuits to analyzing network vulnerabilities, I
-                        bring a unique perspective that combines the precision of electronics engineering with the
-                        strategic thinking of cybersecurity. I also develop web applications, making me a versatile
-                        engineer who can work across the full technology stack.</p>
-                </div>
-
-                <div class="about-stats about-stats-single">
-                    <div class="stat-card">
-                        <div class="stat-value">19+</div>
-                        <div class="stat-label">Projects</div>
-                    </div>
-                </div>
-
-                <div class="expertise-grid">
-                    <div class="expertise-item">
-                        <div class="expertise-icon"><i class="fas fa-user-shield"></i></div>
-                        <div class="expertise-title">Cybersecurity</div>
-                        <div class="expertise-desc">Network security, penetration testing, cryptography, and
-                            vulnerability assessment.</div>
-                    </div>
-                    <div class="expertise-item">
-                        <div class="expertise-icon"><i class="fas fa-microchip"></i></div>
-                        <div class="expertise-title">Electronics & Communication</div>
-                        <div class="expertise-desc">Embedded systems, VLSI design, microcontroller programming, and PCB
-                            design.</div>
-                    </div>
-                    <div class="expertise-item">
-                        <div class="expertise-icon"><i class="fas fa-laptop-code"></i></div>
-                        <div class="expertise-title">Web Development</div>
-                        <div class="expertise-desc">Full-stack development with modern frameworks, creating responsive
-                            and secure applications.</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="certifications certifications-section">
-                <div class="cert-header cert-header-styled">
-                    <i class="fas fa-certificate icon-mr-8 cert-icon-color"></i> Licenses
-                    & Certifications
-                </div>
-
-                <div class="cert-grid">
-                    <!-- Certificate 1 -->
-                    <div class="cert-card">
-                        <h4>
-                            <i class="fas fa-shield-alt"></i>
-                            Cyber Security + Ethical Hacking</h4>
-                        <p>Skill Intern
-                        </p>
-                        <a href="certificate/skill%20intern.pdf" target="_blank" rel="noopener"
-                            class="cert-link">Show
-                            credential <i class="fas fa-external-link-alt icon-ml-4"></i></a>
-                    </div>
-
-                    <!-- Certificate 2 -->
-                    <div class="cert-card">
-                        <h4>
-                            <i class="fas fa-microchip"></i>
-                            Embedded Systems Specialization</h4>
-                        <p>NIELET</p>
-                        <a href="certificate/ebedded%20free%20cirtificte.pdf" target="_blank" rel="noopener"
-                            class="cert-link">Show
-                            credential <i class="fas fa-external-link-alt icon-ml-4"></i></a>
-                    </div>
-
-                    <!-- Certificate 3 -->
-                    <div class="cert-card">
-                        <h4>
-                            <i class="fas fa-robot"></i>
-                            Generative AI</h4>
-                        <p>TCS iON</p>
-                        <a href="https://www.linkedin.com/in/madankumar-s-3537b232a/details/certifications/"
-                            target="_blank" rel="noopener"
-                            class="cert-link">Show
-                            credential <i class="fas fa-external-link-alt icon-ml-4"></i></a>
-                    </div>
-
-                    <!-- Certificate 4 -->
-                    <div class="cert-card">
-                        <h4>
-                            <i class="fas fa-network-wired"></i>
-                            VLSI Design Workshop</h4>
-                        <p>VTU</p>
-                        <a href="https://www.linkedin.com/in/madankumar-s-3537b232a/details/certifications/"
-                            target="_blank" rel="noopener"
-                            class="cert-link">Show
-                            credential <i class="fas fa-external-link-alt icon-ml-4"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills-section">
-        <div class="skills-container">
-            <div class="skills-header">
-                <h2 class="section-title">Technical Skills;</h2>
-            </div>
-
-            <div class="skills-tabs">
-                <button class="tab-btn active" data-tab="cybersecurity"><i class="fas fa-shield-alt"></i> Cybersecurity</button>
-                <button class="tab-btn" data-tab="electronics"><i class="fas fa-microchip"></i> Electronics</button>
-                <button class="tab-btn" data-tab="programming"><i class="fas fa-code"></i> Programming</button>
-            </div>
-
-            <div class="skills-content">
-                <!-- Cybersecurity -->
-                <div class="tab-content active" id="cybersecurity">
-                    <div class="skill-tab-container">
-                        <div class="skill-tab-item"><i class="fas fa-network-wired"></i> Network Security</div>
-                        <div class="skill-tab-item"><i class="fas fa-bug"></i> Threat Analysis</div>
-                        <div class="skill-tab-item"><i class="fas fa-search"></i> Vulnerability Assessment</div>
-                        <div class="skill-tab-item"><i class="fas fa-terminal"></i> Penetration Testing</div>
-                        <div class="skill-tab-item"><i class="fas fa-lock"></i> Cryptography</div>
-                        <div class="skill-tab-item"><i class="fas fa-microscope"></i> Digital Forensics</div>
-                    </div>
-                </div>
-
-                <!-- Electronics -->
-                <div class="tab-content" id="electronics">
-                    <div class="skill-tab-container">
-                        <div class="skill-tab-item"><i class="fas fa-microchip"></i> Embedded Systems</div>
-                        <div class="skill-tab-item"><i class="fas fa-memory"></i> Microcontrollers (AVR/ARM)</div>
-                        <div class="skill-tab-item"><i class="fas fa-draw-polygon"></i> VLSI Design</div>
-                        <div class="skill-tab-item"><i class="fas fa-layer-group"></i> PCB Design</div>
-                        <div class="skill-tab-item"><i class="fas fa-broadcast-tower"></i> IoT Systems</div>
-                        <div class="skill-tab-item"><i class="fas fa-wave-square"></i> Signal Processing</div>
-                    </div>
-                </div>
-
-                <!-- Programming -->
-                <div class="tab-content" id="programming">
-                    <div class="skill-tab-container">
-                        <div class="skill-tab-item"><i class="fab fa-python"></i> Python</div>
-                        <div class="skill-tab-item"><i class="fas fa-code"></i> C / C++</div>
-                        <div class="skill-tab-item"><i class="fas fa-project-diagram"></i> Verilog / VHDL</div>
-                        <div class="skill-tab-item"><i class="fab fa-html5"></i> HTML / CSS / JS</div>
-                        <div class="skill-tab-item"><i class="fas fa-database"></i> SQL / Databases</div>
-                        <div class="skill-tab-item"><i class="fab fa-git-alt"></i> Git / Version Control</div>
-                    </div>
-                </div>
-            </div>
-            <!-- View More Skills Toggle (Mobile Only) -->
-            <div class="view-more-container">
-                <button class="view-more-btn" id="viewMoreSkillsBtn">
-                    View More Skills <i class="fas fa-chevron-down"></i>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects-section">
-        <div class="projects-container">
-            <div class="projects-header">
-
-                <h2 class="section-title">My Work( )</h2>
-            </div>
-
-            <div class="projects-grid projects-grid-layout">
-                <div class="project-card">
-
-                    <div class="project-icon"><i class="fas fa-brain"></i></div>
-                    <div class="project-title">exammind-</div>
-                    <div class="project-category">AI Companion</div>
-                    <p class="project-desc">🧠 AI-Powered Study Companion with Gemini 2.0 Flash & Reinforcement
-                        Learning.</p>
-                    <div class="project-actions">
-                        <a href="https://github.com/madans0316-cmd/exammind-" target="_blank" rel="noopener" class="btn-action-icon" title="View Source on GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://madans0316-cmd.github.io/exammind-/" target="_blank" rel="noopener" class="btn-action-live">
-                            <i class="fas fa-external-link-alt"></i> Live Access to Website
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-
-                    <div class="project-icon"><i class="fas fa-barcode"></i></div>
-                    <div class="project-title">food-product-scanner</div>
-                    <div class="project-category">Python Scanner</div>
-                    <p class="project-desc">A scanner to extract and analyze nutritional properties from food products.
-                    </p>
-                    <div class="project-actions">
-                        <a href="https://github.com/madans0316-cmd/food-product-scanner" target="_blank" rel="noopener" class="btn-action-icon" title="View Source on GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://madans0316-cmd.github.io/food-product-scanner/" target="_blank" rel="noopener" class="btn-action-live">
-                            <i class="fas fa-external-link-alt"></i> Live Access to Website
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-
-                    <div class="project-icon"><i class="fas fa-tasks"></i></div>
-                    <div class="project-title">student-to-do-list</div>
-                    <div class="project-category">Web App</div>
-                    <p class="project-desc">A responsive standard to-do list specialized for modern students.</p>
-                    <div class="project-actions">
-                        <a href="https://github.com/madans0316-cmd/student-to-do-list" target="_blank" rel="noopener" class="btn-action-icon" title="View Source on GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://madans0316-cmd.github.io/student-to-do-list/" target="_blank" rel="noopener" class="btn-action-live">
-                            <i class="fas fa-external-link-alt"></i> Live Access to Website
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-
-                    <div class="project-icon"><i class="fas fa-code"></i></div>
-                    <div class="project-title">decode-every-expression</div>
-                    <div class="project-category">Web App</div>
-                    <p class="project-desc">A decoding utility built to analyze and decode programming expressions.</p>
-                    <div class="project-actions">
-                        <a href="https://github.com/madans0316-cmd/decode-every-expression" target="_blank" rel="noopener" class="btn-action-icon" title="View Source on GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://madans0316-cmd.github.io/decode-every-expression/" target="_blank" rel="noopener" class="btn-action-live">
-                            <i class="fas fa-external-link-alt"></i> Live Access to Website
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-
-                    <div class="project-icon"><i class="fas fa-monument"></i></div>
-                    <div class="project-title">pulwama-memorial</div>
-                    <div class="project-category">Tribute Site</div>
-                    <p class="project-desc">A memorial website offering a tribute to the Pulwama tragedy.</p>
-                    <div class="project-actions">
-                        <a href="https://github.com/madans0316-cmd/pulwama-memorial" target="_blank" rel="noopener" class="btn-action-icon" title="View Source on GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://madans0316-cmd.github.io/pulwama-memorial/" target="_blank" rel="noopener" class="btn-action-live">
-                            <i class="fas fa-external-link-alt"></i> Live Access to Website
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-
-                    <div class="project-icon"><i class="fas fa-cut"></i></div>
-                    <div class="project-title">SK.TYLERING</div>
-                    <div class="project-category">Business Site</div>
-                    <p class="project-desc">Website to showcase and manage tailoring services efficiently.</p>
-                    <div class="project-actions">
-                        <a href="https://github.com/madans0316-cmd/SK.TYLERING" target="_blank" rel="noopener" class="btn-action-icon" title="View Source on GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://madans0316-cmd.github.io/SK.TYLERING/" target="_blank" rel="noopener" class="btn-action-live">
-                            <i class="fas fa-external-link-alt"></i> Live Access to Website
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-
-                    <div class="project-icon"><i class="fas fa-map-marked-alt"></i></div>
-                    <div class="project-title">India Atlas</div>
-                    <div class="project-category">AI Web App</div>
-                    <p class="project-desc">Interactive India knowledge atlas with AI assistant providing UPSC-level information about states, geography &amp; culture.</p>
-                    <div class="project-actions">
-                        <a href="https://github.com/madans0316-cmd/India-Atlas-" target="_blank" rel="noopener" class="btn-action-icon" title="View Source on GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://india-atlas-eta.vercel.app" target="_blank" rel="noopener" class="btn-action-live">
-                            <i class="fas fa-external-link-alt"></i> Live Access to Website
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-
-                    <div class="project-icon"><i class="fas fa-user-circle"></i></div>
-                    <div class="project-title">Portfolio V1</div>
-                    <div class="project-category">Web Design</div>
-                    <p class="project-desc">First version of my professional personal portfolio website showcasing skills, projects and academic background.</p>
-                    <div class="project-actions">
-                        <a href="https://github.com/madans0316-cmd/Madan-kumar-S-portfolio" target="_blank" rel="noopener" class="btn-action-icon" title="View Source on GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://madans0316.github.io" target="_blank" rel="noopener" class="btn-action-live">
-                            <i class="fas fa-external-link-alt"></i> Live Access to Website
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section contact-section-padded">
-        <div class="contact-container contact-container-grid">
-
-            <!-- Left Side -->
-            <div class="contact-left">
-                <div class="contact-label-row">
-                    <span class="contact-label-line"></span>
-                    <span class="contact-label-text">Get in Touch</span>
-                </div>
-                <h2 class="contact-title">Let's Work Together</h2>
-                <p class="contact-intro">
-                    I am actively seeking internship roles, final year project collaborations, and graduate research
-                    opportunities in VLSI, embedded systems, and hardware design. Let's discuss how my skills can add
-                    value to your team.
-                </p>
-
-                <div class="contact-info-list">
-                    <a href="mailto:madans0316@gmail.com" class="contact-info-card-link">
-                        <div class="contact-info-card">
-                            <div class="contact-info-icon-wrap">
-                                <i class="fas fa-envelope contact-info-icon"></i>
-                            </div>
-                            <div>
-                                <div class="contact-detail-label">Email</div>
-                                <div class="contact-detail-value">madans0316@gmail.com</div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="https://linkedin.com/in/madankumar-s-3537b232a" target="_blank" rel="noopener" class="contact-info-card-link">
-                        <div class="contact-info-card">
-                            <div class="contact-info-icon-wrap">
-                                <i class="fab fa-linkedin-in contact-info-icon"></i>
-                            </div>
-                            <div>
-                                <div class="contact-detail-label">LinkedIn</div>
-                                <div class="contact-detail-value">linkedin.com/in/madan...</div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="https://github.com/madans0316-cmd" target="_blank" rel="noopener" class="contact-info-card-link">
-                        <div class="contact-info-card">
-                            <div class="contact-info-icon-wrap">
-                                <i class="fab fa-github contact-info-icon"></i>
-                            </div>
-                            <div>
-                                <div class="contact-detail-label">GitHub</div>
-                                <div class="contact-detail-value">github.com/madans0316-cmd</div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Right Side (Form) -->
-            <div class="contact-right contact-form-panel">
-                <h3 class="contact-form-title">Send a Message</h3>
-                <p class="contact-form-subtitle">I'll respond within 24 hours.</p>
-
-                <form class="contact-form" id="secureContactForm" action="https://formsubmit.co/madans0316@gmail.com"
-                    method="POST">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_subject" value="🔔 New Portfolio Contact: Someone reached out!">
-                    <input type="hidden" name="_template" value="box">
-                    <input type="hidden" name="_replyto" id="_replyto_field" value="">
-                    <input type="hidden" name="_autoresponse" value="Hi! Thanks for reaching out to Madan Kumar S. I've received your message and will respond within 24 hours. — MK.dev">
-
-                    <div class="form-row-2col">
-                        <div>
-                            <label for="contact-name" class="form-label">Full Name</label>
-                            <input type="text" id="contact-name" name="name" placeholder="Your name" required
-                                class="form-input">
-                        </div>
-                        <div>
-                            <label for="contact-email" class="form-label">Email Address</label>
-                            <input type="email" id="contact-email" name="email" placeholder="your@email.com" required
-                                class="form-input">
-                        </div>
-                    </div>
-
-                    <div class="form-field-group">
-                        <label for="contact-org" class="form-label">Organisation</label>
-                        <input type="text" id="contact-org" name="organisation"
-                            placeholder="Company or University (optional)" class="form-input">
-                    </div>
-
-                    <div class="form-field-group">
-                        <label for="contact-subject" class="form-label">Subject</label>
-                        <input type="text" id="contact-subject" name="subject"
-                            placeholder="Internship / Project / Research" required class="form-input">
-                    </div>
-
-                    <div class="form-field-group-lg">
-                        <label for="contact-message" class="form-label">Message</label>
-                        <textarea id="contact-message" name="message"
-                            placeholder="Tell me about your opportunity..." rows="4" required
-                            class="form-textarea"></textarea>
-                    </div>
-
-                    <button type="submit" class="btn form-submit-btn" id="formSubmitBtn">
-                        <span class="btn-text"><i class="fas fa-paper-plane"></i> Send Message</span>
-                    </button>
-                    <p id="formStatusMessage" class="form-status-msg"></p>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-
-        <p class="footer-copy"><i class="fas fa-code"></i> Designed &amp; Built by <strong>Madan Kumar S</strong> &copy; 2026</p>
-    </footer>
-
-    <!-- WhatsApp QR Modal -->
-    <div id="waModal" class="wa-modal">
-        <div class="wa-modal-content wa-modal-content-light">
-            <button class="close-wa-modal wa-close-dark" onclick="closeWhatsAppModal()"
-                onkeydown="if(event.key==='Enter') closeWhatsAppModal()" aria-label="Close modal">&times;</button>
-            <div class="wa-qr-center">
-                <img src="whatsapp-qr.jpeg" alt="WhatsApp QR Code" class="wa-qr-img">
-                <a href="https://wa.me/919449887678" target="_blank" rel="noopener"
-                    class="btn btn-primary wa-chat-link"><i class="fab fa-whatsapp"></i> Chat on
-                    WhatsApp</a>
-            </div>
-        </div>
+<body>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- LOADER -->
+<div id="intro-loader">
+  <div class="loader-name">Welcome to <span>Madan Kumar S</span>'s Portfolio</div>
+  <div class="loader-sub">Electronics &amp; Communication Engineering</div>
+  <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
+  <div class="loader-pct" id="loaderPct">0%</div>
+</div>
+
+<!-- FLOATING DOTS -->
+<div class="nav-float">
+  <div class="nav-dot active" data-label="Home" data-target="home"></div>
+  <div class="nav-dot" data-label="About" data-target="about"></div>
+  <div class="nav-dot" data-label="Skills" data-target="skills"></div>
+  <div class="nav-dot" data-label="Career" data-target="career"></div>
+  <div class="nav-dot" data-label="Education" data-target="education"></div>
+  <div class="nav-dot" data-label="Projects" data-target="projects"></div>
+  <div class="nav-dot" data-label="Contact" data-target="contact"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">MK<span>.</span>S</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#career">Career</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-btn" id="themeBtn" title="Toggle theme">🌙</button>
+    <a href="Madan_Kumar_S_Resume.pdf" class="nav-cta" target="_blank" id="resumeBtn">Resume ↓</a>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#career">Career</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Electronics &amp; Communication Engineering</div>
+      <h1 class="hero-name">Madan <span>Kumar</span> S</h1>
+      <p class="hero-title">ECE Student · Embedded Systems Enthusiast · Ethical Hacker in Making</p>
+      <p class="hero-desc">A passionate Electronics &amp; Communication Engineering student dedicated to innovative solutions — from microcontroller-based systems to IoT and cybersecurity. Driven by curiosity, precision, and purpose.</p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-primary">View My Projects</a>
+        <a href="#contact" class="btn-outline">Get In Touch</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><span class="stat-num">ECE</span><span class="stat-label">Branch</span></div>
+        <div class="stat-item"><span class="stat-num">3+</span><span class="stat-label">Projects</span></div>
+        <div class="stat-item"><span class="stat-num">5+</span><span class="stat-label">Tools</span></div>
+        <div class="stat-item"><span class="stat-num">∞</span><span class="stat-label">Curiosity</span></div>
+      </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="my.js"></script>
-</body>
+    <div class="photo-card">
+      <div class="photo-frame">
+        <div class="circuit-dots"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="avatar-area">MK</div>
+        <div class="photo-name">Madan Kumar S</div>
+        <p class="photo-role">Electronics &amp; Communication Engg.</p>
+      </div>
+      <div class="photo-badge">Open to Internships</div>
+    </div>
+  </div>
+</section>
 
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="section-inner">
+    <div class="section-tag">Who I Am</div>
+    <div class="section-title">About Me</div>
+    <div class="section-line"></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Hello! I'm Madan Kumar S, an Electronics &amp; Communication Engineering student with a deep fascination for how electronic systems power the modern world — from embedded microcontrollers to secure communication networks.</p>
+        <p>I believe engineering is not just about solving equations — it's about designing things that actually matter. I approach every problem with curiosity, patience, and a structured mindset rooted in both hardware and software thinking.</p>
+        <p>When I'm not studying circuits, I'm exploring cybersecurity, ethical hacking, Kali Linux, and building hands-on IoT and microcontroller projects that bridge hardware with intelligence.</p>
+        <div class="about-highlights">
+          <div class="highlight-chip"><div class="chip-icon">⚡</div>Circuit Design</div>
+          <div class="highlight-chip"><div class="chip-icon">🔐</div>Cyber Security</div>
+          <div class="highlight-chip"><div class="chip-icon">📡</div>Embedded Systems</div>
+          <div class="highlight-chip"><div class="chip-icon">🔧</div>Hands-on Maker</div>
+        </div>
+      </div>
+      <div>
+        <div class="value-card"><h4>Precision-driven</h4><p>Engineering demands accuracy. I pay attention to detail in every circuit, code, and system I design.</p></div>
+        <div class="value-card"><h4>Continuous learner</h4><p>Technology evolves fast. I stay curious — exploring Kali Linux, embedded systems, and signal processing beyond the syllabus.</p></div>
+        <div class="value-card"><h4>Ethical engineer</h4><p>I believe in building solutions that are safe, sustainable, and responsible. Ethical hacking is about protecting, not exploiting.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div class="section-inner">
+    <div class="section-tag">What I Know</div>
+    <div class="section-title">Technical Skills</div>
+    <div class="section-line"></div>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <div class="skill-icon">⚡</div>
+        <h3>Electronics &amp; Circuits</h3>
+        <div><span class="skill-tag">Circuit Theory</span><span class="skill-tag">AC/DC Analysis</span><span class="skill-tag">Kirchhoff's Laws</span><span class="skill-tag">Breadboard Prototyping</span><span class="skill-tag">Semiconductor Devices</span></div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-icon">💻</div>
+        <h3>Programming</h3>
+        <div><span class="skill-tag">C / C++</span><span class="skill-tag">Python (Basics)</span><span class="skill-tag">MATLAB</span><span class="skill-tag">Arduino IDE</span><span class="skill-tag">Embedded C</span><span class="skill-tag">Bootstrap</span></div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-icon">🔧</div>
+        <h3>Tools &amp; Software</h3>
+        <div><span class="skill-tag">Multisim</span><span class="skill-tag">Tinkercad</span><span class="skill-tag">Kali Linux</span><span class="skill-tag">Keil uVision</span><span class="skill-tag">LTSpice</span><span class="skill-tag">MATLAB</span><span class="skill-tag">AutoCAD</span><span class="skill-tag">Raspifly</span></div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-icon">📡</div>
+        <h3>Core Subjects</h3>
+        <div><span class="skill-tag">Engineering Maths</span><span class="skill-tag">Physics</span><span class="skill-tag">Network Theory</span><span class="skill-tag">Digital Electronics</span><span class="skill-tag">Microcontrollers</span><span class="skill-tag">Signal Processing</span></div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-icon">🤝</div>
+        <h3>Soft Skills</h3>
+        <div><span class="skill-tag">Team Collaboration</span><span class="skill-tag">Critical Thinking</span><span class="skill-tag">Technical Writing</span><span class="skill-tag">Time Management</span><span class="skill-tag">Presentation</span></div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-icon">🌱</div>
+        <h3>Currently Learning</h3>
+        <div><span class="skill-tag">Embedded Systems</span><span class="skill-tag">Signal Processing</span><span class="skill-tag">Cyber Security</span><span class="skill-tag">Ethical Hacking</span><span class="skill-tag">Kali Linux</span><span class="skill-tag">Arch Linux</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BINARY STRIP -->
+<div class="binary-section">
+  <div class="bin-title">// system active — learning mode on</div>
+  <div class="binary-runner" id="binaryRunner"></div>
+</div>
+
+<!-- CAREER -->
+<section class="career-section" id="career">
+  <div class="section-inner">
+    <div class="section-tag">Where I'm Headed</div>
+    <div class="section-title">Career Vision</div>
+    <div class="section-line"></div>
+    <p class="section-subtitle">My roadmap from student to professional engineer — focused, ambitious, and grounded.</p>
+    <div class="career-grid">
+      <div>
+        <div class="career-timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2024 – 2025 · Now</div>
+            <div class="timeline-title">Foundation Year</div>
+            <div class="timeline-desc">Focusing on basic mathematics, programming, and secure design principles. Building a strong engineering foundation with ethics at its core.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot gold"></div>
+            <div class="timeline-year">2025 – 2026</div>
+            <div class="timeline-title">Tools &amp; Build Phase</div>
+            <div class="timeline-desc">Learning and using industry tools — Kali Linux, Keil uVision, MATLAB. Building IoT-based and microcontroller-based projects, learning embedded systems and computer tools.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot dim"></div>
+            <div class="timeline-year">2026 – 2027</div>
+            <div class="timeline-title">Specialization Phase</div>
+            <div class="timeline-desc">Mastering embedded systems programming languages, MATLAB for CS, and Principles of Communication Systems (PCS). Deep focus on core ECE branch.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot dim"></div>
+            <div class="timeline-year">2027 &amp; Beyond</div>
+            <div class="timeline-title">Industry Entry / Higher Studies</div>
+            <div class="timeline-desc">Join as a Graduate Engineer in ECE, embedded systems, or cybersecurity — or pursue M.Tech / GATE for advanced specialization.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="goal-card"><h4>Short-term Goal</h4><p>Secure a summer internship in an electronics or cybersecurity firm, and build 3 solid hands-on IoT or embedded projects for my portfolio.</p></div>
+        <div class="goal-card"><h4>Long-term Aspiration</h4><p>Become a Systems or Embedded Engineer in the semiconductor or cybersecurity domain — solving real-world problems with intelligence and ethics.</p></div>
+        <div class="goal-card"><h4>Domain of Interest</h4><p>Embedded Systems, IoT, Microcontrollers, Signal Processing, and Ethical Hacking — where hardware meets software meets security.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="education-section" id="education">
+  <div class="section-inner">
+    <div class="section-tag">Academic Background</div>
+    <div class="section-title">Education</div>
+    <div class="section-line"></div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-badge">Current · Pursuing</div>
+        <h3>B.E. / B.Tech — Electronics &amp; Communication Engineering</h3>
+        <div class="school">Your College Name</div>
+        <div class="years">2024 – 2028</div>
+        <div class="desc">Pursuing a four-year degree in ECE with focus on communication systems, digital electronics, microcontrollers, embedded systems, and signal processing.</div>
+        <div class="course-chips"><span class="course-chip">Engineering Maths</span><span class="course-chip">Digital Electronics</span><span class="course-chip">Network Theory</span><span class="course-chip">Microcontrollers</span><span class="course-chip">Signal Processing</span><span class="course-chip">C Programming</span></div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-badge">Completed</div>
+        <h3>Class XII — Science (PCM)</h3>
+        <div class="school">Your School Name</div>
+        <div class="years">Completed 2024</div>
+        <div class="desc">Completed higher secondary education with Physics, Chemistry, and Mathematics as core subjects, building an advanced education foundation.</div>
+        <div class="course-chips"><span class="course-chip">Physics</span><span class="course-chip">Chemistry</span><span class="course-chip">Mathematics</span><span class="course-chip">Computer Science</span></div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-badge">Certifications &amp; Courses</div>
+        <h3>Online Learning &amp; MOOCs</h3>
+        <div class="school">NPTEL · SkillIntern · Cyber Security Platforms · Codex &amp; more</div>
+        <div class="years">Ongoing</div>
+        <div class="desc">Self-learning through structured platforms for cybersecurity, embedded systems, and communication engineering to stay ahead of the curriculum.</div>
+        <div class="course-chips"><span class="course-chip">Cyber Security</span><span class="course-chip">Embedded Systems</span><span class="course-chip">Arduino</span><span class="course-chip">Python for Engineers</span><span class="course-chip">MATLAB</span></div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-badge">Extracurriculars</div>
+        <h3>Workshops &amp; College Activities</h3>
+        <div class="school">College Campus</div>
+        <div class="years">2024 – Present</div>
+        <div class="desc">Actively involved in college workshops in electronics and communication, technical events, and hands-on lab sessions to grow beyond the classroom.</div>
+        <div class="course-chips"><span class="course-chip">Electronics Workshop</span><span class="course-chip">Technical Fest</span><span class="course-chip">Lab Sessions</span><span class="course-chip">Robotics</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING -->
+<section class="learning-section">
+  <div class="section-inner">
+    <div class="section-tag">Growth Mindset</div>
+    <div class="section-title">How I Learn</div>
+    <div class="section-line"></div>
+    <div class="learning-grid">
+      <div class="learning-card"><span class="learn-icon">📚</span><h4>Textbooks &amp; Notes</h4><p>Deep reading of core engineering textbooks — fundamentals first.</p><div class="learn-progress"><div class="progress-dot active"></div><div class="progress-dot active"></div><div class="progress-dot active"></div><div class="progress-dot"></div></div></div>
+      <div class="learning-card"><span class="learn-icon">🎥</span><h4>Video Tutorials</h4><p>NPTEL, MIT OpenCourseWare, and YouTube for visual learning.</p><div class="learn-progress"><div class="progress-dot active"></div><div class="progress-dot active"></div><div class="progress-dot active"></div><div class="progress-dot active"></div></div></div>
+      <div class="learning-card"><span class="learn-icon">🛠️</span><h4>Build &amp; Tinker</h4><p>Hands-on microcontroller and IoT projects. Learn by doing.</p><div class="learn-progress"><div class="progress-dot active"></div><div class="progress-dot active"></div><div class="progress-dot"></div><div class="progress-dot"></div></div></div>
+      <div class="learning-card"><span class="learn-icon">🔐</span><h4>Cyber Labs</h4><p>Kali Linux, ethical hacking labs and CTF challenges online.</p><div class="learn-progress"><div class="progress-dot active"></div><div class="progress-dot active"></div><div class="progress-dot active"></div><div class="progress-dot"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects-section" id="projects">
+  <div class="section-inner">
+    <div class="section-tag">What I've Built</div>
+    <div class="section-title">Projects</div>
+    <div class="section-line"></div>
+    <p class="section-subtitle">Hover a card to visit the live site.</p>
+    <div class="projects-grid" id="projectsGrid">
+
+      <div class="project-card" data-url="https://your-project-1-url.com">
+        <div class="project-header ph-blue">
+          <div class="ph-placeholder">💡</div>
+          <div class="project-overlay"><button class="overlay-btn">View Online →</button></div>
+        </div>
+        <div class="project-body">
+          <div class="project-tag">Electronics · Beginner</div>
+          <h3>Smart LED Lighting System</h3>
+          <p>Light-controlled LED circuit using LDR sensors with automatic brightness adjustment — built on breadboard and simulated in Multisim.</p>
+          <div class="tech-pills"><span class="tech-pill">LDR Sensor</span><span class="tech-pill">555 Timer IC</span><span class="tech-pill">Multisim</span></div>
+          <a href="https://your-project-1-url.com" target="_blank" rel="noopener" class="proj-link">→ View Online</a>
+        </div>
+      </div>
+
+      <div class="project-card" data-url="https://your-project-2-url.com">
+        <div class="project-header ph-navy">
+          <div class="ph-placeholder">🤖</div>
+          <div class="project-overlay"><button class="overlay-btn">View Online →</button></div>
+        </div>
+        <div class="project-body">
+          <div class="project-tag">Arduino · Embedded</div>
+          <h3>Line-Following Robot</h3>
+          <p>Autonomous line-following robot using IR sensors and Arduino Uno. Programmed motor control logic and sensor feedback loops.</p>
+          <div class="tech-pills"><span class="tech-pill">Arduino Uno</span><span class="tech-pill">IR Sensor</span><span class="tech-pill">C++</span><span class="tech-pill">L298N</span></div>
+          <a href="https://your-project-2-url.com" target="_blank" rel="noopener" class="proj-link">→ View Online</a>
+        </div>
+      </div>
+
+      <div class="project-card" data-url="https://your-project-3-url.com">
+        <div class="project-header ph-gold">
+          <div class="ph-placeholder">📡</div>
+          <div class="project-overlay"><button class="overlay-btn">View Online →</button></div>
+        </div>
+        <div class="project-body">
+          <div class="project-tag">Digital Logic · Academic</div>
+          <h3>4-bit Binary Calculator</h3>
+          <p>Designed and simulated a 4-bit binary adder/subtractor using logic gates — foundational digital electronics project.</p>
+          <div class="tech-pills"><span class="tech-pill">Full Adder</span><span class="tech-pill">Tinkercad</span><span class="tech-pill">Logic Gates</span></div>
+          <a href="https://your-project-3-url.com" target="_blank" rel="noopener" class="proj-link">→ View Online</a>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-inner">
+    <div class="section-tag">Let's Connect</div>
+    <div class="section-title">Get In Touch</div>
+    <div class="section-line"></div>
+    <p class="contact-tagline">Whether it's a collaboration, an internship opportunity, or a conversation about electronics and cybersecurity — I'd love to hear from you.</p>
+    <div class="contact-cards">
+      <div class="contact-card"><span class="c-icon">📧</span><h4>Email</h4><p>madankumars@gmail.com</p></div>
+      <div class="contact-card"><span class="c-icon">💼</span><h4>LinkedIn</h4><p>linkedin.com/in/madankumars</p></div>
+      <div class="contact-card"><span class="c-icon">🐙</span><h4>GitHub</h4><p>github.com/madankumars</p></div>
+      <div class="contact-card"><span class="c-icon">📍</span><h4>Location</h4><p>Mangaluru, Karnataka</p></div>
+    </div>
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-group"><label for="contact-name">Your Name</label><input id="contact-name" type="text" placeholder="John Smith"/></div>
+        <div class="form-group"><label for="contact-email">Email Address</label><input id="contact-email" type="email" placeholder="john@email.com"/></div>
+      </div>
+      <div class="form-group"><label for="contact-subject">Subject</label><input id="contact-subject" type="text" placeholder="Internship Opportunity / Collaboration..."/></div>
+      <div class="form-group"><label for="contact-message">Message</label><textarea id="contact-message" placeholder="Tell me what's on your mind..."></textarea></div>
+      <button class="btn-submit">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Madan Kumar S · Electronics &amp; Communication Engineering · Mangaluru</p>
+  <div class="footer-links">
+    <a href="#home">Top</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+// LOADER
+(function(){
+  const bar=document.getElementById('loaderBar');
+  const pct=document.getElementById('loaderPct');
+  const loader=document.getElementById('intro-loader');
+  let p=0;
+  const iv=setInterval(()=>{
+    p+=Math.random()*3.5+1;
+    if(p>=100){
+      p=100;clearInterval(iv);
+      setTimeout(()=>{
+        loader.style.opacity='0';loader.style.transition='opacity 0.6s';
+        setTimeout(()=>{loader.style.display='none';},600);
+      },300);
+    }
+    bar.style.width=p+'%';
+    pct.textContent=Math.floor(p)+'%';
+  },50);
+})();
+
+// THEME
+const themeBtn=document.getElementById('themeBtn');
+let dark=true;
+themeBtn.addEventListener('click',()=>{
+  dark=!dark;
+  document.documentElement.dataset.theme=dark?'':'light';
+  themeBtn.textContent=dark?'🌙':'☀️';
+});
+
+// HAMBURGER
+const ham=document.getElementById('hamburger');
+const mob=document.getElementById('mobileMenu');
+ham.addEventListener('click',()=>mob.classList.toggle('open'));
+mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mob.classList.remove('open')));
+
+// CURSOR
+const glow=document.getElementById('cursorGlow');
+const trail=document.getElementById('cursorTrail');
+let tx=0,ty=0,cx=0,cy=0;
+document.addEventListener('mousemove',e=>{
+  tx=e.clientX;ty=e.clientY;
+  glow.style.left=tx+'px';glow.style.top=ty+'px';
+});
+(function animT(){
+  cx+=(tx-cx)*0.15;cy+=(ty-cy)*0.15;
+  trail.style.left=cx+'px';trail.style.top=cy+'px';
+  requestAnimationFrame(animT);
+})();
+
+// FLOATING NAV DOTS
+const sections=['home','about','skills','career','education','projects','contact'];
+const dots=document.querySelectorAll('.nav-dot');
+dots.forEach(d=>d.addEventListener('click',()=>{
+  const t=document.getElementById(d.dataset.target);
+  if(t)t.scrollIntoView({behavior:'smooth'});
+}));
+window.addEventListener('scroll',()=>{
+  let cur='home';
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&window.scrollY>=el.offsetTop-200)cur=id;
+  });
+  dots.forEach(d=>d.classList.toggle('active',d.dataset.target===cur));
+},{passive:true});
+
+// BINARY RUNNER
+(function(){
+  const el=document.getElementById('binaryRunner');
+  const w=['01001011','01000001','01001100','01001001','01001100','01001001','01001110','01010101','01011000',
+    'EMBEDDED','SYSTEM','SIGNAL','PROCESS','01000001','01010010','01000011','01001000',
+    'MADAN','ECE','01001001','01001111','01010100','SECURITY','ETHICAL','01001000',
+    '01000001','01000011','01001011','MICROCON','TROLLER','KALI','LINUX','ARCH','01001000'];
+  let s='';
+  for(let i=0;i<65;i++)s+=w[Math.floor(Math.random()*w.length)]+'  ';
+  el.textContent=s;
+})();
+
+// PROJECT OPEN — event delegation
+(function(){
+  const placeholders=['https://your-project-1-url.com','https://your-project-2-url.com','https://your-project-3-url.com'];
+  document.getElementById('projectsGrid').addEventListener('click',function(e){
+    const card=e.target.closest('.project-card');
+    if(!card)return;
+    const url=card.dataset.url;
+    if(url&&!placeholders.includes(url))window.open(url,'_blank');
+  });
+})();
+</script>
+</body>
 </html>
