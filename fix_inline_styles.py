@@ -2,6 +2,10 @@
 Script to extract all inline styles from index.html into styles.css classes.
 """
 import re
+import os
+
+# Change to script directory
+os.chdir(r"c:\Users\MADAN\OneDrive\Documents\GitHub\Madan.Dev")
 
 # Read the files
 with open('index.html', 'r', encoding='utf-8') as f:

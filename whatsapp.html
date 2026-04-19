@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp QR - Madan Kumar S</title>
+    <!-- Browser Profile Icon (Favicon) -->
+    <link rel="icon" type="image/png" href="mk_dev_logo.png">
+    <link rel="apple-touch-icon" href="mk_dev_logo.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            /* Light black */
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Space Grotesk', Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: #000;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 0 30px silver;
+            border: 2px solid silver;
+            text-align: center;
+            animation: popUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+            transform: scale(0.5);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        @keyframes popUp {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h2 {
+            color: silver;
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+            line-height: 1.4;
+            text-shadow: 0 0 10px silver;
+        }
+
+        .qr-wrapper {
+            position: relative;
+            display: inline-block;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid silver;
+            box-shadow: 0 0 20px silver;
+            filter: grayscale(100%) contrast(1.2) brightness(1.2);
+            /* Makes it look silver/white */
+        }
+
+        .qr-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 320px;
+        }
+
+        /* Paytm Style Scanner Animation */
+        .scanner-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: silver;
+            /* Silver laser */
+            box-shadow: 0 0 15px 5px rgba(192, 192, 192, 0.9);
+            animation: scanAnimation 2.5s infinite linear;
+        }
+
+        @keyframes scanAnimation {
+            0% {
+                top: 0;
+                opacity: 0;
+            }
+
+            5% {
+                opacity: 1;
+            }
+
+            95% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Contact me hi, I am Madan Kumar.<br>Contact me in WhatsApp</h2>
+        <div class="qr-wrapper">
+            <!-- Dynamically transformed to silver/white via CSS filters -->
+            <img src="whatsapp_qr.jpg" alt="WhatsApp QR Code">
+            <div class="scanner-line"></div>
+        </div>
+    </div>
+</body>
+
+</html>

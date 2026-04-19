@@ -230,7 +230,7 @@ function initTheme(particleSys) {
     }
 }
 
-// Form submission handler — sends email via FormSubmit.co + WhatsApp notification
+// Form submission handler
 function initFormSubmission() {
     const contactForm = document.getElementById('secureContactForm');
     const formStatus = document.getElementById('formStatusMessage');
@@ -238,76 +238,59 @@ function initFormSubmission() {
 
     if (!contactForm) return;
 
-    // Private contact — not rendered in UI
-    const _p = ['91', '9449', '887678'].join('');
-
-    const handleFormSubmit = async (e) => {
+    globalThis.sendToWhatsApp = async (e) => {
         e.preventDefault();
 
-        const nameInput  = contactForm.querySelector('[name="name"]').value.trim();
-        const emailInput = contactForm.querySelector('[name="email"]').value.trim();
-        const subInput   = contactForm.querySelector('[name="subject"]').value.trim();
-        const txtInput   = contactForm.querySelector('[name="message"]').value.trim();
+        const nameInput = contactForm.querySelector('[name="name"]').value;
+        const emailInput = contactForm.querySelector('[name="email"]').value;
+        const subInput = contactForm.querySelector('[name="subject"]').value;
+        const txtInput = contactForm.querySelector('[name="message"]').value;
 
         if (!nameInput || !emailInput || !subInput || !txtInput) {
-            showStatus('⚠️ Please fill out all required fields before sending!', '#c0392b');
+            formStatus.textContent = "Please fill out all the fields before sending!";
+            formStatus.style.color = "#FF3366";
+            formStatus.style.display = 'block';
             return;
         }
 
-        // Dynamically set _replyto so FormSubmit can auto-reply to the sender
-        const replyToField = document.getElementById('_replyto_field');
-        if (replyToField) replyToField.value = emailInput;
-
-        // Loading state
         const btnText = submitBtn.querySelector('.btn-text');
-        const originalHTML = btnText.innerHTML;
-        btnText.innerHTML = 'Sending… <i class="fas fa-spinner fa-spin"></i>';
+        const originalText = btnText.innerHTML;
+        btnText.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
         submitBtn.disabled = true;
         formStatus.style.display = 'none';
 
         try {
-            const formData = new FormData(contactForm);
             const response = await fetch(contactForm.action, {
                 method: 'POST',
-                body: formData,
+                body: new FormData(contactForm),
                 headers: { 'Accept': 'application/json' }
             });
 
             if (response.ok) {
+                const cleanMessage = `Hello Madan!\n\n*Name:* ${nameInput}\n*Email:* ${emailInput}\n*Subject:* ${subInput}\n\n*Message:* ${txtInput}`;
+                globalThis.open(`https://wa.me/919449887678?text=${encodeURIComponent(cleanMessage)}`, '_blank');
+
                 contactForm.reset();
-
-                // Send WhatsApp notification to private contact
-                const waMsg = `📬 New Portfolio Message\n\n👤 Name: ${nameInput}\n📧 Email: ${emailInput}\n📌 Subject: ${subInput}\n\n💬 Message:\n${txtInput}`;
-                const waUrl = `https://wa.me/${_p}?text=${encodeURIComponent(waMsg)}`;
-                const waWin = window.open(waUrl, '_blank', 'noopener,noreferrer');
-                if (waWin) setTimeout(() => waWin.close(), 3000);
-
-                showStatus(
-                    '✅ Message delivered! I\'ll respond to <strong>' + emailInput + '</strong> within 24 hours.',
-                    '#1a7a4a'
-                );
+                formStatus.innerHTML = `Success! Sent to both your 📧 Email & <i class='fab fa-whatsapp'></i> WhatsApp.`;
+                formStatus.style.color = "#00FF88";
+                formStatus.style.display = 'block';
             } else {
-                const data = await response.json().catch(() => ({}));
-                const msg = data?.errors?.[0]?.message || 'Server error — please try again shortly.';
-                showStatus('❌ ' + msg, '#c0392b');
+                formStatus.textContent = "Oops! Temporary Email server connection drop. Try again.";
+                formStatus.style.color = "#FF3366";
+                formStatus.style.display = 'block';
             }
-        } catch (err) {
-            console.error('Contact form error:', err);
-            showStatus('❌ Network error. Check your connection and retry.', '#c0392b');
+        } catch (error) {
+            console.error('Form submission failed:', error);
+            formStatus.textContent = "Network Error. Please check your signal and retry.";
+            formStatus.style.color = "#FF3366";
+            formStatus.style.display = 'block';
         }
 
-        btnText.innerHTML = originalHTML;
+        btnText.innerHTML = originalText;
         submitBtn.disabled = false;
     };
 
-    function showStatus(html, color) {
-        formStatus.innerHTML = html;
-        formStatus.style.color = color;
-        formStatus.style.display = 'block';
-        formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    contactForm.addEventListener('submit', handleFormSubmit);
+    contactForm.addEventListener('submit', globalThis.sendToWhatsApp);
 }
 
 // Initialize on page load
@@ -348,50 +331,49 @@ globalThis.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Animate skill bars on scroll handled by global fade elements below
+    // Animate skill bars on scroll
+    const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px'
+    };
+
+    const animateSkillFills = (entry) => {
+        const skillFills = entry.target.querySelectorAll('.skill-fill');
+        skillFills.forEach(fill => {
+            const width = fill.dataset.width ? fill.dataset.width + '%' : fill.style.width;
+            fill.style.width = '0';
+            setTimeout(() => { fill.style.width = width; }, 100);
+        });
+        observer.unobserve(entry.target);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateSkillFills(entry);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.skills-section').forEach(section => {
+        observer.observe(section);
+    });
 
     initFormSubmission();
 
-    // Skills Sections Expansion Toggle (Mobile Only)
-    const viewMoreBtn = document.getElementById('viewMoreSkillsBtn');
-    const skillsContent = document.querySelector('.skills-content');
-    if (viewMoreBtn && skillsContent) {
-        viewMoreBtn.addEventListener('click', () => {
-            const isExpanded = skillsContent.classList.toggle('expanded');
-            viewMoreBtn.classList.toggle('active');
-            
-            if (isExpanded) {
-                viewMoreBtn.innerHTML = `View Less <i class="fas fa-chevron-up"></i>`;
-            } else {
-                viewMoreBtn.innerHTML = `View More Skills <i class="fas fa-chevron-down"></i>`;
-            }
-        });
-    }
-
-    // Interactive Hero Tags (Mobile Only)
-    document.querySelectorAll('.hero-tag').forEach(tag => {
-        tag.addEventListener('click', function() {
-            if (window.innerWidth <= 768) {
-                // Toggle active state for "expand" effect
-                this.classList.toggle('active');
-                if (navigator.vibrate) navigator.vibrate(20);
-            }
-        });
-    });
-
     // Add global scroll animations for a premium feel
-    const fadeElements = document.querySelectorAll('.card, .stat-card, .expertise-item, .info-block, .project-card, .left-section > *, .certifications, .code-block, .skill-tab-item');
+    const fadeElements = document.querySelectorAll('.card, .stat-card, .expertise-item, .info-block, .project-card, .left-section > *, .certifications, .code-block, .skill-fill');
     const fadeObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
                 setTimeout(() => {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
-                    
-                    // After the transition ends, remove the inline transform so CSS hovers work
-                    setTimeout(() => {
-                        entry.target.style.transform = '';
-                    }, 650);
+
+                    // If it's a skill bar, expand its width!
+                    if (entry.target.classList.contains('skill-fill')) {
+                        entry.target.style.width = entry.target.dataset.width;
+                    }
                 }, (index % 5) * 80); // Stagger animations nicely grouped together
                 fadeObserver.unobserve(entry.target);
             }
@@ -399,10 +381,21 @@ globalThis.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.1 });
 
     fadeElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
-        fadeObserver.observe(el);
+        // Check if it's a skill bar specifically
+        if (el.classList.contains('skill-fill')) {
+            // Read width from data-width attribute (e.g., "85" -> "85%")
+            const targetWidth = el.dataset.width ? el.dataset.width + '%' : el.style.width;
+            el.dataset.width = targetWidth; // Store with % for the animation callback
+            el.style.width = '0%'; // Reset to 0 for the animation
+            el.style.opacity = '1';
+            el.style.transition = 'width 1.5s cubic-bezier(0.25, 1, 0.5, 1)';
+            fadeObserver.observe(el);
+        } else {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+            fadeObserver.observe(el);
+        }
     });
 
     // Interactive Premium Hover Tilt for Content Cards
@@ -416,26 +409,15 @@ globalThis.addEventListener('DOMContentLoaded', () => {
             const rotateX = ((y - centerY) / centerY) * -6; // Up/down tilt
             const rotateY = ((x - centerX) / centerX) * 6;  // Left/right tilt
 
-            // Determine correct slide distance from CSS rules
-            const slideDistance = card.classList.contains('project-card') ? -8 : -5;
-            
-            // Apply 3D rotate with a slight pop-out scale AND the CSS slide-up effect
-            card.style.transform = `perspective(1000px) translateY(${slideDistance}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            // Apply 3D rotate with a slight pop-out scale
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
             card.style.zIndex = '10';
         });
 
         card.addEventListener('mouseleave', () => {
             card.style.transition = 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
-            card.style.transform = `perspective(1000px) translateY(0px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
             card.style.zIndex = '1';
-            
-            // Clean up inline transform after animation finishes so normal CSS hovers work if needed
-            setTimeout(() => {
-                if (!card.matches(':hover')) {
-                    card.style.transform = '';
-                    card.style.zIndex = '';
-                }
-            }, 500);
         });
 
         card.addEventListener('mouseenter', () => {
