@@ -216,15 +216,38 @@ section{padding:5rem 2.5rem;}
 .progress-dot.active{background:#2563eb;}
 
 /* PROJECTS TABS */
-.proj-tabs{display:flex;width:100%;border-bottom:2px solid rgba(255,255,255,0.08);margin-bottom:2.5rem;gap:0;}
-.proj-tab{flex:1;background:transparent;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;color:rgba(255,255,255,0.4);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;padding:1rem 1.5rem;cursor:pointer;transition:all 0.25s;display:flex;align-items:center;justify-content:center;gap:0.55rem;letter-spacing:0.02em;}
-.proj-tab .tab-icon{font-size:1.1rem;}
+.proj-tabs{display:flex;width:100%;gap:1.2rem;margin-bottom:2.5rem;padding:0.5rem 0;}
+.proj-tab{
+  flex:1;
+  background:#212121;
+  border:none;
+  border-radius:20px;
+  box-shadow:15px 15px 30px rgb(25,25,25),-15px -15px 30px rgb(60,60,60);
+  color:rgba(255,255,255,0.4);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.9rem;
+  font-weight:500;
+  padding:1.1rem 1.5rem;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.65rem;
+  letter-spacing:0.02em;
+  position:relative;
+  overflow:hidden;
+}
+.proj-tab::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:transparent;transition:background 0.3s;}
+.proj-tab .tab-icon{font-size:1.2rem;}
 .proj-tab .tab-label{display:flex;flex-direction:column;align-items:flex-start;}
 .proj-tab .tab-title{font-size:0.88rem;font-weight:600;}
 .proj-tab .tab-sub{font-size:0.68rem;opacity:0.7;font-weight:400;letter-spacing:0.05em;}
-.proj-tab:hover{color:rgba(255,255,255,0.75);background:rgba(255,255,255,0.03);}
-.proj-tab[data-tab="hardware"].active{color:#c8a84b;border-bottom-color:#c8a84b;background:rgba(200,168,75,0.06);}
-.proj-tab[data-tab="software"].active{color:#60a5fa;border-bottom-color:#60a5fa;background:rgba(96,165,250,0.06);}
+.proj-tab:hover{color:rgba(255,255,255,0.75);box-shadow:18px 18px 36px rgb(20,20,20),-18px -18px 36px rgb(65,65,65);}
+.proj-tab[data-tab="hardware"].active{color:#c8a84b;box-shadow:inset 6px 6px 14px rgb(25,25,25),inset -6px -6px 14px rgb(55,55,55);}
+.proj-tab[data-tab="hardware"].active::after{background:#c8a84b;}
+.proj-tab[data-tab="software"].active{color:#60a5fa;box-shadow:inset 6px 6px 14px rgb(25,25,25),inset -6px -6px 14px rgb(55,55,55);}
+.proj-tab[data-tab="software"].active::after{background:#60a5fa;}
 .proj-grid-hidden{display:none!important;}
 
 /* PROJECTS */
