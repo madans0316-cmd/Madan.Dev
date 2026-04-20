@@ -248,7 +248,7 @@ section{padding:5rem 2.5rem;}
 .contact-section .section-line{margin:0 auto 1.5rem;}
 .contact-tagline{color:rgba(255,255,255,0.6);font-size:0.95rem;max-width:460px;line-height:1.7;margin-bottom:2.5rem;}
 .contact-cards{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-bottom:2.5rem;}
-.contact-card{background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--glass-border);border-radius:12px;padding:1.2rem 1.6rem;min-width:136px;text-align:center;transition:var(--transition);cursor:pointer;}
+.contact-card{background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--glass-border);border-radius:12px;padding:1.2rem 1.6rem;min-width:136px;text-align:center;transition:var(--transition);cursor:pointer;text-decoration:none;color:inherit;display:block;}
 .contact-card:hover{background:rgba(37,99,235,0.12);border-color:var(--accent);transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,0,0,0.2);}
 .contact-card .c-icon{font-size:1.3rem;margin-bottom:0.35rem;display:block;}
 .contact-card h4{font-size:0.8rem;font-weight:500;color:#fff;margin-bottom:0.18rem;}
@@ -665,20 +665,53 @@ footer p{color:rgba(255,255,255,0.5);font-size:0.78rem;}
     <div class="section-line"></div>
     <p class="contact-tagline">Whether it's a collaboration, an internship opportunity, or a conversation about electronics and cybersecurity — I'd love to hear from you.</p>
     <div class="contact-cards">
-      <div class="contact-card"><span class="c-icon">📧</span><h4>Email</h4><p>madankumars@gmail.com</p></div>
-      <div class="contact-card"><span class="c-icon">💼</span><h4>LinkedIn</h4><p>linkedin.com/in/madankumars</p></div>
-      <div class="contact-card"><span class="c-icon">🐙</span><h4>GitHub</h4><p>github.com/madankumars</p></div>
-      <div class="contact-card"><span class="c-icon">📍</span><h4>Location</h4><p>Mangaluru, Karnataka</p></div>
+      <a href="mailto:madans0316@gmail.com" class="contact-card" id="email-card">
+        <span class="c-icon">📧</span><h4>Email</h4><p>Send a Mail</p>
+      </a>
+      <a href="https://wa.me/91XXXXXXXXXX?text=Hi%20Madan%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20connect!" target="_blank" rel="noopener" class="contact-card" id="whatsapp-card">
+        <span class="c-icon">💬</span><h4>WhatsApp</h4><p>Chat Now</p>
+      </a>
+      <a href="https://linkedin.com/in/madankumars" target="_blank" rel="noopener" class="contact-card" id="linkedin-card">
+        <span class="c-icon">💼</span><h4>LinkedIn</h4><p>Connect</p>
+      </a>
+      <a href="https://github.com/madankumars" target="_blank" rel="noopener" class="contact-card" id="github-card">
+        <span class="c-icon">🐙</span><h4>GitHub</h4><p>Follow</p>
+      </a>
     </div>
-    <div class="contact-form">
+
+    <!-- FormSubmit: delivers form to madans0316@gmail.com, no backend needed -->
+    <form
+      class="contact-form"
+      id="contact-form"
+      action="https://formsubmit.co/madans0316@gmail.com"
+      method="POST"
+    >
+      <!-- FormSubmit config: disable captcha, set subject, redirect back -->
+      <input type="hidden" name="_captcha" value="false"/>
+      <input type="hidden" name="_subject" value="New message from your Portfolio!"/>
+      <input type="hidden" name="_next" value="https://madans0316-cmd.github.io/Madan.Dev/index.html"/>
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off"/>
+
       <div class="form-row">
-        <div class="form-group"><label for="contact-name">Your Name</label><input id="contact-name" type="text" placeholder="John Smith"/></div>
-        <div class="form-group"><label for="contact-email">Email Address</label><input id="contact-email" type="email" placeholder="john@email.com"/></div>
+        <div class="form-group">
+          <label for="contact-name">Your Name</label>
+          <input id="contact-name" name="name" type="text" placeholder="John Smith" required/>
+        </div>
+        <div class="form-group">
+          <label for="contact-email">Email Address</label>
+          <input id="contact-email" name="email" type="email" placeholder="john@email.com" required/>
+        </div>
       </div>
-      <div class="form-group"><label for="contact-subject">Subject</label><input id="contact-subject" type="text" placeholder="Internship Opportunity / Collaboration..."/></div>
-      <div class="form-group"><label for="contact-message">Message</label><textarea id="contact-message" placeholder="Tell me what's on your mind..."></textarea></div>
-      <button class="btn-submit">Send Message →</button>
-    </div>
+      <div class="form-group">
+        <label for="contact-subject">Subject</label>
+        <input id="contact-subject" name="subject" type="text" placeholder="Internship Opportunity / Collaboration..." required/>
+      </div>
+      <div class="form-group">
+        <label for="contact-message">Message</label>
+        <textarea id="contact-message" name="message" placeholder="Tell me what's on your mind..." required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Send Message →</button>
+    </form>
   </div>
 </section>
 
