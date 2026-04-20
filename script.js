@@ -8,17 +8,40 @@
   }
 })();
 
-// PROJECT TABS
+// PROJECT TOGGLE SWITCH
 (function(){
-  const tabs=document.querySelectorAll('.proj-tab');
-  tabs.forEach(tab=>tab.addEventListener('click',()=>{
-    tabs.forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    const target=tab.dataset.tab;
-    document.getElementById('grid-hardware').classList.toggle('proj-grid-hidden',target!=='hardware');
-    document.getElementById('grid-software').classList.toggle('proj-grid-hidden',target!=='software');
-  }));
+  const sw=document.getElementById('projSwitch');
+  const hwLabel=document.getElementById('hw-label');
+  const swLabel=document.getElementById('sw-label');
+  if(!sw)return;
+  sw.addEventListener('change',()=>{
+    const isSw=sw.checked;
+    document.getElementById('grid-hardware').classList.toggle('proj-grid-hidden',isSw);
+    document.getElementById('grid-software').classList.toggle('proj-grid-hidden',!isSw);
+    hwLabel.classList.toggle('hw-active',!isSw);
+    swLabel.classList.toggle('sw-active',isSw);
+  });
 })();
+
+// NAV GLIDER
+function moveNavGlider(section){
+  const links=document.querySelectorAll('.nav-link');
+  const glider=document.getElementById('navGlider');
+  if(!glider)return;
+  links.forEach(a=>a.classList.remove('nav-active'));
+  const active=document.querySelector(`.nav-link[data-section="${section}"]`);
+  if(!active)return;
+  active.classList.add('nav-active');
+  const li=active.closest('li');
+  glider.style.width=active.offsetWidth+'px';
+  glider.style.left=li.offsetLeft+'px';
+}
+// Init glider on page load
+window.addEventListener('load',()=>moveNavGlider('about'));
+// Click to move glider
+document.querySelectorAll('.nav-link').forEach(a=>{
+  a.addEventListener('click',()=>moveNavGlider(a.dataset.section));
+});
 
 // LOADER
 (function(){
@@ -104,6 +127,13 @@ window.addEventListener('scroll',()=>{
     if(el&&window.scrollY>=el.offsetTop-200)cur=id;
   });
   dots.forEach(d=>d.classList.toggle('active',d.dataset.target===cur));
+  // Update nav glider on scroll
+  const navSections=['about','skills','career','education','projects','contact'];
+  const inView=navSections.find(id=>{
+    const el=document.getElementById(id);
+    return el&&window.scrollY>=el.offsetTop-200;
+  });
+  if(inView)moveNavGlider(inView);
 },{passive:true});
 
 // BINARY RUNNER

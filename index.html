@@ -69,10 +69,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);-we
 .nav-logo{font-family:'Playfair Display',serif;color:#fff;font-size:1.2rem;font-weight:700;letter-spacing:0.03em;}
 [data-theme="light"] .nav-logo{color:#0a1628;}
 .nav-logo span{color:#c8a84b;}
-.nav-links{display:flex;gap:0;list-style:none;align-items:center;}
-.nav-links a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.8rem;font-weight:400;letter-spacing:0.07em;text-transform:uppercase;padding:0.5rem 0.9rem;display:block;transition:color 0.2s;border-radius:6px;}
-[data-theme="light"] .nav-links a{color:rgba(0,0,0,0.6);}
-.nav-links a:hover{color:#c8a84b;}
+.nav-links{display:flex;position:relative;background:rgba(255,255,255,0.06);box-shadow:0 0 1px 0 rgba(37,99,235,0.25),0 4px 10px 0 rgba(10,22,40,0.4);padding:0.38rem;border-radius:99px;list-style:none;align-items:center;gap:0;}
+.nav-links a{display:flex;align-items:center;justify-content:center;height:28px;padding:0 0.85rem;font-size:0.73rem;color:rgba(255,255,255,0.55);font-weight:500;border-radius:99px;cursor:pointer;transition:color 0.15s;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;position:relative;z-index:2;white-space:nowrap;}
+.nav-links a:hover{color:#fff;}
+.nav-links a.nav-active{color:#60a5fa;}
+.nav-glider{position:absolute;display:flex;height:28px;background:rgba(37,99,235,0.2);border:1px solid rgba(37,99,235,0.3);z-index:1;border-radius:99px;transition:0.25s ease-out;top:0.38rem;left:0.38rem;width:60px;pointer-events:none;}
 .nav-right{display:flex;align-items:center;gap:0.75rem;}
 .nav-cta{background:#2563eb;color:#fff;border:none;padding:0.42rem 1rem;border-radius:6px;font-size:0.8rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:background 0.2s;text-decoration:none;display:inline-block;}
 .nav-cta:hover{background:#3b82f6;}
@@ -215,39 +216,22 @@ section{padding:5rem 2.5rem;}
 .progress-dot{width:5px;height:5px;border-radius:50%;background:var(--border);}
 .progress-dot.active{background:#2563eb;}
 
-/* PROJECTS TABS */
-.proj-tabs{display:flex;width:100%;gap:1.2rem;margin-bottom:2.5rem;padding:0.5rem 0;}
-.proj-tab{
-  flex:1;
-  background:#212121;
-  border:none;
-  border-radius:20px;
-  box-shadow:15px 15px 30px rgb(25,25,25),-15px -15px 30px rgb(60,60,60);
-  color:rgba(255,255,255,0.4);
-  font-family:'DM Sans',sans-serif;
-  font-size:0.9rem;
-  font-weight:500;
-  padding:1.1rem 1.5rem;
-  cursor:pointer;
-  transition:all 0.3s ease;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:0.65rem;
-  letter-spacing:0.02em;
-  position:relative;
-  overflow:hidden;
-}
-.proj-tab::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:transparent;transition:background 0.3s;}
-.proj-tab .tab-icon{font-size:1.2rem;}
-.proj-tab .tab-label{display:flex;flex-direction:column;align-items:flex-start;}
-.proj-tab .tab-title{font-size:0.88rem;font-weight:600;}
-.proj-tab .tab-sub{font-size:0.68rem;opacity:0.7;font-weight:400;letter-spacing:0.05em;}
-.proj-tab:hover{color:rgba(255,255,255,0.75);box-shadow:18px 18px 36px rgb(20,20,20),-18px -18px 36px rgb(65,65,65);}
-.proj-tab[data-tab="hardware"].active{color:#c8a84b;box-shadow:inset 6px 6px 14px rgb(25,25,25),inset -6px -6px 14px rgb(55,55,55);}
-.proj-tab[data-tab="hardware"].active::after{background:#c8a84b;}
-.proj-tab[data-tab="software"].active{color:#60a5fa;box-shadow:inset 6px 6px 14px rgb(25,25,25),inset -6px -6px 14px rgb(55,55,55);}
-.proj-tab[data-tab="software"].active::after{background:#60a5fa;}
+/* PROJECT TOGGLE SWITCH */
+.proj-switch-row{display:flex;align-items:center;justify-content:center;gap:1.8rem;margin-bottom:2.5rem;}
+.switch-mode-label{font-size:0.95rem;font-weight:600;color:rgba(255,255,255,0.35);transition:color 0.25s;letter-spacing:0.04em;}
+.switch-mode-label.sw-active{color:#4ade80;}
+.switch-mode-label.hw-active{color:#c8a84b;}
+.switch{background-color:rgba(0,0,0,0.2);border-radius:30px;border:4px solid rgba(58,58,58,0.1);box-shadow:0 0 6px rgba(0,0,0,0.5) inset;height:48px;margin:2px;position:relative;width:120px;display:inline-block;user-select:none;}
+.switch-check{position:absolute;visibility:hidden;user-select:none;}
+.switch-label{cursor:pointer;display:block;height:42px;text-indent:-9999px;width:115px;user-select:none;}
+.switch-label:before{background:-webkit-radial-gradient(45%,circle,rgb(255,58,58) 0%,rgb(255,113,113) 100%);border-radius:10px;border:1px solid #742323;box-shadow:0 2px 5px rgba(255,67,48,0.6),0 0 5px rgba(255,159,109,0.5) inset;content:"";display:block;height:10px;left:-20%;position:absolute;top:16px;transition:all 0.2s;width:10px;z-index:12;user-select:none;}
+.switch-label:after{background:-moz-radial-gradient(45%,circle,rgba(60,60,60,0.6) 0%,rgba(151,151,151,0.6) 100%);border-radius:10px;border:1px solid #111;box-shadow:0 2px 5px rgba(20,20,20,0.5);content:"";display:block;height:10px;right:-20%;position:absolute;top:16px;transition:all 0.2s;width:10px;z-index:12;user-select:none;}
+.switch-label span{background:linear-gradient(#4f4f4f,#2b2b2b);border-radius:30px;border:1px solid #1a1a1a;box-shadow:0 0 4px rgba(0,0,0,0.5),0 1px 1px rgba(255,255,255,0.1) inset,0 -2px 0 rgba(0,0,0,0.2) inset;display:block;height:38px;left:1px;position:absolute;top:1px;transition:all 0.2s linear;width:53px;user-select:none;}
+.switch-label span:before{background:linear-gradient(left,rgba(48,48,48,0.4),rgba(34,34,34,0.4));border-radius:30px 10px 10px 30px;box-shadow:-2px 0 5px rgba(0,0,0,0.2) inset;content:"";display:block;height:33px;left:2px;position:absolute;top:2px;width:21px;user-select:none;}
+.switch-label span:after{background:linear-gradient(right,rgba(48,48,48,0.4),rgba(34,34,34,0.4));border-radius:10px 30px 30px 10px;box-shadow:2px 0 5px rgba(0,0,0,0.2) inset;content:"";display:block;height:33px;position:absolute;right:2px;top:2px;width:21px;user-select:none;}
+.switch-check:checked + .switch-label span{left:59px;}
+.switch-check:checked + .switch-label:before{background:-webkit-radial-gradient(45%,circle,rgba(60,60,60,0.6) 0%,rgba(151,151,151,0.6) 100%);border:1px solid #111;box-shadow:0 2px 5px rgba(20,20,20,0.5);}
+.switch-check:checked + .switch-label:after{background:-webkit-radial-gradient(45%,circle,lightgreen 0%,lightgreen 100%);border:1px solid #004562;box-shadow:0 2px 5px green,0 0 5px green inset;}
 .proj-grid-hidden{display:none!important;}
 
 /* PROJECTS */
@@ -402,13 +386,14 @@ footer p{color:rgba(255,255,255,0.5);font-size:0.78rem;}
 <!-- NAV -->
 <nav>
   <div class="nav-logo">MK<span>.</span>S</div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#career">Career</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#contact">Contact</a></li>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+    <li><a href="#skills" class="nav-link" data-section="skills">Skills</a></li>
+    <li><a href="#career" class="nav-link" data-section="career">Career</a></li>
+    <li><a href="#education" class="nav-link" data-section="education">Education</a></li>
+    <li><a href="#projects" class="nav-link" data-section="projects">Projects</a></li>
+    <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+    <li aria-hidden="true"><span class="nav-glider" id="navGlider"></span></li>
   </ul>
   <div class="nav-right">
     <button class="theme-btn" id="themeBtn" title="Toggle theme">🌙</button>
@@ -644,22 +629,14 @@ footer p{color:rgba(255,255,255,0.5);font-size:0.78rem;}
     <div class="section-line"></div>
     <p class="section-subtitle">Click a card to visit the live site or source code.</p>
 
-    <!-- PROJECT TABS -->
-    <div class="proj-tabs" id="projTabs">
-      <button class="proj-tab active" data-tab="hardware" id="tab-hardware">
-        <span class="tab-icon">⚙️</span>
-        <span class="tab-label">
-          <span class="tab-title">Hardware &amp; ECE</span>
-          <span class="tab-sub">Electronics · Embedded · Circuits</span>
-        </span>
-      </button>
-      <button class="proj-tab" data-tab="software" id="tab-software">
-        <span class="tab-icon">💻</span>
-        <span class="tab-label">
-          <span class="tab-title">Software &amp; Web</span>
-          <span class="tab-sub">Python · HTML · GitHub Pages</span>
-        </span>
-      </button>
+    <!-- PROJECT TOGGLE SWITCH -->
+    <div class="proj-switch-row" id="projSwitchRow">
+      <span class="switch-mode-label hw-active" id="hw-label">⚙️ Hardware &amp; ECE</span>
+      <div class="switch">
+        <input type="checkbox" class="switch-check" id="projSwitch"/>
+        <label class="switch-label" for="projSwitch"><span></span></label>
+      </div>
+      <span class="switch-mode-label" id="sw-label">💻 Software &amp; Web</span>
     </div>
 
     <!-- HARDWARE PROJECTS -->
