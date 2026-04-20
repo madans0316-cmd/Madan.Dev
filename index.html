@@ -216,11 +216,11 @@ section{padding:5rem 2.5rem;}
 .progress-dot.active{background:#2563eb;}
 
 /* PROJECTS TABS */
-.proj-tabs{display:flex;gap:0.6rem;margin-bottom:2rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.35rem;width:fit-content;}
-.proj-tab{background:transparent;border:none;color:rgba(255,255,255,0.5);font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:500;padding:0.55rem 1.3rem;border-radius:7px;cursor:pointer;transition:all 0.2s;}
-.proj-tab.active{background:#2563eb;color:#fff;box-shadow:0 4px 12px rgba(37,99,235,0.3);}
-.proj-tab:hover:not(.active){color:#fff;background:rgba(255,255,255,0.06);}
 .proj-grid-hidden{display:none;}
+
+/* SOFTWARE SECTION */
+.software-section{background:var(--bg-main);}
+.ph-memorial{background:linear-gradient(135deg,#1a0a0a,#3d1010);}
 
 /* PROJECTS */
 .projects-section{background:var(--bg-section);}
@@ -608,22 +608,14 @@ footer p{color:rgba(255,255,255,0.5);font-size:0.78rem;}
   </div>
 </section>
 
-<!-- PROJECTS -->
+<!-- HARDWARE PROJECTS -->
 <section class="projects-section reveal" id="projects">
   <div class="section-inner">
-    <div class="section-tag">What I've Built</div>
-    <div class="section-title">Projects</div>
+    <div class="section-tag">ECE &amp; Embedded</div>
+    <div class="section-title">⚙️ Hardware Projects</div>
     <div class="section-line"></div>
-    <p class="section-subtitle">Click a card to visit the live site or source code.</p>
-
-    <!-- PROJECT TABS -->
-    <div class="proj-tabs" id="projTabs">
-      <button class="proj-tab active" data-tab="hardware" id="tab-hardware">⚙️ Hardware &amp; ECE</button>
-      <button class="proj-tab" data-tab="software" id="tab-software">💻 Software &amp; Web</button>
-    </div>
-
-    <!-- HARDWARE PROJECTS -->
-    <div class="projects-grid" id="grid-hardware">
+    <p class="section-subtitle">Electronics, microcontrollers, and circuit design projects.</p>
+    <div class="projects-grid">
 
       <div class="project-card">
         <div class="project-header ph-blue">
@@ -662,9 +654,17 @@ footer p{color:rgba(255,255,255,0.5);font-size:0.78rem;}
       </div>
 
     </div>
+  </div>
+</section>
 
-    <!-- SOFTWARE / WEB PROJECTS -->
-    <div class="projects-grid proj-grid-hidden" id="grid-software">
+<!-- SOFTWARE & WEB PROJECTS -->
+<section class="software-section reveal" id="software">
+  <div class="section-inner">
+    <div class="section-tag">GitHub · Live Sites</div>
+    <div class="section-title">💻 Software &amp; Web Projects</div>
+    <div class="section-line"></div>
+    <p class="section-subtitle">Web apps and software built and deployed on GitHub Pages.</p>
+    <div class="projects-grid">
 
       <div class="project-card">
         <div class="project-header ph-green">
@@ -699,7 +699,7 @@ footer p{color:rgba(255,255,255,0.5);font-size:0.78rem;}
       </div>
 
       <div class="project-card">
-        <div class="project-header" style="background:linear-gradient(135deg,#1a0a0a,#3d1010);">
+        <div class="project-header ph-memorial">
           <div class="ph-placeholder">🕊️</div>
           <div class="project-overlay">
             <a href="https://madans0316-cmd.github.io/pulwama-memorial/" target="_blank" rel="noopener" class="overlay-btn">Live Site →</a>
