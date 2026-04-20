@@ -8,7 +8,17 @@
   }
 })();
 
-// PROJECT TABS - removed (now two separate sections)
+// PROJECT TABS
+(function(){
+  const tabs=document.querySelectorAll('.proj-tab');
+  tabs.forEach(tab=>tab.addEventListener('click',()=>{
+    tabs.forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const target=tab.dataset.tab;
+    document.getElementById('grid-hardware').classList.toggle('proj-grid-hidden',target!=='hardware');
+    document.getElementById('grid-software').classList.toggle('proj-grid-hidden',target!=='software');
+  }));
+})();
 
 // LOADER
 (function(){
@@ -81,7 +91,7 @@ document.querySelectorAll('.magnetic-btn').forEach(btn=>{
 });
 
 // FLOATING NAV DOTS
-const sections=['home','about','skills','career','education','projects','software','contact'];
+const sections=['home','about','skills','career','education','projects','contact'];
 const dots=document.querySelectorAll('.nav-dot');
 dots.forEach(d=>d.addEventListener('click',()=>{
   const t=document.getElementById(d.dataset.target);

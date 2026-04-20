@@ -216,11 +216,16 @@ section{padding:5rem 2.5rem;}
 .progress-dot.active{background:#2563eb;}
 
 /* PROJECTS TABS */
-.proj-grid-hidden{display:none;}
-
-/* SOFTWARE SECTION */
-.software-section{background:var(--bg-main);}
-.ph-memorial{background:linear-gradient(135deg,#1a0a0a,#3d1010);}
+.proj-tabs{display:flex;width:100%;border-bottom:2px solid rgba(255,255,255,0.08);margin-bottom:2.5rem;gap:0;}
+.proj-tab{flex:1;background:transparent;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;color:rgba(255,255,255,0.4);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;padding:1rem 1.5rem;cursor:pointer;transition:all 0.25s;display:flex;align-items:center;justify-content:center;gap:0.55rem;letter-spacing:0.02em;}
+.proj-tab .tab-icon{font-size:1.1rem;}
+.proj-tab .tab-label{display:flex;flex-direction:column;align-items:flex-start;}
+.proj-tab .tab-title{font-size:0.88rem;font-weight:600;}
+.proj-tab .tab-sub{font-size:0.68rem;opacity:0.7;font-weight:400;letter-spacing:0.05em;}
+.proj-tab:hover{color:rgba(255,255,255,0.75);background:rgba(255,255,255,0.03);}
+.proj-tab[data-tab="hardware"].active{color:#c8a84b;border-bottom-color:#c8a84b;background:rgba(200,168,75,0.06);}
+.proj-tab[data-tab="software"].active{color:#60a5fa;border-bottom-color:#60a5fa;background:rgba(96,165,250,0.06);}
+.proj-grid-hidden{display:none!important;}
 
 /* PROJECTS */
 .projects-section{background:var(--bg-section);}
@@ -608,14 +613,34 @@ footer p{color:rgba(255,255,255,0.5);font-size:0.78rem;}
   </div>
 </section>
 
-<!-- HARDWARE PROJECTS -->
+<!-- PROJECTS -->
 <section class="projects-section reveal" id="projects">
   <div class="section-inner">
-    <div class="section-tag">ECE &amp; Embedded</div>
-    <div class="section-title">⚙️ Hardware Projects</div>
+    <div class="section-tag">What I've Built</div>
+    <div class="section-title">Projects</div>
     <div class="section-line"></div>
-    <p class="section-subtitle">Electronics, microcontrollers, and circuit design projects.</p>
-    <div class="projects-grid">
+    <p class="section-subtitle">Click a card to visit the live site or source code.</p>
+
+    <!-- PROJECT TABS -->
+    <div class="proj-tabs" id="projTabs">
+      <button class="proj-tab active" data-tab="hardware" id="tab-hardware">
+        <span class="tab-icon">⚙️</span>
+        <span class="tab-label">
+          <span class="tab-title">Hardware &amp; ECE</span>
+          <span class="tab-sub">Electronics · Embedded · Circuits</span>
+        </span>
+      </button>
+      <button class="proj-tab" data-tab="software" id="tab-software">
+        <span class="tab-icon">💻</span>
+        <span class="tab-label">
+          <span class="tab-title">Software &amp; Web</span>
+          <span class="tab-sub">Python · HTML · GitHub Pages</span>
+        </span>
+      </button>
+    </div>
+
+    <!-- HARDWARE PROJECTS -->
+    <div class="projects-grid" id="grid-hardware">
 
       <div class="project-card">
         <div class="project-header ph-blue">
@@ -654,17 +679,9 @@ footer p{color:rgba(255,255,255,0.5);font-size:0.78rem;}
       </div>
 
     </div>
-  </div>
-</section>
 
-<!-- SOFTWARE & WEB PROJECTS -->
-<section class="software-section reveal" id="software">
-  <div class="section-inner">
-    <div class="section-tag">GitHub · Live Sites</div>
-    <div class="section-title">💻 Software &amp; Web Projects</div>
-    <div class="section-line"></div>
-    <p class="section-subtitle">Web apps and software built and deployed on GitHub Pages.</p>
-    <div class="projects-grid">
+    <!-- SOFTWARE / WEB PROJECTS -->
+    <div class="projects-grid proj-grid-hidden" id="grid-software">
 
       <div class="project-card">
         <div class="project-header ph-green">
@@ -699,7 +716,7 @@ footer p{color:rgba(255,255,255,0.5);font-size:0.78rem;}
       </div>
 
       <div class="project-card">
-        <div class="project-header ph-memorial">
+        <div class="project-header" style="background:linear-gradient(135deg,#1a0a0a,#3d1010);">
           <div class="ph-placeholder">🕊️</div>
           <div class="project-overlay">
             <a href="https://madans0316-cmd.github.io/pulwama-memorial/" target="_blank" rel="noopener" class="overlay-btn">Live Site →</a>
