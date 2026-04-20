@@ -8,6 +8,18 @@
   }
 })();
 
+// PROJECT TABS
+(function(){
+  const tabs=document.querySelectorAll('.proj-tab');
+  tabs.forEach(tab=>tab.addEventListener('click',()=>{
+    tabs.forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const target=tab.dataset.tab;
+    document.getElementById('grid-hardware').classList.toggle('proj-grid-hidden',target!=='hardware');
+    document.getElementById('grid-software').classList.toggle('proj-grid-hidden',target!=='software');
+  }));
+})();
+
 // LOADER
 (function(){
   const bar=document.getElementById('loaderBar');

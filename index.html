@@ -215,6 +215,13 @@ section{padding:5rem 2.5rem;}
 .progress-dot{width:5px;height:5px;border-radius:50%;background:var(--border);}
 .progress-dot.active{background:#2563eb;}
 
+/* PROJECTS TABS */
+.proj-tabs{display:flex;gap:0.6rem;margin-bottom:2rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.35rem;width:fit-content;}
+.proj-tab{background:transparent;border:none;color:rgba(255,255,255,0.5);font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:500;padding:0.55rem 1.3rem;border-radius:7px;cursor:pointer;transition:all 0.2s;}
+.proj-tab.active{background:#2563eb;color:#fff;box-shadow:0 4px 12px rgba(37,99,235,0.3);}
+.proj-tab:hover:not(.active){color:#fff;background:rgba(255,255,255,0.06);}
+.proj-grid-hidden{display:none;}
+
 /* PROJECTS */
 .projects-section{background:var(--bg-section);}
 .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}
@@ -607,52 +614,121 @@ footer p{color:rgba(255,255,255,0.5);font-size:0.78rem;}
     <div class="section-tag">What I've Built</div>
     <div class="section-title">Projects</div>
     <div class="section-line"></div>
-    <p class="section-subtitle">Hover a card to visit the live site.</p>
-    <div class="projects-grid" id="projectsGrid">
+    <p class="section-subtitle">Click a card to visit the live site or source code.</p>
 
-      <div class="project-card" data-url="https://your-project-1-url.com">
+    <!-- PROJECT TABS -->
+    <div class="proj-tabs" id="projTabs">
+      <button class="proj-tab active" data-tab="hardware" id="tab-hardware">⚙️ Hardware &amp; ECE</button>
+      <button class="proj-tab" data-tab="software" id="tab-software">💻 Software &amp; Web</button>
+    </div>
+
+    <!-- HARDWARE PROJECTS -->
+    <div class="projects-grid" id="grid-hardware">
+
+      <div class="project-card">
         <div class="project-header ph-blue">
           <div class="ph-placeholder">💡</div>
-          <div class="project-overlay"><button class="overlay-btn">View Online →</button></div>
         </div>
         <div class="project-body">
           <div class="project-tag">Electronics · Beginner</div>
           <h3>Smart LED Lighting System</h3>
           <p>Light-controlled LED circuit using LDR sensors with automatic brightness adjustment — built on breadboard and simulated in Multisim.</p>
           <div class="tech-pills"><span class="tech-pill">LDR Sensor</span><span class="tech-pill">555 Timer IC</span><span class="tech-pill">Multisim</span></div>
-          <a href="https://your-project-1-url.com" target="_blank" rel="noopener" class="proj-link">→ View Online</a>
         </div>
       </div>
 
-      <div class="project-card" data-url="https://your-project-2-url.com">
+      <div class="project-card">
         <div class="project-header ph-navy">
           <div class="ph-placeholder">🤖</div>
-          <div class="project-overlay"><button class="overlay-btn">View Online →</button></div>
         </div>
         <div class="project-body">
           <div class="project-tag">Arduino · Embedded</div>
           <h3>Line-Following Robot</h3>
           <p>Autonomous line-following robot using IR sensors and Arduino Uno. Programmed motor control logic and sensor feedback loops.</p>
           <div class="tech-pills"><span class="tech-pill">Arduino Uno</span><span class="tech-pill">IR Sensor</span><span class="tech-pill">C++</span><span class="tech-pill">L298N</span></div>
-          <a href="https://your-project-2-url.com" target="_blank" rel="noopener" class="proj-link">→ View Online</a>
         </div>
       </div>
 
-      <div class="project-card" data-url="https://your-project-3-url.com">
+      <div class="project-card">
         <div class="project-header ph-gold">
           <div class="ph-placeholder">📡</div>
-          <div class="project-overlay"><button class="overlay-btn">View Online →</button></div>
         </div>
         <div class="project-body">
           <div class="project-tag">Digital Logic · Academic</div>
           <h3>4-bit Binary Calculator</h3>
           <p>Designed and simulated a 4-bit binary adder/subtractor using logic gates — foundational digital electronics project.</p>
           <div class="tech-pills"><span class="tech-pill">Full Adder</span><span class="tech-pill">Tinkercad</span><span class="tech-pill">Logic Gates</span></div>
-          <a href="https://your-project-3-url.com" target="_blank" rel="noopener" class="proj-link">→ View Online</a>
         </div>
       </div>
 
+    </div>
 
+    <!-- SOFTWARE / WEB PROJECTS -->
+    <div class="projects-grid proj-grid-hidden" id="grid-software">
+
+      <div class="project-card">
+        <div class="project-header ph-green">
+          <div class="ph-placeholder">🍱</div>
+          <div class="project-overlay">
+            <a href="https://github.com/madans0316-cmd/food-product-scanner" target="_blank" rel="noopener" class="overlay-btn">GitHub →</a>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-tag">Python · AI · FastAPI</div>
+          <h3>NutriScan – Food Product Analyzer</h3>
+          <p>AI-powered food product scanner using Claude AI. Upload an image and get full nutritional analysis, ingredient breakdown, and health scores.</p>
+          <div class="tech-pills"><span class="tech-pill">Python</span><span class="tech-pill">FastAPI</span><span class="tech-pill">Claude AI</span><span class="tech-pill">HTML/CSS</span></div>
+          <a href="https://github.com/madans0316-cmd/food-product-scanner" target="_blank" rel="noopener" class="proj-link">→ View on GitHub</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header ph-blue">
+          <div class="ph-placeholder">🌐</div>
+          <div class="project-overlay">
+            <a href="https://madans0316-cmd.github.io/decode-every-expression/" target="_blank" rel="noopener" class="overlay-btn">Live Site →</a>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-tag">HTML · Web · Live</div>
+          <h3>Decode Every Expression</h3>
+          <p>An interactive web project exploring expressions, logic, and digital concepts — built with vanilla HTML, CSS, and JavaScript.</p>
+          <div class="tech-pills"><span class="tech-pill">HTML</span><span class="tech-pill">CSS</span><span class="tech-pill">JavaScript</span></div>
+          <a href="https://madans0316-cmd.github.io/decode-every-expression/" target="_blank" rel="noopener" class="proj-link">→ View Live Site</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header" style="background:linear-gradient(135deg,#1a0a0a,#3d1010);">
+          <div class="ph-placeholder">🕊️</div>
+          <div class="project-overlay">
+            <a href="https://madans0316-cmd.github.io/pulwama-memorial/" target="_blank" rel="noopener" class="overlay-btn">Live Site →</a>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-tag">HTML · Tribute · Live</div>
+          <h3>Pulwama Memorial</h3>
+          <p>A digital tribute and memorial website dedicated to the brave soldiers of the 2019 Pulwama attack — built with respect and purpose.</p>
+          <div class="tech-pills"><span class="tech-pill">HTML</span><span class="tech-pill">CSS</span><span class="tech-pill">GitHub Pages</span></div>
+          <a href="https://madans0316-cmd.github.io/pulwama-memorial/" target="_blank" rel="noopener" class="proj-link">→ View Live Site</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header ph-navy">
+          <div class="ph-placeholder">✅</div>
+          <div class="project-overlay">
+            <a href="https://madans0316-cmd.github.io/student-to-do-list/" target="_blank" rel="noopener" class="overlay-btn">Live Site →</a>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-tag">HTML · Utility · Web App</div>
+          <h3>Student To-Do List</h3>
+          <p>A clean, student-focused task management web app to organize assignments, deadlines, and study goals — built for daily use.</p>
+          <div class="tech-pills"><span class="tech-pill">HTML</span><span class="tech-pill">CSS</span><span class="tech-pill">JavaScript</span></div>
+          <a href="https://madans0316-cmd.github.io/student-to-do-list/" target="_blank" rel="noopener" class="proj-link">→ View Live Site</a>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -672,7 +748,7 @@ footer p{color:rgba(255,255,255,0.5);font-size:0.78rem;}
       <a href="#" id="wa-link" target="_blank" rel="noopener" class="contact-card" id="whatsapp-card">
         <span class="c-icon">💬</span><h4>WhatsApp</h4><p>Chat Now</p>
       </a>
-      <a href="https://linkedin.com/in/madankumars" target="_blank" rel="noopener" class="contact-card" id="linkedin-card">
+      <a href="https://linkedin.com/in/madankumar-s-3537b232a" target="_blank" rel="noopener" class="contact-card" id="linkedin-card">
         <span class="c-icon">💼</span><h4>LinkedIn</h4><p>Connect</p>
       </a>
       <a href="https://github.com/madans0316-cmd" target="_blank" rel="noopener" class="contact-card" id="github-card">
