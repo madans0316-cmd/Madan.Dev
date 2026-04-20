@@ -1,3 +1,13 @@
+// WHATSAPP LINK (number encoded for security - not visible in source)
+(function(){
+  const w=document.getElementById('wa-link');
+  if(w){
+    const _n=atob('OTE5NDQ5ODg3Njc4');
+    const _m='Hi%20Madan%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20connect!';
+    w.href='https://wa.me/'+_n+'?text='+_m;
+  }
+})();
+
 // LOADER
 (function(){
   const bar=document.getElementById('loaderBar');

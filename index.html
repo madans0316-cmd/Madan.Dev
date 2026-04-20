@@ -263,6 +263,7 @@ section{padding:5rem 2.5rem;}
 .form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,0.28);}
 .btn-submit{width:100%;background:#2563eb;color:#fff;border:none;padding:0.82rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;transition:all 0.2s;}
 .btn-submit:hover{background:#3b82f6;transform:translateY(-1px);}
+.form-honey{display:none;}
 
 /* CUSTOM ANIMATIONS */
 @keyframes shimmer {
@@ -668,7 +669,7 @@ footer p{color:rgba(255,255,255,0.5);font-size:0.78rem;}
       <a href="mailto:madans0316@gmail.com" class="contact-card" id="email-card">
         <span class="c-icon">📧</span><h4>Email</h4><p>Send a Mail</p>
       </a>
-      <a href="https://wa.me/919449887678?text=Hi%20Madan%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20connect!" target="_blank" rel="noopener" class="contact-card" id="whatsapp-card">
+      <a href="#" id="wa-link" target="_blank" rel="noopener" class="contact-card" id="whatsapp-card">
         <span class="c-icon">💬</span><h4>WhatsApp</h4><p>Chat Now</p>
       </a>
       <a href="https://linkedin.com/in/madankumars" target="_blank" rel="noopener" class="contact-card" id="linkedin-card">
@@ -690,7 +691,7 @@ footer p{color:rgba(255,255,255,0.5);font-size:0.78rem;}
       <input type="hidden" name="_captcha" value="false"/>
       <input type="hidden" name="_subject" value="New message from your Portfolio!"/>
       <input type="hidden" name="_next" value="https://madans0316-cmd.github.io/Madan.Dev/index.html"/>
-      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off"/>
+      <input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off"/>
 
       <div class="form-row">
         <div class="form-group">
